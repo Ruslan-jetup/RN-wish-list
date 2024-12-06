@@ -5,7 +5,11 @@ module.exports = {
       'module-resolver',
       {
         alias: {
-          '@': './',
+          '@src': './src',
+          '@shared': './src/shared',
+          '@modules': './src/modules',
+          '@configs': './src/configs',
+          '@assets': './assets',
         },
       },
     ],
