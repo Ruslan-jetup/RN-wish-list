@@ -3,8 +3,9 @@ import {StatusBar, StyleSheet, View, ViewStyle} from 'react-native';
 import {ScreenLayoutContent} from './screen-layout-content.component';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import { primaryBgColor } from 'shared/conigs';
+
 import { $size } from 'shared/helpers';
+import { primaryBgColor } from 'shared/conigs';
 
 export interface IScreenLayoutProps {
   children: JSX.Element | JSX.Element[];

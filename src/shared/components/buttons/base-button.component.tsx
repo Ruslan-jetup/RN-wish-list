@@ -97,8 +97,14 @@ export const BaseButton: React.FC<IProps> = ({
       ]}
       disabled={disabled}
       onPress={onBaseBtnPrase}>
-      iconName
-      {iconName && <Icon aditionalStyle={{position: 'absolute', left: 16}} name={iconName} size={24} color={primaryWhite}/>}
+      {iconName && (
+        <Icon
+          aditionalStyle={{position: 'absolute', left: 16}}
+          name={iconName}
+          size={24}
+          color={primaryWhite}
+        />
+      )}
       <Text
         style={[
           {
@@ -111,6 +117,7 @@ export const BaseButton: React.FC<IProps> = ({
     </TouchableOpacity>
   );
 };
+
 
 const styles = StyleSheet.create({
   large_btn_comon: {

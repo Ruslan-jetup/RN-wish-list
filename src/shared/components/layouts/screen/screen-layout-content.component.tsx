@@ -4,6 +4,7 @@ import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import { $size } from 'shared/helpers';
 import { useEventsListener } from 'shared/hooks';
 
+
 interface ScreenLayoutContentProps {
   children: JSX.Element | JSX.Element[];
   header?: () => ReactElement | undefined;
