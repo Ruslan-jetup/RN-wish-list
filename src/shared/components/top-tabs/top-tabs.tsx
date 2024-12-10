@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import {primaryWhite} from '@src/shared/conigs';
-import {ITopTabItem} from '@src/typing/interfacec';
+import { primaryWhite } from 'shared/conigs';
+import {ITopTabItem} from 'typing';
 
 interface iProps {
   tabs: ITopTabItem[];

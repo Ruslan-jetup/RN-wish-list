@@ -1,6 +1,7 @@
-import {primaryBlack} from '@shared/conigs';
 import {Text, TextStyle} from 'react-native';
-import {FontWeightEnum, FontFamiliesEnum} from '@src/typing';
+import { primaryBlack } from 'shared/conigs';
+import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+
 
 interface IProps {
   content?: string | number;

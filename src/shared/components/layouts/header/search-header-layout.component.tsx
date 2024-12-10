@@ -1,13 +1,8 @@
-import {
-  darckGrey,
-  primaryBlue,
-  primaryGrey,
-  primaryWhite,
-} from '@src/shared/conigs';
 import {View, StyleSheet, TextInput, ViewStyle} from 'react-native';
-import {BaseButton, IconBtn} from '@src/shared/components/buttons';
-import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum} from '@src/typing';
 import {StyleProp} from 'react-native';
+import { BaseButton, IconBtn } from 'shared/components/buttons';
+import { darckGrey, primaryBlue, primaryGrey, primaryWhite } from 'shared/conigs';
+import { BaseBtnTypeEnum, FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   onSearchCancelPress: () => void;
@@ -58,10 +53,11 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
         </View>
 
         <BaseButton
-          texColor={primaryBlue}
           title="Cancel"
           onBaseBtnPrase={onSearchCancelPress}
           aditionalBtnStyles={{width: 60, height: 50, justifyContent: 'center'}}
+          buttonType={BaseBtnTypeEnum.Text}
+          aditionalFontStyles={{color: primaryBlue}}
         />
       </View>
     </View>

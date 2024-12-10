@@ -1,14 +1,13 @@
-import {Txt} from '@shared/components/typography/txt.component';
-import {IconBtn} from '@src/shared/components/buttons';
-import {primaryBlue, secondaryBlue} from '@src/shared/conigs';
-
+import {Image, View, ImageSourcePropType, StyleSheet} from 'react-native';
+import {IconBtn} from 'shared/components/buttons';
+import {Txt} from 'shared/components/typography';
+import {primaryBlue, secondaryBlue} from 'shared/conigs';
 import {
   ActiveScreenEnum,
   FontFamiliesEnum,
   FontWeightEnum,
   IconBtnNamesEnum,
-} from '@src/typing/enums';
-import {Image, View, ImageSourcePropType, StyleSheet} from 'react-native';
+} from 'typing';
 
 interface IProps {
   title: string;
@@ -83,7 +82,6 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: '50%',
-    backgroundColor: 'red',
     overflow: 'hidden',
   },
   avatar: {

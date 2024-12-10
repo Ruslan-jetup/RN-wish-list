@@ -1,13 +1,8 @@
-import {BaseButton, IconBtn} from '@src/shared/components/buttons';
-import {Txt} from '@src/shared/components/typography';
-import {
-  DefaultHeaderBtnEnum,
-  FontFamiliesEnum,
-  FontWeightEnum,
-  IconBtnNamesEnum,
-} from '@src/typing';
 import {StyleSheet, View} from 'react-native';
 import _ from 'lodash';
+import { BaseBtnTypeEnum, DefaultHeaderBtnEnum, FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { BaseButton, IconBtn } from 'shared/components/buttons';
+import { Txt } from 'shared/components/typography';
 
 interface IProps {
   title?: string;
@@ -48,6 +43,7 @@ export const DefaulHeaderLayout: React.FC<IProps> = ({
       <BaseButton
         title={DefaultHeaderBtnEnum.Skip}
         onBaseBtnPrase={onRightBtnPress}
+        buttonType={BaseBtnTypeEnum.Text}
       />
     ),
   };

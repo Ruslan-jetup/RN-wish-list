@@ -1,7 +1,9 @@
 import {StyleSheet, Pressable, StyleProp, ViewStyle} from 'react-native';
-import {primaryBlack} from '@shared/conigs';
+
 import {Icon} from '../icon.component';
-import {IconBtnNamesEnum} from '@src/typing';
+import { IconBtnNamesEnum } from 'typing';
+import { primaryBlack } from 'shared/conigs';
+
 
 interface IProps {
   onIconBtnPress: () => void;

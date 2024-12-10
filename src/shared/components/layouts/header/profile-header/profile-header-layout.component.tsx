@@ -1,8 +1,9 @@
 import {View, ImageSourcePropType, StyleSheet} from 'react-native';
 import {GreetingUserAtom} from './atoms/greeting-user.atom';
-import {primaryWhite} from '@shared/conigs';
 import {SubscribeInfoAtom} from './atoms';
-import { ActiveScreenEnum } from '@src/typing';
+import { ActiveScreenEnum } from 'typing';
+import { primaryWhite } from 'shared/conigs';
+
 
 interface IProps {
   title: string;

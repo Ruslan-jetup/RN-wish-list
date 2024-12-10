@@ -1,11 +1,8 @@
-import {
-  ScreenLayout,
-} from '@shared/components';
-import {Text, View, StatusBar} from 'react-native';
-import {homeScreenMock} from '../../../mock/home-screen-mock';
-import {primaryWhite} from '@shared/conigs';
-import {ProfileHeaderLayout} from '@shared/components/layouts/header/profile-header';
+import {homeScreenMock} from 'mock';
+import {StatusBar} from 'react-native';
+import {ProfileHeaderLayout, ScreenLayout} from 'shared/components/layouts';
 import _ from 'lodash';
+import {primaryWhite} from 'shared/conigs/theme.config';
 
 export const HomeScreen: React.FC = () => {
   return (
@@ -23,9 +20,6 @@ export const HomeScreen: React.FC = () => {
         />
       }>
       <StatusBar barStyle="dark-content" backgroundColor={primaryWhite} />
-      <View>
-        <Text>Home screen</Text>
-      </View>
     </ScreenLayout>
   );
 };

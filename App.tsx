@@ -1,5 +1,5 @@
+import { HomeScreen } from 'modules';
 import React from 'react';
-import {HomeScreen} from './src/modules/home/sreens/home.screen';
 import {StyleSheet, SafeAreaView} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
@@ -7,7 +7,7 @@ function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.container}>
-        <HomeScreen />
+        <HomeScreen/>
       </SafeAreaView>
     </SafeAreaProvider>
   );

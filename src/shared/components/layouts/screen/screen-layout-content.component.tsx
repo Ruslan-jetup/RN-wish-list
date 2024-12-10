@@ -1,9 +1,8 @@
 import React, {FC, ReactElement, useState} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
-
-import {$size} from '@shared/helpers';
-import {useEventsListener} from '@shared/hooks';
+import { $size } from 'shared/helpers';
+import { useEventsListener } from 'shared/hooks';
 
 interface ScreenLayoutContentProps {
   children: JSX.Element | JSX.Element[];

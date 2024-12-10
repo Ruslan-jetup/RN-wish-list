@@ -1,7 +1,7 @@
-import {Txt} from '@src/shared/components/typography';
-import { primaryBlack } from '@src/shared/conigs';
-import {FontFamiliesEnum, FontWeightEnum} from '@src/typing';
 import {StyleSheet, View} from 'react-native';
+import { Txt } from 'shared/components/typography';
+import { primaryBlack } from 'shared/conigs';
+import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface IProps {
   subscribers: number;

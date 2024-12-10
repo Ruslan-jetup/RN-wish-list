@@ -1,2 +1,2 @@
-export * from './screnn';
+export * from './screen';
 export * from './header';
