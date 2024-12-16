@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {useWindowDimensions} from 'react-native';
 import {TabView, SceneMap, TabBar} from 'react-native-tab-view';
-import { primaryWhite } from 'shared/conigs';
+import { primaryWhite } from 'shared/configs';
 import {ITopTabItem} from 'typing';
 
 interface iProps {

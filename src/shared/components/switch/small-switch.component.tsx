@@ -1,6 +1,6 @@
 import {Switch} from 'react-native-switch';
 import { StyleProp, ViewStyle } from 'react-native';
-import { primaryBlue, secondaryBlue, secondaryGrey } from 'shared/conigs';
+import { primaryBlue, secondaryBlue, secondaryGrey } from 'shared/configs';
 
 interface IProps {
   backgroundActive?: string;
@@ -8,7 +8,7 @@ interface IProps {
   disabled?: boolean;
   value: boolean;
   onSwitchChange: () => void;
-  auditionalStyles?: StyleProp<ViewStyle>;
+  additionalStyles?: StyleProp<ViewStyle>;
 }
 export const SmallSwitch: React.FC<IProps> = ({
   value,
@@ -16,7 +16,7 @@ export const SmallSwitch: React.FC<IProps> = ({
   backgroundActive = primaryBlue,
   backgroundInactive = secondaryBlue,
   disabled = false,
-  auditionalStyles,
+  additionalStyles,
 }) => {
   return (
     <Switch
@@ -31,7 +31,7 @@ export const SmallSwitch: React.FC<IProps> = ({
       backgroundActive={disabled ? secondaryGrey : backgroundActive}
       backgroundInactive={backgroundInactive}
       outerCircleStyle={{width: 48}}
-      containerStyle={auditionalStyles}
+      containerStyle={additionalStyles}
     />
   );
 };

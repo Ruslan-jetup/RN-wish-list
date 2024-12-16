@@ -1,14 +1,15 @@
-import {IconBtn} from './buttons';
-import {primaryBlue} from '../conigs';
+
 import {StyleProp, View, ViewStyle} from 'react-native';
 import DatePicker from 'react-native-date-picker';
 import {useState} from 'react';
 import { IconBtnNamesEnum } from 'typing';
+import { IconBtn } from '../buttons';
+import { primaryBlue } from 'shared/configs';
 
 interface IProps {
   onDateConfirm: (val: Date) => void;
   date?: Date;
-  auditionalStyles?: StyleProp<ViewStyle>;
+  additionalStyles?: StyleProp<ViewStyle>;
   size?: number;
   height?: number;
   width?: number;
@@ -17,7 +18,7 @@ interface IProps {
 export const DatePickerBtn: React.FC<IProps> = ({
   onDateConfirm,
   date = new Date(),
-  auditionalStyles,
+  additionalStyles,
   size = 24,
   height = 24,
   width = 24,
@@ -33,7 +34,7 @@ export const DatePickerBtn: React.FC<IProps> = ({
         size={size}
         height={height}
         width={width}
-        aditionalStyles={auditionalStyles}
+        additionalStyles={additionalStyles}
       />
 
       <DatePicker

@@ -4,8 +4,8 @@ import {ScreenLayoutContent} from './screen-layout-content.component';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import { $size } from 'shared/helpers';
-import { primaryBgColor } from 'shared/conigs';
+import {$size} from 'shared/helpers';
+import {primaryBgColor} from 'shared/configs';
 
 export interface IScreenLayoutProps {
   children: JSX.Element | JSX.Element[];

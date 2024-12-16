@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import Modal from 'react-native-modal';
-import {primaryBlue, primaryGrey, primaryWhite} from 'shared/conigs';
+import {primaryBlue, primaryGrey, primaryWhite} from 'shared/configs';
 import {FontFamiliesEnum, FontWeightEnum} from 'typing';
 
 interface ContextMenuProps {

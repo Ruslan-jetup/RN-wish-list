@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -5,187 +6,167 @@ import {
   ViewStyle,
   Text,
   TextStyle,
+  ActivityIndicator,
 } from 'react-native';
-import {
-  primaryBlack,
-  primaryBlue,
-  primaryWhite,
-  secondaryGrey,
-} from 'shared/conigs';
-import {
-  BaseBtnTypeEnum,
-  FontFamiliesEnum,
-  FontWeightEnum,
-  IconBtnNamesEnum,
-} from 'typing';
+import {primaryBlue, primaryWhite, secondaryGrey} from 'shared/configs';
 import {Icon} from '../icon.component';
+import { FontWeightEnum } from 'typing';
 
 interface IProps {
   title: string;
-  onBaseBtnPrase: () => void;
-  aditionalBtnStyles?: StyleProp<ViewStyle>;
-  aditionalFontStyles?: TextStyle;
+  onPress: () => void;
+  additionalBtnStyles?: StyleProp<ViewStyle>;
+  additionalFontStyles?: TextStyle | TextStyle[];
   disabled?: boolean;
-  buttonType: BaseBtnTypeEnum;
-  iconName?: IconBtnNamesEnum;
+  size: 'small' | 'medium' | 'large';
+  mode: 'primary' | 'secondary' | 'transparent';
+  iconName?: string;
+  iconStyle?: StyleProp<ViewStyle>;
+  loading?: boolean;
+  loaderColor?: string;
 }
+
 export const BaseButton: React.FC<IProps> = ({
   title,
-  onBaseBtnPrase,
-  aditionalBtnStyles,
-  aditionalFontStyles,
-  disabled,
-  buttonType,
+  onPress,
+  additionalBtnStyles,
+  additionalFontStyles,
+  disabled = false,
+  size = 'large',
+  mode = 'primary',
   iconName,
+  iconStyle,
+  loading = false,
+  loaderColor = primaryWhite,
 }) => {
-  const btnStylesConfig: Record<BaseBtnTypeEnum, ViewStyle> = {
-    [BaseBtnTypeEnum.PrimeryLarge]: {
-      ...styles.large_primary,
-      ...styles.large_btn_comon,
-      ...(disabled && styles.disabled_btn),
-    },
-    [BaseBtnTypeEnum.SecondaryLarge]: {
-      ...styles.large_secondary,
-      ...styles.large_btn_comon,
-      ...(disabled && styles.disabled_btn),
-    },
-    [BaseBtnTypeEnum.PrimerySmall]: {
-      ...styles.small_btn_primary,
-      ...styles.small_btn_common,
-      ...(disabled && styles.disabled_btn),
-    },
-    [BaseBtnTypeEnum.SecondarySmall]: {
-      ...styles.small_btn_secondary,
-      ...styles.small_btn_common,
-      ...(disabled && styles.disabled_btn),
-    },
-    [BaseBtnTypeEnum.Text]: styles.txt_btn,
+  const getButtonStyle = (): ViewStyle => {
+    const sizeStyles = styles[size];
+    const variantStyles = styles[mode];
+    const disabledStyle = disabled ? styles.disabledButton : {};
+
+    return {
+      ...sizeStyles,
+      ...variantStyles,
+      ...disabledStyle,
+    };
   };
 
-  const fontsStylesConfig = {
-    [BaseBtnTypeEnum.PrimeryLarge]: {
-      ...styles.large_primery_font,
-      ...styles.large_font_common,
-    },
-    [BaseBtnTypeEnum.SecondaryLarge]: {
-      ...styles.large_secondary_font,
-      ...styles.large_font_common,
-      ...(disabled && styles.disabled_font),
-    },
-    [BaseBtnTypeEnum.PrimerySmall]: {
-      ...styles.small_font_primary,
-      ...styles.small_font_common,
-    },
-    [BaseBtnTypeEnum.SecondarySmall]: {
-      ...styles.small_font_secondary,
-      ...styles.small_font_common,
-      ...(disabled && styles.disabled_font),
-    },
-    [BaseBtnTypeEnum.Text]: {
-      ...styles.txt_btn,
-      ...(disabled && styles.txt_btn_disabled),
-    },
+  const getTextStyle = (): TextStyle => {
+    const sizeTextStyles = styles[`${size}Text`];
+    const modeTextStyles =
+      mode === 'primary' ? styles.primaryText : styles.secondaryText;
+    const disabledTextStyle = disabled ? styles.disabledText : {};
+
+    return {
+      ...sizeTextStyles,
+      ...modeTextStyles,
+      ...disabledTextStyle,
+    };
   };
 
   return (
     <TouchableOpacity
-      style={[
-        {
-          ...btnStylesConfig[buttonType],
-        },
-        aditionalBtnStyles,
-      ]}
-      disabled={disabled}
-      onPress={onBaseBtnPrase}>
+      style={[getButtonStyle(), additionalBtnStyles]}
+      disabled={disabled || loading}
+      onPress={onPress}>
       {iconName && (
         <Icon
-          aditionalStyle={{position: 'absolute', left: 16}}
+          additionalStyle={[{position: 'absolute', left: 16}, iconStyle]}
           name={iconName}
           size={24}
           color={primaryWhite}
         />
       )}
-      <Text
-        style={[
-          {
-            ...fontsStylesConfig[buttonType],
-          },
-          aditionalFontStyles,
-        ]}>
-        {title}
-      </Text>
+
+      {mode === 'primary' || !loading ? (
+        <Text style={[getTextStyle(), additionalFontStyles]}>
+          {title}
+        </Text>
+      ) : null}
+
+      {loading && (
+        <ActivityIndicator
+          size="small"
+          color={loaderColor}
+          style={
+            mode === 'primary' ? styles.primary_loader : styles.secondary_loader
+          }
+        />
+      )}
     </TouchableOpacity>
   );
 };
 
-
 const styles = StyleSheet.create({
-  large_btn_comon: {
+  large: {
     position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: '100%',
     height: 50,
     borderRadius: 50,
     overflow: 'hidden',
   },
-  large_primary: {
-    backgroundColor: primaryBlue,
-  },
-  large_secondary: {
-    backgroundColor: primaryWhite,
-  },
-  large_font_common: {
-    fontFamily: FontFamiliesEnum.poppins,
-    fontSize: 16,
-    lineHeight: 18,
-    fontWeight: FontWeightEnum.SemiBold,
-  },
-  large_primery_font: {
-    color: primaryWhite,
-  },
-  large_secondary_font: {
-    color: primaryBlack,
-  },
-  small_btn_common: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  medium: {
     width: 100,
     height: 30,
     borderRadius: 8,
-    overflow: 'hidden',
   },
-  small_btn_primary: {
-    backgroundColor: primaryBlue,
-  },
-  small_btn_secondary: {
-    backgroundColor: primaryWhite,
-  },
-  small_font_common: {
-    fontFamily: FontFamiliesEnum.poppins,
-    fontSize: 14,
-    lineHeight: 16,
-    fontWeight: FontWeightEnum.Regular,
-  },
-  small_font_primary: {
-    color: primaryWhite,
-  },
-  small_font_secondary: {
-    color: primaryBlack,
-  },
-  txt_btn: {
+  small: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 5,
-    paddingVertical: 2,
+    paddingHorizontal: 2,
     borderRadius: 8,
   },
-  txt_btn_disabled: {
-    backgroundColor: secondaryGrey,
-    opacity: 0.5,
+  primary: {
+    backgroundColor: primaryBlue,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  disabled_btn: {
-    backgroundColor: secondaryGrey,
+  secondary: {
+    backgroundColor: primaryWhite,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  disabled_font: {
+  transparent: {
+    backgroundColor: 'transparent',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  smallText: {
+    fontWeight: FontWeightEnum.Regular,
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  mediumText: {
+    fontWeight: FontWeightEnum.Medium,
+    fontSize: 14,
+    lineHeight: 16,
+  },
+  largeText: {
+    fontWeight: FontWeightEnum.SemiBold,
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  primaryText: {
     color: primaryWhite,
+  },
+  secondaryText: {
+    color: primaryBlue,
+  },
+  disabledButton: {
+    backgroundColor: secondaryGrey,
+  },
+  disabledText: {
+    color: primaryWhite,
+    opacity: 0.6,
+  },
+  icon: {
+    position: 'absolute',
+    left: 16,
+  },
+  primary_loader: {
+    position: 'absolute',
+    right: 16,
+  },
+  secondary_loader: {
+    position: 'static',
   },
 });

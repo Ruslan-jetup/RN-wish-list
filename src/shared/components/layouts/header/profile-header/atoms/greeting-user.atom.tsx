@@ -1,7 +1,8 @@
-import {Image, View, ImageSourcePropType, StyleSheet} from 'react-native';
+import {userDefaultAva} from 'mock';
+import {Image, View, StyleSheet} from 'react-native';
 import {IconBtn} from 'shared/components/buttons';
 import {Txt} from 'shared/components/typography';
-import {primaryBlue, secondaryBlue} from 'shared/conigs';
+import {primaryBlue, secondaryBlue} from 'shared/configs';
 import {
   ActiveScreenEnum,
   FontFamiliesEnum,
@@ -12,10 +13,11 @@ import {
 interface IProps {
   title: string;
   userName: string;
-  userAvatarUrl: ImageSourcePropType;
+  userAvatarUrl: string;
   onSearchPress: () => void;
   onDotsPress: () => void;
   activeScreen: ActiveScreenEnum;
+  loading?: boolean
 }
 
 export const GreetingUserAtom: React.FC<IProps> = ({
@@ -25,12 +27,18 @@ export const GreetingUserAtom: React.FC<IProps> = ({
   onDotsPress,
   userAvatarUrl,
   activeScreen,
+  loading,
 }) => {
   return (
     <View style={styles.container}>
       <View style={styles.user_container}>
         <View style={styles.avatar_container}>
-          <Image style={styles.avatar} source={userAvatarUrl} />
+          <Image
+            style={styles.avatar}
+            source={
+              userAvatarUrl ? {uri: `file://${userAvatarUrl}`} : userDefaultAva
+            }
+          />
         </View>
         <View>
           <Txt
@@ -55,13 +63,15 @@ export const GreetingUserAtom: React.FC<IProps> = ({
           onIconBtnPress={onSearchPress}
           size={24}
           color={primaryBlue}
-          aditionalStyles={{backgroundColor: secondaryBlue, borderRadius: 10}}
+          additionalStyles={{backgroundColor: secondaryBlue, borderRadius: 10}}
+          loading={loading}
         />
       ) : (
         <IconBtn
           iconName={IconBtnNamesEnum.Dots}
           onIconBtnPress={onDotsPress}
           size={16}
+          loading={loading}
         />
       )}
     </View>

@@ -1,1 +1,1 @@
-export * from './seaarch-subscribe-screen';
+export * from './search-subscribe-screen';

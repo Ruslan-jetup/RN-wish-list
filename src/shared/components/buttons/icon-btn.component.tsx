@@ -1,9 +1,13 @@
-import {StyleSheet, Pressable, StyleProp, ViewStyle} from 'react-native';
-
+import {
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+  ActivityIndicator,
+} from 'react-native';
 import {Icon} from '../icon.component';
-import { IconBtnNamesEnum } from 'typing';
-import { primaryBlack } from 'shared/conigs';
-
+import {IconBtnNamesEnum} from 'typing';
+import {primaryBlack} from 'shared/configs';
 
 interface IProps {
   onIconBtnPress: () => void;
@@ -12,7 +16,10 @@ interface IProps {
   width?: number;
   height?: number;
   color?: string;
-  aditionalStyles?: StyleProp<ViewStyle>;
+  additionalStyles?: StyleProp<ViewStyle>;
+  disabled?: boolean;
+  loading?: boolean;
+  loaderColor?: string;
 }
 
 export const IconBtn: React.FC<IProps> = ({
@@ -22,17 +29,28 @@ export const IconBtn: React.FC<IProps> = ({
   width = 36,
   height = 36,
   color = primaryBlack,
-  aditionalStyles,
+  additionalStyles,
+  disabled,
+  loading = false,
+  loaderColor = primaryBlack,
 }) => {
   return (
-    <Pressable
+    <TouchableOpacity
       style={[
         {...styles.button, width: width, height: height},
-        aditionalStyles,
+        additionalStyles,
       ]}
-      onPress={onIconBtnPress}>
-      <Icon name={iconName} size={size} color={color} />
-    </Pressable>
+      onPress={onIconBtnPress}
+      disabled={disabled}>
+      {loading ? (
+        <ActivityIndicator
+          size="small"
+          color={loaderColor}
+        />
+      ) : (
+        <Icon name={iconName} size={size} color={color} />
+      )}
+    </TouchableOpacity>
   );
 };
 

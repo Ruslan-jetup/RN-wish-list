@@ -1,11 +1,11 @@
 import {Text, TextStyle} from 'react-native';
-import { primaryBlack } from 'shared/conigs';
+import { primaryBlack } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 
 interface IProps {
   content?: string | number;
-  fontFamily: FontFamiliesEnum;
+  fontFamily?: FontFamiliesEnum;
   fontSize?: number;
   fontWeight?: FontWeightEnum;
   lineHeight?: number;

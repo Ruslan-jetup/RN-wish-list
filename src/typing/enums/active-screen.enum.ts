@@ -1,5 +1,5 @@
 export enum ActiveScreenEnum {
-  Home = 'h',
-  Profile = 'p',
-  Search = 's',
+  Home = 'home',
+  Profile = 'profile',
+  Search = 'search',
 }

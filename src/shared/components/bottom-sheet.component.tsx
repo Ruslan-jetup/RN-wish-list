@@ -1,20 +1,20 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {primaryBlack, secondaryWhite} from 'shared/conigs';
+import {primaryBlack, secondaryWhite} from 'shared/configs';
 
 interface IProps {
   refRBSheet: any;
   children: React.ReactNode;
   draggable?: boolean;
-  aditionalContainerStyles?: StyleProp<ViewStyle>;
+  additionalContainerStyles?: StyleProp<ViewStyle>;
 }
 
 export const BottomSheet: React.FC<IProps> = ({
   refRBSheet,
   children,
   draggable = false,
-  aditionalContainerStyles,
+  additionalContainerStyles,
 }) => {
   return (
     <View style={{flex: 1}}>
@@ -26,7 +26,7 @@ export const BottomSheet: React.FC<IProps> = ({
           wrapper: styles.wrapper,
           container: StyleSheet.flatten([
             styles.container,
-            aditionalContainerStyles,
+            additionalContainerStyles,
           ]),
           draggableIcon: styles.draggableIcon,
         }}

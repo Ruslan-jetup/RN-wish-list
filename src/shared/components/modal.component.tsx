@@ -5,7 +5,7 @@ import {
   primaryBlack,
   primaryBlue,
   primaryWhite,
-} from 'shared/conigs';
+} from 'shared/configs';
 import {FontFamiliesEnum, FontWeightEnum} from 'typing';
 
 interface ModalComponentProps {

@@ -1,7 +1,7 @@
 import {ImageSourcePropType} from 'react-native';
 import { ActiveScreenEnum } from 'typing';
 
-const userAva = require('../../assets/images/frame_4.png');
+export const userDefaultAva = require('../../assets/images/frame_4.png');
 
 interface IHomeScreenMock {
   userName: string;
@@ -14,7 +14,7 @@ interface IHomeScreenMock {
 
 export const homeScreenMock: IHomeScreenMock = {
   userName: 'Jennifer',
-  userAvatar: userAva,
+  userAvatar: userDefaultAva,
   headerTitle: 'Good morning',
   subscribers: 256,
   subscriptions: 78,

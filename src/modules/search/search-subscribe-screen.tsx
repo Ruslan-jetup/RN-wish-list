@@ -1,12 +1,10 @@
 import {StatusBar} from 'react-native';
 import _ from 'lodash';
-import { ITopTabItem } from 'typing';
-import { searchMockData, SubscribersTab, SubscriptionsTab } from 'mock';
-import { primaryWhite, TopTabs } from 'shared';
-import { ScreenLayout, SearchHeaderLayout } from 'shared/components/layouts';
-
-
-
+import {ITopTabItem} from 'typing';
+import {searchMockData, SubscribersTab, SubscriptionsTab} from 'mock';
+import {TopTabs} from 'shared';
+import {ScreenLayout, SearchHeaderLayout} from 'shared/components/layouts';
+import {primaryWhite} from 'shared/configs';
 
 export const SearchSubscribeScreen: React.FC = () => {
   const tabs: ITopTabItem[] = [

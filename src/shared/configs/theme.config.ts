@@ -5,8 +5,10 @@ const primaryBlack = '#0E101F';
 const primaryBlue = '#4E9FFF';
 const primaryGrey = '#E8EDF1';
 const secondaryGrey = '#CEDAE6';
-const darckGrey = '#514F50';
+const grey = '#C5C5C5';
+const darkGrey = '#514F50';
 const secondaryBlue = '#CEECFD';
+const errorsColor = '#cc0000';
 
 export {
   primaryBgColor,
@@ -16,6 +18,8 @@ export {
   secondaryWhite,
   primaryBlack,
   primaryGrey,
-  darckGrey,
+  darkGrey,
+  grey,
   secondaryGrey,
+  errorsColor,
 };

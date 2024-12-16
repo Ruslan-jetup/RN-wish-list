@@ -1,8 +1,8 @@
 import {View, StyleSheet, TextInput, ViewStyle} from 'react-native';
 import {StyleProp} from 'react-native';
-import { BaseButton, IconBtn } from 'shared/components/buttons';
-import { darckGrey, primaryBlue, primaryGrey, primaryWhite } from 'shared/conigs';
-import { BaseBtnTypeEnum, FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import {BaseButton, IconBtn} from 'shared/components/buttons';
+import {darkGrey, primaryBlue, primaryGrey, primaryWhite} from 'shared/configs';
+import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum} from 'typing';
 
 interface IProps {
   onSearchCancelPress: () => void;
@@ -11,7 +11,7 @@ interface IProps {
   onClearPress: () => void;
   value?: string;
   searchResult?: boolean;
-  auditionalStyles?: StyleProp<ViewStyle>;
+  additionalStyles?: StyleProp<ViewStyle>;
 }
 
 export const SearchHeaderLayout: React.FC<IProps> = ({
@@ -21,10 +21,10 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
   onClearPress,
   value,
   searchResult = false,
-  auditionalStyles,
+  additionalStyles,
 }) => {
   return (
-    <View style={[{...styles.container}, auditionalStyles]}>
+    <View style={[{...styles.container}, additionalStyles]}>
       <View style={styles.search_container}>
         <View style={styles.input_container}>
           <TextInput
@@ -32,7 +32,7 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
             value={value}
             style={styles.input}
             placeholder="Search"
-            placeholderTextColor={darckGrey}
+            placeholderTextColor={darkGrey}
           />
 
           {searchResult ? (
@@ -40,24 +40,29 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
               iconName={IconBtnNamesEnum.Close}
               onIconBtnPress={onClearPress}
               color={primaryBlue}
-              aditionalStyles={{position: 'absolute', right: 10, top: 7}}
+              additionalStyles={{position: 'absolute', right: 10, top: 7}}
             />
           ) : (
             <IconBtn
               iconName={IconBtnNamesEnum.Search}
               onIconBtnPress={onSearchPress}
               color={primaryBlue}
-              aditionalStyles={{position: 'absolute', right: 10, top: 7}}
+              additionalStyles={{position: 'absolute', right: 10, top: 7}}
             />
           )}
         </View>
 
         <BaseButton
+          mode="transparent"
+          size="small"
           title="Cancel"
-          onBaseBtnPrase={onSearchCancelPress}
-          aditionalBtnStyles={{width: 60, height: 50, justifyContent: 'center'}}
-          buttonType={BaseBtnTypeEnum.Text}
-          aditionalFontStyles={{color: primaryBlue}}
+          onPress={onSearchCancelPress}
+          additionalBtnStyles={{
+            width: 60,
+            height: 50,
+            justifyContent: 'center',
+          }}
+          additionalFontStyles={{color: primaryBlue}}
         />
       </View>
     </View>

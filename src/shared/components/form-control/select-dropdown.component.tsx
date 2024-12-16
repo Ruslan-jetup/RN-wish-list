@@ -1,9 +1,8 @@
 import {View, StyleSheet, Text, StyleProp, ViewStyle} from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import {Icon} from './icon.component';
-
-import {primaryBlack, primaryGrey, primaryWhite} from '../conigs';
-import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import {primaryBlack, primaryGrey, primaryWhite} from 'shared/configs';
+import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum} from 'typing';
+import {Icon} from '../icon.component';
 
 interface EmojiWithIcon {
   title: string;
@@ -43,11 +42,13 @@ export const DropdownSelect: React.FC<IProps> = ({
             <Text style={[{...styles.txt_style}, fontStyles]}>
               {(selectedItem && selectedItem.title) || selectTitle}
             </Text>
-            <Icon
-              name={isOpened ? iconOpen || '' : iconClose || ''}
-              size={iconSize}
-              color={iconColor}
-            />
+            {iconOpen && iconClose && (
+              <Icon
+                name={isOpened ? iconOpen : iconClose}
+                size={iconSize}
+                color={iconColor}
+              />
+            )}
           </View>
         );
       }}

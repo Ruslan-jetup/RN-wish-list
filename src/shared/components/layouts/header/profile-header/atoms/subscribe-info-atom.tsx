@@ -1,6 +1,6 @@
 import {StyleSheet, View} from 'react-native';
 import { Txt } from 'shared/components/typography';
-import { primaryBlack } from 'shared/conigs';
+import { primaryBlack } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface IProps {

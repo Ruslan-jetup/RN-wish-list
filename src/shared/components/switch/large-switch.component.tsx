@@ -1,7 +1,7 @@
 import {StyleProp, ViewStyle} from 'react-native';
 // @ts-ignore
 import SwitchSelector from 'react-native-switch-selector';
-import { primaryBlack, primaryBlue, secondaryBlue } from 'shared/conigs';
+import { primaryBlack, primaryBlue, secondaryBlue } from 'shared/configs';
 
 interface IProps {
   onPress: (val: string) => void;
@@ -12,7 +12,7 @@ interface IProps {
   textColor?: string;
   selectedColor?: string;
   buttonColor?: string;
-  auditionalStyles?: StyleProp<ViewStyle>;
+  additionalStyles?: StyleProp<ViewStyle>;
 }
 
 export const LargeSwitch: React.FC<IProps> = ({
@@ -24,7 +24,7 @@ export const LargeSwitch: React.FC<IProps> = ({
   textColor = primaryBlack,
   selectedColor = primaryBlue,
   buttonColor = secondaryBlue,
-  auditionalStyles,
+  additionalStyles,
 }) => {
   const switchOptions = (val: string[]) => {
     return val.map(item => ({
@@ -50,7 +50,7 @@ export const LargeSwitch: React.FC<IProps> = ({
         borderRadius: borderRadius,
       }}
       height={36}
-      style={auditionalStyles}
+      style={additionalStyles}
     />
   );
 };
