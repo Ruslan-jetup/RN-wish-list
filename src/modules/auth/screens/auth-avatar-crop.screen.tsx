@@ -1,6 +1,6 @@
-import {useEffect, useRef} from 'react';
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
-import {CropView} from 'react-native-image-crop-tools';
+import { useEffect, useRef } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { CropView } from 'react-native-image-crop-tools';
 import {
   BaseButton,
   primaryBlack,
@@ -8,17 +8,15 @@ import {
   ScreenLayout,
   useNav,
 } from 'shared';
-import {useAuthNavigationStore} from 'store';
-import {FontWeightEnum, RouteKey} from 'typing';
+import { useAuthNavigationStore } from 'store';
+import { FontWeightEnum, RouteKey } from 'typing';
 
 export const AuthAvatarCropScreen: React.FC = () => {
-  const {goBack, navigate} = useNav();
+  const { goBack, navigate } = useNav();
   const {
     selectedImg,
-
     authUserData,
     setAuthUserData,
-    setActiveModule,
   } = useAuthNavigationStore();
 
   const cropRef = useRef<any>(null);
@@ -31,19 +29,15 @@ export const AuthAvatarCropScreen: React.FC = () => {
     if (authUserData.userAvatarUri) {
       navigate(RouteKey.AuthPremium);
     }
-  }, [authUserData, setActiveModule, navigate]);
+  }, [authUserData]);
 
   const onCrop = (uri: string) => {
-    setAuthUserData({userAvatarUri: uri});
+    setAuthUserData({ userAvatarUri: uri });
   };
 
   const onDonePress = async () => {
     cropRef.current.saveImage(true, 90);
   };
-
-  if (!selectedImg) {
-    return <Text>Loading</Text>;
-  }
 
   return (
     <ScreenLayout background={primaryBlack}>
@@ -55,7 +49,7 @@ export const AuthAvatarCropScreen: React.FC = () => {
           ref={cropRef}
           onImageCrop={res => onCrop(res.uri)}
           keepAspectRatio
-          aspectRatio={{width: 1, height: 1}}
+          aspectRatio={{ width: 1, height: 1 }}
         />
 
         <View style={styles.buttons_container}>
@@ -64,7 +58,7 @@ export const AuthAvatarCropScreen: React.FC = () => {
             size="small"
             onPress={onCancelPress}
             title="Cancel"
-            additionalFontStyles={{color: primaryWhite}}
+            additionalFontStyles={{ color: primaryWhite }}
           />
 
           <BaseButton
@@ -72,7 +66,7 @@ export const AuthAvatarCropScreen: React.FC = () => {
             size="small"
             onPress={onDonePress}
             title="Done"
-            additionalFontStyles={{fontWeight: FontWeightEnum.SemiBold}}
+            additionalFontStyles={{ fontWeight: FontWeightEnum.SemiBold }}
           />
         </View>
       </View>

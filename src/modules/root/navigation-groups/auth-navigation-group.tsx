@@ -4,7 +4,6 @@ import {
   AuthAvatarCropScreen,
   AuthNicknameScreen,
   CreateAccountScreen,
-  LoadingScreen,
   PremiumScreen,
   ProfilePhotoScreen,
   WelcomeScreen,
@@ -17,13 +16,12 @@ const Stack = createNativeStackNavigator();
 export const AuthNavigationGroup = () => {
   return (
     <Stack.Navigator
-      initialRouteName={RouteKey.Loading}
+      initialRouteName={RouteKey.Welcome}
       screenOptions={{
         headerShown: false,
         animationTypeForReplace: 'push',
         animation: 'slide_from_right',
       }}>
-      <Stack.Screen name={RouteKey.Loading} component={LoadingScreen} />
       <Stack.Screen name={RouteKey.Welcome} component={WelcomeScreen} />
       <Stack.Screen
         name={RouteKey.CreateAccount}
@@ -32,12 +30,12 @@ export const AuthNavigationGroup = () => {
       <Stack.Screen
         name={RouteKey.AuthUserName}
         component={AuthNicknameScreen}
-        initialParams={{routeKey: RouteKey.AuthUserName}}
+        initialParams={{ routeKey: RouteKey.AuthUserName }}
       />
       <Stack.Screen
         name={RouteKey.AuthUserCountry}
         component={AuthCountryScreen}
-        initialParams={{routeKey: RouteKey.AuthUserCountry}}
+        initialParams={{ routeKey: RouteKey.AuthUserCountry }}
       />
       <Stack.Screen
         name={RouteKey.AuthUserPhoto}

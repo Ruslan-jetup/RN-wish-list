@@ -5,7 +5,7 @@ import {
   Dimensions,
   Text,
 } from 'react-native';
-import {BaseButton, ScreenLayout, Txt, useNav} from 'shared';
+import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
 import {
   FontFamiliesEnum,
   FontWeightEnum,
@@ -13,16 +13,14 @@ import {
   RouteKey,
 } from 'typing';
 import _ from 'lodash';
-import {primaryBlack, primaryWhite} from 'shared/configs';
+import { primaryBlack, primaryWhite } from 'shared/configs';
 
 const screenWidth = Dimensions.get('window').width;
 
 export const CreateAccountScreen: React.FC = () => {
-  const {navigate} = useNav();
+  const { navigate } = useNav();
   const onCreateAccountPress = () => {
-    navigate(RouteKey.AuthUserName, {
-      routeKey: RouteKey.AuthUserName,
-    });
+    navigate(RouteKey.AuthUserName);
   };
 
   const handleLinkPress = () => {
@@ -45,12 +43,12 @@ export const CreateAccountScreen: React.FC = () => {
             fontWeight={FontWeightEnum.Bold}
             fontSize={26}
             lineHeight={33}
-            style={{marginBottom: 10}}
+            style={{ marginBottom: 10 }}
           />
 
           <Txt
             content={'Or sign in to your account:'}
-            style={{marginBottom: 24}}
+            style={{ marginBottom: 24 }}
           />
         </View>
 
@@ -63,7 +61,7 @@ export const CreateAccountScreen: React.FC = () => {
             backgroundColor: primaryBlack,
             marginBottom: 24,
           }}
-          additionalFontStyles={{color: primaryWhite}}
+          additionalFontStyles={{ color: primaryWhite }}
           iconName={IconBtnNamesEnum.Apple}
         />
 

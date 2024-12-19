@@ -11,7 +11,7 @@ interface IProfilePhotoStore {
 }
 
 export const useAuthNavigationStore = create<IProfilePhotoStore>(set => ({
-  activeModule: NavigationModuleKey.Auth,
+  activeModule: NavigationModuleKey.Loading,
   selectedImg: '',
   authUserData: {
     userName: '',
