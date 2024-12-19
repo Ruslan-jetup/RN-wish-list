@@ -7,3 +7,5 @@ export const searchMockData: ISearchMockData = {
   subscribers: 256,
   subscriptions: 78,
 };
+
+

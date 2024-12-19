@@ -6,9 +6,9 @@ import {Txt} from 'shared/components/typography';
 
 interface IProps {
   title?: string;
-  showBackBtn: boolean;
+  showBackBtn?: boolean;
   onBackBtnPress?: () => void;
-  onRightBtnPress: () => void;
+  onRightBtnPress?: () => void;
   rightBtnTitle?: string;
   rightBtnIconName?: IconBtnNamesEnum;
   rightBtnAdditionalStyles?: StyleProp<ViewStyle>;
@@ -54,7 +54,7 @@ export const DefaultHeaderLayout: React.FC<IProps> = ({
           <BaseButton
             mode="transparent"
             size="small"
-            onPress={onRightBtnPress}
+            onPress={onRightBtnPress || _.noop}
             title={rightBtnTitle}
             additionalBtnStyles={rightBtnAdditionalStyles}
             additionalFontStyles={rightBtnAdditionalTextStyles}
@@ -64,7 +64,7 @@ export const DefaultHeaderLayout: React.FC<IProps> = ({
         {rightBtnIconName && (
           <IconBtn
             iconName={rightBtnIconName}
-            onIconBtnPress={onRightBtnPress}
+            onIconBtnPress={onRightBtnPress || _.noop}
             additionalStyles={rightBtnAdditionalStyles}
             disabled={rightBtnDisable}
           />

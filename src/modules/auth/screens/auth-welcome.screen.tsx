@@ -1,9 +1,28 @@
-import {StyleSheet, View, ImageBackground} from 'react-native';
-import {BaseButton, ScreenLayout, Txt, useNav} from 'shared';
-import {FontFamiliesEnum, FontWeightEnum, RouteKey} from 'typing';
+import { useEffect } from 'react';
+import { StyleSheet, View, ImageBackground } from 'react-native';
+import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
+import { useAuthNavigationStore } from 'store';
+import {
+  FontFamiliesEnum,
+  FontWeightEnum,
+  PremiumPeriodEnum,
+  RouteKey,
+} from 'typing';
 
 export const WelcomeScreen: React.FC = () => {
-  const {navigate} = useNav();
+  const { setSelectedImg, setAuthUserData } = useAuthNavigationStore();
+
+  useEffect(() => {
+    setSelectedImg('');
+    setAuthUserData({
+      userName: '',
+      userCountry: '',
+      userAvatarUri: '',
+      premiumPeriod: PremiumPeriodEnum.NoPremium,
+    });
+  }, []);
+
+  const { navigate } = useNav();
 
   const onGetStartedPress = () => {
     navigate(RouteKey.CreateAccount);

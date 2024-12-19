@@ -1,1 +1,1 @@
-export * from './search-subscribe-screen';
+export * from './screens';

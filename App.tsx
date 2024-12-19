@@ -1,4 +1,4 @@
-import {Navigation} from 'modules';
+import { Navigation } from 'modules';
 import React from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 

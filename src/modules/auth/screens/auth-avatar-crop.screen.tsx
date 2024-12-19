@@ -9,11 +9,10 @@ import {
   useNav,
 } from 'shared';
 import {useAuthNavigationStore} from 'store';
-import {FontWeightEnum, IUserAuth, NavigationModuleKey} from 'typing';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {FontWeightEnum, RouteKey} from 'typing';
 
-export const AuthFinishScreen: React.FC = () => {
-  const {goBack} = useNav();
+export const AuthAvatarCropScreen: React.FC = () => {
+  const {goBack, navigate} = useNav();
   const {
     selectedImg,
 
@@ -28,23 +27,11 @@ export const AuthFinishScreen: React.FC = () => {
     goBack();
   };
 
-  const storeData = async (authData: IUserAuth) => {
-    try {
-      if (authData.userAvatarUri) {
-        const jsonValue = JSON.stringify(authData);
-        await AsyncStorage.setItem('auth-user-data', jsonValue);
-      }
-    } catch (error) {
-      //
-    }
-  };
-
   useEffect(() => {
     if (authUserData.userAvatarUri) {
-      storeData(authUserData);
-      setActiveModule(NavigationModuleKey.Home);
+      navigate(RouteKey.AuthPremium);
     }
-  }, [authUserData, setActiveModule]);
+  }, [authUserData, setActiveModule, navigate]);
 
   const onCrop = (uri: string) => {
     setAuthUserData({userAvatarUri: uri});

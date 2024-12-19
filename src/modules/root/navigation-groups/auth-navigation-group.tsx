@@ -1,13 +1,15 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {
-  AuthFinishScreen,
+  AuthCountryScreen,
+  AuthAvatarCropScreen,
   AuthNicknameScreen,
   CreateAccountScreen,
   LoadingScreen,
+  PremiumScreen,
   ProfilePhotoScreen,
   WelcomeScreen,
 } from 'modules/auth';
-import {AuthCountryScreen} from 'modules/auth/screens/auth-country-screen';
+
 import {RouteKey} from 'typing';
 
 const Stack = createNativeStackNavigator();
@@ -41,7 +43,11 @@ export const AuthNavigationGroup = () => {
         name={RouteKey.AuthUserPhoto}
         component={ProfilePhotoScreen}
       />
-      <Stack.Screen name={RouteKey.AuthFinish} component={AuthFinishScreen} />
+      <Stack.Screen
+        name={RouteKey.AuthAvatarCrop}
+        component={AuthAvatarCropScreen}
+      />
+      <Stack.Screen name={RouteKey.AuthPremium} component={PremiumScreen} />
     </Stack.Navigator>
   );
 };

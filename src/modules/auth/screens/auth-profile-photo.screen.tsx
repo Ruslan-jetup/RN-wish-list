@@ -26,7 +26,7 @@ export const ProfilePhotoScreen: React.FC = () => {
 
     if (img?.assets?.[0]?.uri) {
       setSelectedImg(img.assets[0].uri);
-      navigate(RouteKey.AuthFinish);
+      navigate(RouteKey.AuthAvatarCrop);
     }
   };
 
@@ -41,7 +41,7 @@ export const ProfilePhotoScreen: React.FC = () => {
 
     if (img?.assets?.[0]?.uri) {
       setSelectedImg(img.assets[0].uri);
-      navigate(RouteKey.AuthFinish);
+      navigate(RouteKey.AuthAvatarCrop);
     }
   };
 
