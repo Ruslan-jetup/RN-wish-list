@@ -1,4 +1,4 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   AuthCountryScreen,
   AuthAvatarCropScreen,
@@ -9,7 +9,7 @@ import {
   WelcomeScreen,
 } from 'modules/auth';
 
-import {RouteKey} from 'typing';
+import { RouteKey } from 'typing';
 
 const Stack = createNativeStackNavigator();
 

@@ -1,17 +1,12 @@
 import React from 'react';
 import {
   FlatList,
-  Image,
   StyleSheet,
   View,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {secondaryGrey, Txt} from 'shared';
-
-export interface ICountry {
-  countryName: string;
-  flagUrl: string;
-}
+import { secondaryGrey, Txt } from 'shared';
+import { ICountry } from 'typing';
 
 interface IProps {
   countriesList: ICountry[];
@@ -22,24 +17,26 @@ export const CountriesListAtom: React.FC<IProps> = ({
   countriesList,
   onCountryItemPress,
 }) => {
-  const renderItem = ({item, index}: {item: ICountry; index: number}) => {
-    const isLastItem = index === countriesList.length - 1;
-    return (
-      <TouchableWithoutFeedback
-        key={item.countryName}
-        onPress={() => onCountryItemPress(item.countryName, item.flagUrl)}>
-        <View style={[styles.container, !isLastItem && styles.border_bottom]}>
-          <Image style={styles.image} source={{uri: item.flagUrl}} />
-          <Txt content={item.countryName} />
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  };
+const renderItem = ({ item, index }: { item: ICountry; index: number }) => {
+  const isLastItem = index === countriesList.length - 1;
+
+  return (
+    <TouchableWithoutFeedback
+      key={item.isoCode}
+      onPress={() => onCountryItemPress(item.name, item.flag)}>
+      <View style={[styles.container, !isLastItem && styles.border_bottom]}>
+        <Txt content={item.flag} />
+        <Txt content={item.name} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
 
   return (
     <FlatList
       data={countriesList}
-      keyExtractor={item => item.countryName}
+      keyExtractor={(item, index) => `${item.name}-${index}`}
       renderItem={renderItem}
     />
   );

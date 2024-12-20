@@ -1,4 +1,4 @@
-import {Image, StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import {
   BaseButton,
   grey,
@@ -6,8 +6,9 @@ import {
   primaryBlack,
   primaryBlue,
   TextField,
+  Txt,
 } from 'shared';
-import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum} from 'typing';
+import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   value: string;
@@ -33,7 +34,7 @@ export const UserCountryInputAtom: React.FC<IProps> = ({
     <View style={styles.container}>
       <View style={styles.input_container}>
         {flagUrl && !isInFocus && (
-          <Image source={{uri: flagUrl}} style={styles.flag_img} />
+          <Txt style={styles.flag_img} content={flagUrl} />
         )}
 
         <TextField
@@ -64,7 +65,7 @@ export const UserCountryInputAtom: React.FC<IProps> = ({
           mode="transparent"
           title="Cancel"
           onPress={onCancelPress}
-          additionalBtnStyles={{height: 30, margin: 0, alignSelf: 'center'}}
+          additionalBtnStyles={{ height: 30, margin: 0, alignSelf: 'center' }}
         />
       )}
     </View>

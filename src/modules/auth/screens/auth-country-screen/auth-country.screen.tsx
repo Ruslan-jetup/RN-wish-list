@@ -1,38 +1,51 @@
-import {StyleSheet, View} from 'react-native';
-import {BaseButton, IconBtn, ScreenLayout, Txt, useForm, useNav} from 'shared';
-import {FontWeightEnum, IconBtnNamesEnum, RouteKey} from 'typing';
-import {validateUserAuth} from '../../validations/auth.validator';
-import {CountriesListAtom, UserCountryInputAtom} from './atoms';
-import {countriesMock} from 'mock';
-import {useState} from 'react';
-import {useAuthNavigationStore} from 'store';
+import { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { validateUserAuth } from 'modules/auth/validations';
+import {
+  BaseButton,
+  IconBtn,
+  ScreenLayout,
+  Txt,
+  useForm,
+  useNav,
+} from 'shared';
+import { FontWeightEnum, IconBtnNamesEnum, ICountry, RouteKey } from 'typing';
+import { CountriesListAtom, UserCountryInputAtom } from './atoms';
+import { useAuthNavigationStore } from 'store';
+import CountryList from 'country-list-with-dial-code-and-flag';
 
 export const AuthCountryScreen: React.FC = () => {
   const [isInFocus, setInFocus] = useState<boolean>(false);
-  const [currentCountryFlagUrl, setCurrentCountryFlagUrl] =
-    useState<string>('');
-  const {navigate, goBack} = useNav();
-  const {setAuthUserData} = useAuthNavigationStore();
+  const [currentCountryFlag, setCurrentCountryFlag] = useState<string>('');
+  const [countriesList, setCountriesList] = useState<ICountry[]>([]);
 
-  const {values, setField, errors, onSubmit, setError} = useForm({}, data =>
+  const { navigate, goBack } = useNav();
+  const { setAuthUserData } = useAuthNavigationStore();
+
+  const { values, setField, errors, onSubmit, setError } = useForm({}, data =>
     validateUserAuth(data, 'userCountry'),
   );
 
+  useEffect(() => {
+    const countries = CountryList.getAll();
+    setCountriesList(countries);
+  }, []);
+
   const onNextPress = () => {
     onSubmit(() => {
-      const isCountryValid = countriesMock.some(
+      const isCountryValid = countriesList.some(
         country =>
-          country.countryName.toLocaleLowerCase() ===
+          country.name.toLocaleLowerCase() ===
           values.userCountry.toLocaleLowerCase(),
       );
 
       if (!values.userCountry) {
         return;
       } else if (!isCountryValid) {
-        setError('userCountry', 'Choose country from list');
+        setError('userCountry', 'Choose a country from the list');
         return;
       }
-      setAuthUserData({userCountry: values.userCountry});
+      setAuthUserData({ userCountry: values.userCountry });
       navigate(RouteKey.AuthUserPhoto);
     });
   };
@@ -41,8 +54,8 @@ export const AuthCountryScreen: React.FC = () => {
     setField('userCountry', val);
   };
 
-  const filteredCountries = countriesMock.filter(item =>
-    item.countryName?.toLowerCase().includes(values.userCountry?.toLowerCase()),
+  const filteredCountries = countriesList.filter(item =>
+    item.name?.toLowerCase().includes(values.userCountry?.toLowerCase()),
   );
 
   const onFocusInput = () => {
@@ -52,8 +65,8 @@ export const AuthCountryScreen: React.FC = () => {
     setInFocus(false);
   };
 
-  const onCountryItemPress = (countryName: string, flagUrl: string) => {
-    setCurrentCountryFlagUrl(flagUrl);
+  const onCountryItemPress = (countryName: string, flag: string) => {
+    setCurrentCountryFlag(flag);
     setField('userCountry', countryName);
     setInFocus(false);
   };
@@ -61,7 +74,7 @@ export const AuthCountryScreen: React.FC = () => {
   return (
     <ScreenLayout>
       <View style={styles.container}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <IconBtn
             iconName={IconBtnNamesEnum.Left}
             onIconBtnPress={() => goBack()}
@@ -83,7 +96,7 @@ export const AuthCountryScreen: React.FC = () => {
           <UserCountryInputAtom
             value={values?.userCountry}
             error={errors?.userCountry}
-            flagUrl={currentCountryFlagUrl}
+            flagUrl={currentCountryFlag}
             onCountryChange={onCountryChange}
             onCancelPress={() => setField('userCountry', '')}
             onFocusInput={onFocusInput}
@@ -93,7 +106,10 @@ export const AuthCountryScreen: React.FC = () => {
 
           {values.userCountry && isInFocus && (
             <CountriesListAtom
-              countriesList={filteredCountries}
+              countriesList={filteredCountries.map(country => ({
+                name: country.name,
+                flag: country.flag,
+              }))}
               onCountryItemPress={onCountryItemPress}
             />
           )}
