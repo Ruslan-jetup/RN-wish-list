@@ -15,9 +15,13 @@ import { grey, primaryBlack, primaryBlue } from 'shared/configs';
 
 interface IProps {
   props: BottomTabBarProps;
+  onAddBtnPress: () => void;
 }
 
-export const BottomTadBar: React.FC<IProps> = ({ props: { state, navigation } }) => {
+export const BottomTadBar: React.FC<IProps> = ({
+  props: { state, navigation },
+  onAddBtnPress,
+}) => {
   const [selectedTab, setSelectedTab] = useState(BottomTabsEnum.Home);
 
   const { width } = useWindowDimensions();
@@ -55,7 +59,7 @@ export const BottomTadBar: React.FC<IProps> = ({ props: { state, navigation } })
                 <TabAddBtnAtom
                   key={index}
                   iconColor={renderColor(route.name)}
-                  onPress={() => onTabPress(route.name)}
+                  onPress={onAddBtnPress}
                 />
               );
             }

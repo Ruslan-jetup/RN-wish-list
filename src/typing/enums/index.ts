@@ -6,3 +6,4 @@ export * from './navigation-module-key.enum';
 export * from './route-key.enum';
 export * from './premium-period.enum';
 export * from './bottom-tabs.enum';
+export * from './home-switch.enum';

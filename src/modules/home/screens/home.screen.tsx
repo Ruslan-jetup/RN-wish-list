@@ -1,30 +1,20 @@
-import {homeScreenMock} from 'mock';
-import {StatusBar} from 'react-native';
-import {ProfileHeaderLayout, ScreenLayout} from 'shared/components/layouts';
+import { homeScreenMock } from 'mock';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { ProfileHeaderLayout, ScreenLayout } from 'shared/components/layouts';
 import _ from 'lodash';
-import {primaryWhite} from 'shared/configs';
-import {useAuthNavigationStore} from 'store';
-import {BaseButton} from 'shared';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {NavigationModuleKey} from 'typing';
+import { primaryWhite } from 'shared/configs';
+import { useAuthNavigationStore } from 'store';
+import { LargeSwitch } from 'shared';
+import { HomeList, HomeWish } from '../components';
+import { useState } from 'react';
+import { HomeSwitchEnum } from 'typing';
 
 export const HomeScreen: React.FC = () => {
-  const {authUserData, setActiveModule, setAuthUserData, setSelectedImg} =
-    useAuthNavigationStore();
+  const [switchValue, setSwitchValue] = useState<string>(HomeSwitchEnum.Lists);
+  const { authUserData } = useAuthNavigationStore();
 
-  const onLogoutPress = async () => {
-    try {
-      setActiveModule(NavigationModuleKey.Auth);
-      setSelectedImg('');
-      setAuthUserData({
-        userName: '',
-        userCountry: '',
-        userAvatarUri: '',
-      });
-      await AsyncStorage.removeItem('auth-user-data');
-    } catch (error) {
-      //
-    }
+  const onSwitchToggle = (val: string) => {
+    setSwitchValue(val);
   };
 
   return (
@@ -42,13 +32,23 @@ export const HomeScreen: React.FC = () => {
         />
       }>
       <StatusBar barStyle="dark-content" backgroundColor={primaryWhite} />
-      <BaseButton
-        mode="transparent"
-        onPress={() => onLogoutPress()}
-        size="small"
-        title="Logout"
-        additionalBtnStyles={{alignSelf: 'flex-end', marginVertical: 20}}
-      />
+      <View style={styles.container}>
+        <LargeSwitch
+          onPress={onSwitchToggle}
+          additionalStyles={styles.switch}
+        />
+        {switchValue === HomeSwitchEnum.Lists ? <HomeList /> : <HomeWish />}
+      </View>
     </ScreenLayout>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 24,
+  },
+  switch: {
+    marginBottom: 16,
+  },
+});
