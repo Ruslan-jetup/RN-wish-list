@@ -3,12 +3,13 @@ import {
   createBottomTabNavigator,
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
-import { HomeScreen, SearchCommonScreen } from 'modules';
-import { BottomTabsEnum, ITopTabItem } from 'typing';
-import { TopTabContentItem } from '../top-tab-content-item.components';
+import { HomeScreen, SearchCommonScreen, SettingsScreen } from 'modules';
+import { ITopTabItem } from 'typing';
+import { TopTabContentItem } from 'shared/components/top-tabs';
 import { Txt } from 'shared/components/typography';
 import { searchMockData } from 'mock';
-import { BottomTadBar } from './bottom-tab-bar.atom';
+import { BottomTadBar } from '../bottom-tab-bar/bottom-tab-bar';
+import _ from 'lodash';
 
 const Tab = createBottomTabNavigator();
 
@@ -50,31 +51,30 @@ const wishTabs: ITopTabItem[] = [
   },
 ];
 
-export const BottomNavigator = () => {
+export const BottomTabNavigationGroup = () => {
   const renderCustomTabBar = (props: BottomTabBarProps) => (
-    <BottomTadBar props={props} />
+    <BottomTadBar props={props} onAddBtnPress={_.noop} />
   );
 
   return (
-    <>
-      <Tab.Navigator
-        tabBar={(props: BottomTabBarProps) => renderCustomTabBar(props)}
-        screenOptions={{
-          headerShown: false,
-          tabBarShowLabel: false,
-        }}>
-        <Tab.Screen name={BottomTabsEnum.Home} component={HomeScreen} />
-        <Tab.Screen
-          name={BottomTabsEnum.Friends}
-          children={() => <SearchCommonScreen tabs={friendsTabs} />}
-        />
-        <Tab.Screen name={BottomTabsEnum.Add} component={HomeScreen} />
-        <Tab.Screen
-          name={BottomTabsEnum.Search}
-          children={() => <SearchCommonScreen tabs={wishTabs} />}
-        />
-        <Tab.Screen name={BottomTabsEnum.Settings} component={HomeScreen} />
-      </Tab.Navigator>
-    </>
+    <Tab.Navigator
+      initialRouteName={'Home'}
+      tabBar={(props: BottomTabBarProps) => renderCustomTabBar(props)}
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+      }}>
+      <Tab.Screen name={'Home'} component={HomeScreen} />
+      <Tab.Screen
+        name={'Friends'}
+        children={() => <SearchCommonScreen tabs={friendsTabs} />}
+      />
+      <Tab.Screen name={'Add'} component={HomeScreen} />
+      <Tab.Screen
+        name={'Search'}
+        children={() => <SearchCommonScreen tabs={wishTabs} />}
+      />
+      <Tab.Screen name={'Settings'} component={SettingsScreen} />
+    </Tab.Navigator>
   );
 };

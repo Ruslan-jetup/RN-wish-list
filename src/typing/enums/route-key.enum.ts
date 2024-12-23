@@ -2,6 +2,9 @@ export enum RouteKey {
   Home = 'home',
 
   Loading = 'loading',
+
+  BottomTab = 'bottom-tab',
+
   Welcome = 'welcome',
   CreateAccount = 'create-account',
   AuthUserName = 'auth-user-name',

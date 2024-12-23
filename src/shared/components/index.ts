@@ -7,4 +7,4 @@ export * from './bottom-sheet.component';
 export * from './modal.component';
 export * from './context-menu.component';
 export * from './form-control';
-export * from './navigators';
+export * from './top-tabs';

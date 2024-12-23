@@ -51,12 +51,12 @@ export const PremiumScreen: React.FC = () => {
     authUserData.premiumPeriod === PremiumPeriodEnum.NoPremium &&
       storeData(authUserData);
 
-    setActiveModule(NavigationModuleKey.Home);
+    setActiveModule(NavigationModuleKey.App);
   };
 
   const onSubscribePress = () => {
     storeData(authUserData);
-    setActiveModule(NavigationModuleKey.Home);
+    setActiveModule(NavigationModuleKey.App);
   };
 
   const onPeriodPress = (period: PremiumPeriodEnum) => {

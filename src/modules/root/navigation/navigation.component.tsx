@@ -1,6 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { NavigationModuleKey } from 'typing';
-import { AuthNavigationGroup, HomeNavigationGroup } from '../navigation-groups';
+import { AuthNavigationGroup, AppNavigationGroup } from '../navigation-groups';
 import { navigationRef } from 'services';
 import { useAuthNavigationStore } from 'store';
 import { LoadingScreen } from '../screens';
@@ -18,7 +18,7 @@ export const Navigation: React.FC = () => {
   const modules = {
     [NavigationModuleKey.Loading]: <LoadingScreen />,
     [NavigationModuleKey.Auth]: <AuthNavigationGroup />,
-    [NavigationModuleKey.Home]: <HomeNavigationGroup />,
+    [NavigationModuleKey.App]: <AppNavigationGroup />,
   };
   return (
     <NavigationContainer ref={navigationRef}>

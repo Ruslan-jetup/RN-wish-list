@@ -12,7 +12,7 @@ export const useAuthNavigation = () => {
       const parsedValue = jsonValue ? JSON.parse(jsonValue) : null;
       if (parsedValue) {
         setAuthUserData(parsedValue);
-        setActiveModule(NavigationModuleKey.Home);
+        setActiveModule(NavigationModuleKey.App);
       } else {
         setActiveModule(NavigationModuleKey.Auth);
       }
