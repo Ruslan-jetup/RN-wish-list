@@ -14,6 +14,7 @@ interface IProps {
   rightBtnAdditionalStyles?: StyleProp<ViewStyle>;
   rightBtnAdditionalTextStyles?: TextStyle;
   rightBtnDisable?: boolean;
+  headerAdditionalStyles: StyleProp<ViewStyle>;
 }
 export const DefaultHeaderLayout: React.FC<IProps> = ({
   title,
@@ -25,11 +26,15 @@ export const DefaultHeaderLayout: React.FC<IProps> = ({
   rightBtnAdditionalStyles,
   rightBtnAdditionalTextStyles,
   rightBtnDisable = false,
+  headerAdditionalStyles,
 }) => {
   return (
-    <View style={styles.container}>
+    <View style={[{ ...styles.container }, headerAdditionalStyles]}>
       <View
-        style={{...styles.btn_container_common, ...styles.left_btn_container}}>
+        style={{
+          ...styles.btn_container_common,
+          ...styles.left_btn_container,
+        }}>
         {showBackBtn && (
           <IconBtn
             iconName={IconBtnNamesEnum.Left}
@@ -49,7 +54,10 @@ export const DefaultHeaderLayout: React.FC<IProps> = ({
       )}
 
       <View
-        style={{...styles.btn_container_common, ...styles.right_btn_container}}>
+        style={{
+          ...styles.btn_container_common,
+          ...styles.right_btn_container,
+        }}>
         {rightBtnTitle && (
           <BaseButton
             mode="transparent"

@@ -1,17 +1,24 @@
-import {ImageBackground, StyleSheet, View} from 'react-native';
-import {BaseButton, IconBtn, ScreenLayout, Txt, useNav} from 'shared';
-import {FontWeightEnum, IconBtnNamesEnum, RouteKey} from 'typing';
+import { ImageBackground, StyleSheet, View } from 'react-native';
+import {
+  BaseButton,
+  DefaultHeaderLayout,
+  primaryBlack,
+  ScreenLayout,
+  Txt,
+  useNav,
+} from 'shared';
+import { FontWeightEnum, RouteKey } from 'typing';
 import {
   CameraOptions,
   ImageLibraryOptions,
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import {useAuthNavigationStore} from 'store';
+import { useAuthNavigationStore } from 'store';
 
 export const ProfilePhotoScreen: React.FC = () => {
-  const {goBack, navigate} = useNav();
-  const {setSelectedImg} = useAuthNavigationStore();
+  const { goBack, navigate } = useNav();
+  const { setSelectedImg } = useAuthNavigationStore();
 
   const onBackPress = () => {
     goBack();
@@ -45,14 +52,21 @@ export const ProfilePhotoScreen: React.FC = () => {
     }
   };
 
+  const onSkipPress = () => {
+     navigate(RouteKey.AuthPremium);
+  };
+
   return (
     <ScreenLayout>
       <View style={styles.container}>
         <View>
-          <IconBtn
-            iconName={IconBtnNamesEnum.Left}
-            onIconBtnPress={onBackPress}
-            additionalStyles={styles.back_btn}
+          <DefaultHeaderLayout
+            onRightBtnPress={onSkipPress}
+            rightBtnTitle="Skip"
+            rightBtnAdditionalTextStyles={{color: primaryBlack}}
+            showBackBtn={true}
+            onBackBtnPress={onBackPress}
+            headerAdditionalStyles={styles.header}
           />
 
           <Txt
@@ -89,7 +103,10 @@ export const ProfilePhotoScreen: React.FC = () => {
             size="large"
             title={'Camera'}
             onPress={onCameraPress}
-            additionalBtnStyles={{backgroundColor: 'transparent', marginTop: 8}}
+            additionalBtnStyles={{
+              backgroundColor: 'transparent',
+              marginTop: 8,
+            }}
           />
         </View>
       </View>
@@ -103,7 +120,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: 34,
   },
-  back_btn: {
+  header: {
     marginTop: 8,
     marginBottom: 32,
   },
