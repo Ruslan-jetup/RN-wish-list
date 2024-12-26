@@ -1,1 +1,1 @@
-export * from './settings.screen';
+export * from './create-profile-screen';

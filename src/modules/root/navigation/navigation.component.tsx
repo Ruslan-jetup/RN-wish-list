@@ -2,13 +2,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { NavigationModuleKey } from 'typing';
 import { AuthNavigationGroup, AppNavigationGroup } from '../navigation-groups';
 import { navigationRef } from 'services';
-import { useAuthNavigationStore } from 'store';
+import { useNavigationStore } from 'store';
 import { LoadingScreen } from '../screens';
 import { useAuthNavigation } from 'shared';
 import { useEffect } from 'react';
 
 export const Navigation: React.FC = () => {
-  const { activeModule } = useAuthNavigationStore();
+  const { activeModule } = useNavigationStore();
   const { getUserAuthData } = useAuthNavigation();
 
   useEffect(() => {

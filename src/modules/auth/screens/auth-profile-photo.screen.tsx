@@ -14,11 +14,11 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import { useAuthNavigationStore } from 'store';
+import { useUserInfoStore } from 'store';
 
 export const ProfilePhotoScreen: React.FC = () => {
   const { goBack, navigate } = useNav();
-  const { setSelectedImg } = useAuthNavigationStore();
+  const { setSelectedImg } = useUserInfoStore();
 
   const onBackPress = () => {
     goBack();

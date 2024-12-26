@@ -14,7 +14,7 @@ interface IProps {
   rightBtnAdditionalStyles?: StyleProp<ViewStyle>;
   rightBtnAdditionalTextStyles?: TextStyle;
   rightBtnDisable?: boolean;
-  headerAdditionalStyles: StyleProp<ViewStyle>;
+  headerAdditionalStyles?: StyleProp<ViewStyle>;
 }
 export const DefaultHeaderLayout: React.FC<IProps> = ({
   title,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
-import { useAuthNavigationStore } from 'store';
+import { useUserInfoStore } from 'store';
 import {
   FontFamiliesEnum,
   FontWeightEnum,
@@ -10,12 +10,12 @@ import {
 } from 'typing';
 
 export const WelcomeScreen: React.FC = () => {
-  const { setSelectedImg, setAuthUserData } = useAuthNavigationStore();
+  const { setSelectedImg, setUserInfo } = useUserInfoStore();
 
   useEffect(() => {
     setSelectedImg('');
-    setAuthUserData({
-      userName: '',
+    setUserInfo({
+      userNickName: '',
       userCountry: '',
       userAvatarUri: '',
       premiumPeriod: PremiumPeriodEnum.NoPremium,

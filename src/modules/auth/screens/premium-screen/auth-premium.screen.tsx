@@ -10,63 +10,47 @@ import {
   DefaultHeaderLayout,
   primaryBlue,
   ScreenLayout,
+  storeDataHelper,
+  TopBgClouds,
   Txt,
 } from 'shared';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from 'react';
 import {
   FontFamiliesEnum,
   FontWeightEnum,
   IconBtnNamesEnum,
-  IUserAuth,
   NavigationModuleKey,
   PremiumPeriodEnum,
 } from 'typing';
-import { useAuthNavigationStore } from 'store';
+import { useNavigationStore, useUserInfoStore } from 'store';
 import _ from 'lodash';
 import { PremiumPeriodAtom } from './atoms';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const PremiumScreen: React.FC = () => {
-  const { setAuthUserData, setActiveModule, authUserData } =
-    useAuthNavigationStore();
+  const { setUserInfo, userInfo } = useUserInfoStore();
+    const { setActiveModule } = useNavigationStore();
 
-  const [selectedPeriod, setSelectedPeriod] = useState(
-    authUserData.premiumPeriod,
-  );
-
-  const insets = useSafeAreaInsets();
-
-  const storeData = async (authData: IUserAuth) => {
-    try {
-      const jsonValue = JSON.stringify(authData);
-      await AsyncStorage.setItem('auth-user-data', jsonValue);
-    } catch (error) {
-      //
-    }
-  };
+  const [selectedPeriod, setSelectedPeriod] = useState(userInfo.premiumPeriod);
 
   const onClosePress = () => {
-    setAuthUserData({ premiumPeriod: PremiumPeriodEnum.NoPremium });
-    authUserData.premiumPeriod === PremiumPeriodEnum.NoPremium &&
-      storeData(authUserData);
+    setUserInfo({ premiumPeriod: PremiumPeriodEnum.NoPremium });
+    userInfo.premiumPeriod === PremiumPeriodEnum.NoPremium &&
+      storeDataHelper(userInfo);
 
     setActiveModule(NavigationModuleKey.App);
   };
 
   const onSubscribePress = () => {
-    storeData(authUserData);
+    storeDataHelper(userInfo);
     setActiveModule(NavigationModuleKey.App);
   };
 
   const onPeriodPress = (period: PremiumPeriodEnum) => {
     const newPeriod =
-      authUserData.premiumPeriod === period
-        ? PremiumPeriodEnum.NoPremium
-        : period;
+      userInfo.premiumPeriod === period ? PremiumPeriodEnum.NoPremium : period;
 
-    setAuthUserData({
-      ...authUserData,
+    setUserInfo({
+      ...userInfo,
       premiumPeriod: newPeriod,
     });
     setSelectedPeriod(newPeriod);
@@ -86,21 +70,7 @@ export const PremiumScreen: React.FC = () => {
       <StatusBar backgroundColor={'transparent'} barStyle={'dark-content'} />
 
       <View style={styles.container}>
-        <ImageBackground
-          style={{
-            ...styles.left_cloud_bg,
-            top: -insets.top,
-          }}
-          source={require('../../../../../assets/images/frame_13.png')}
-        />
-
-        <ImageBackground
-          style={{
-            ...styles.right_cloud_bg,
-            top: -insets.top,
-          }}
-          source={require('../../../../../assets/images/frame_12.png')}
-        />
+        <TopBgClouds />
 
         <View>
           <DefaultHeaderLayout

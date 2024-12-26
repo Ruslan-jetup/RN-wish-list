@@ -11,7 +11,7 @@ import {
 } from 'shared';
 import { FontWeightEnum, IconBtnNamesEnum, ICountry, RouteKey } from 'typing';
 import { CountriesListAtom, UserCountryInputAtom } from './atoms';
-import { useAuthNavigationStore } from 'store';
+import { useUserInfoStore } from 'store';
 import CountryList from 'country-list-with-dial-code-and-flag';
 
 export const AuthCountryScreen: React.FC = () => {
@@ -20,7 +20,7 @@ export const AuthCountryScreen: React.FC = () => {
   const [countriesList, setCountriesList] = useState<ICountry[]>([]);
 
   const { navigate, goBack } = useNav();
-  const { setAuthUserData } = useAuthNavigationStore();
+  const { setUserInfo } = useUserInfoStore();
 
   const { values, setField, errors, onSubmit, setError } = useForm({}, data =>
     validateUserAuth(data, 'userCountry'),
@@ -45,7 +45,7 @@ export const AuthCountryScreen: React.FC = () => {
         setError('userCountry', 'Choose a country from the list');
         return;
       }
-      setAuthUserData({ userCountry: values.userCountry });
+      setUserInfo({ userCountry: values.userCountry });
       navigate(RouteKey.AuthUserPhoto);
     });
   };

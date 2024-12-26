@@ -3,7 +3,7 @@ import { StatusBar, StyleSheet, View } from 'react-native';
 import { ProfileHeaderLayout, ScreenLayout } from 'shared/components/layouts';
 import _ from 'lodash';
 import { primaryWhite } from 'shared/configs';
-import { useAuthNavigationStore } from 'store';
+import { useUserInfoStore } from 'store';
 import { LargeSwitch } from 'shared';
 import { HomeList, HomeWish } from '../components';
 import { useState } from 'react';
@@ -11,7 +11,7 @@ import { HomeSwitchEnum } from 'typing';
 
 export const HomeScreen: React.FC = () => {
   const [switchValue, setSwitchValue] = useState<string>(HomeSwitchEnum.Lists);
-  const { authUserData } = useAuthNavigationStore();
+  const { userInfo } = useUserInfoStore();
 
   const onSwitchToggle = (val: string) => {
     setSwitchValue(val);
@@ -22,8 +22,8 @@ export const HomeScreen: React.FC = () => {
       headerComponent={
         <ProfileHeaderLayout
           title={homeScreenMock.headerTitle}
-          userName={authUserData.userName}
-          userAvatarUrl={authUserData.userAvatarUri}
+          userName={userInfo.userNickName}
+          userAvatarUrl={userInfo.userAvatarUri}
           onSearchPress={_.noop}
           subscribers={homeScreenMock.subscribers}
           subscriptions={homeScreenMock.subscriptions}

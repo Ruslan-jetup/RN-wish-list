@@ -1,6 +1,6 @@
 import {Switch} from 'react-native-switch';
 import { StyleProp, ViewStyle } from 'react-native';
-import { primaryBlue, secondaryBlue, secondaryGrey } from 'shared/configs';
+import { grey, primaryBlue, secondaryGrey } from 'shared/configs';
 
 interface IProps {
   backgroundActive?: string;
@@ -14,7 +14,7 @@ export const SmallSwitch: React.FC<IProps> = ({
   value,
   onSwitchChange,
   backgroundActive = primaryBlue,
-  backgroundInactive = secondaryBlue,
+  backgroundInactive = grey,
   disabled = false,
   additionalStyles,
 }) => {

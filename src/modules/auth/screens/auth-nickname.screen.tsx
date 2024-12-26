@@ -1,13 +1,28 @@
-import {StyleSheet, View} from 'react-native';
-import {BaseButton, grey, IconBtn, primaryBlack, ScreenLayout, TextField, Txt, useForm, useNav} from 'shared';
-import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum, RouteKey} from 'typing';
-import {validateUserAuth} from '../validations/auth.validator';
-import {useAuthNavigationStore} from 'store';
+import { StyleSheet, View } from 'react-native';
+import {
+  BaseButton,
+  grey,
+  IconBtn,
+  primaryBlack,
+  ScreenLayout,
+  TextField,
+  Txt,
+  useForm,
+  useNav,
+} from 'shared';
+import {
+  FontFamiliesEnum,
+  FontWeightEnum,
+  IconBtnNamesEnum,
+  RouteKey,
+} from 'typing';
+import { validateUserAuth } from '../validations/auth.validator';
+import { useUserInfoStore } from 'store';
 
 export const AuthNicknameScreen = () => {
-  const {setAuthUserData} = useAuthNavigationStore();
-  const {navigate, goBack} = useNav();
-  const {values, onSubmit, errors, setField} = useForm({}, data =>
+  const { setUserInfo } = useUserInfoStore();
+  const { navigate, goBack } = useNav();
+  const { values, onSubmit, errors, setField } = useForm({}, data =>
     validateUserAuth(data, 'userName'),
   );
   const onNextPress = () => {
@@ -15,7 +30,7 @@ export const AuthNicknameScreen = () => {
       if (!values.userName) {
         return;
       }
-      setAuthUserData({userName: values.userName});
+      setUserInfo({ userNickName: values.userName });
       navigate(RouteKey.AuthUserCountry);
     });
   };
@@ -23,7 +38,7 @@ export const AuthNicknameScreen = () => {
   return (
     <ScreenLayout>
       <View style={styles.container}>
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <IconBtn
             iconName={IconBtnNamesEnum.Left}
             onIconBtnPress={() => goBack()}

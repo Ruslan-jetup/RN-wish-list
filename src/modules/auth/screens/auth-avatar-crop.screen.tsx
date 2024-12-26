@@ -8,16 +8,12 @@ import {
   ScreenLayout,
   useNav,
 } from 'shared';
-import { useAuthNavigationStore } from 'store';
+import { useUserInfoStore } from 'store';
 import { FontWeightEnum, RouteKey } from 'typing';
 
 export const AuthAvatarCropScreen: React.FC = () => {
   const { goBack, navigate } = useNav();
-  const {
-    selectedImg,
-    authUserData,
-    setAuthUserData,
-  } = useAuthNavigationStore();
+  const { selectedImg, userInfo, setUserInfo } = useUserInfoStore();
 
   const cropRef = useRef<any>(null);
 
@@ -26,13 +22,13 @@ export const AuthAvatarCropScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    if (authUserData.userAvatarUri) {
+    if (userInfo.userAvatarUri) {
       navigate(RouteKey.AuthPremium);
     }
-  }, [authUserData]);
+  }, [userInfo]);
 
   const onCrop = (uri: string) => {
-    setAuthUserData({ userAvatarUri: uri });
+    setUserInfo({ userAvatarUri: uri });
   };
 
   const onDonePress = async () => {

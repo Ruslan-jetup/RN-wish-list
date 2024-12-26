@@ -1,17 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useCallback } from 'react';
 import { NavigationModuleKey } from 'typing';
-import { useAuthNavigationStore } from 'store';
+import { useNavigationStore, useUserInfoStore } from 'store';
 
 export const useAuthNavigation = () => {
-  const { setAuthUserData, setActiveModule } = useAuthNavigationStore();
+  const {  setActiveModule } = useNavigationStore();
+  const { setUserInfo } = useUserInfoStore();
 
   const getUserAuthData = useCallback(async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('auth-user-data');
       const parsedValue = jsonValue ? JSON.parse(jsonValue) : null;
       if (parsedValue) {
-        setAuthUserData(parsedValue);
+        setUserInfo(parsedValue);
         setActiveModule(NavigationModuleKey.App);
       } else {
         setActiveModule(NavigationModuleKey.Auth);
@@ -19,7 +20,7 @@ export const useAuthNavigation = () => {
     } catch (error) {
       //
     }
-  }, [setActiveModule, setAuthUserData]);
+  }, [setActiveModule, setUserInfo]);
 
   return {
     getUserAuthData,

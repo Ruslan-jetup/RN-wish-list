@@ -1,5 +1,5 @@
 import React from 'react';
-import {Modal, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Modal, StyleSheet, Text, View, TouchableOpacity, StatusBar} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {
   primaryBlack,
@@ -25,6 +25,9 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
 }) => {
   return (
     <SafeAreaProvider>
+      {isVisible && (
+        <StatusBar barStyle="light-content" backgroundColor="#00000080" />
+      )}
       <SafeAreaView style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -36,7 +39,6 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
               <View style={styles.modalView}>
                 <Text style={styles.modalText}>{content}</Text>
 
-                {/* Conditionally render Cancel and Confirm buttons */}
                 <View style={styles.buttonContainer}>
                   {onCancel && (
                     <TouchableOpacity

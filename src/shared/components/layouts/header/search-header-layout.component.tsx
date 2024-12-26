@@ -58,7 +58,6 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
           title="Cancel"
           onPress={onSearchCancelPress}
           additionalBtnStyles={{
-            width: 60,
             height: 50,
             justifyContent: 'center',
           }}
