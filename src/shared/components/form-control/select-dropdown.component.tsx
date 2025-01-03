@@ -1,35 +1,45 @@
+import React from 'react';
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { primaryBlack, primaryGrey, primaryWhite } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
 import { Icon } from '../icon.component';
 import { useState, useEffect } from 'react';
+import { Txt } from '../typography';
 
 interface ISelectedItem {
   title: string;
-  icon?: IconBtnNamesEnum;
+  icon?: string;
 }
 
 interface IProps {
   selectTitle: string | undefined;
   selectItems: ISelectedItem[];
+  itemIconType?: 'emoji' | 'image';
   containerStyles?: StyleProp<ViewStyle>;
   fontStyles?: StyleProp<ViewStyle>;
+  openMenuStyles?: StyleProp<ViewStyle>;
   iconColor?: string;
   iconSize?: number;
   showSearch?: boolean;
   onSelectItem: (Item: any) => void;
+  defaultValue?: string;
+  iconCloseDirection?: 'right' | 'down';
 }
 
 export const DropdownSelect: React.FC<IProps> = ({
   selectTitle,
   selectItems,
+  itemIconType,
   containerStyles,
   fontStyles,
+  openMenuStyles,
   iconColor = primaryBlack,
   iconSize = 24,
   showSearch = false,
   onSelectItem,
+  defaultValue,
+  iconCloseDirection = 'down',
 }) => {
   const [filteredItems, setFilteredItems] =
     useState<ISelectedItem[]>(selectItems);
@@ -49,8 +59,14 @@ export const DropdownSelect: React.FC<IProps> = ({
     }
   };
 
+  const iconDirectionConfig = {
+    right: '0deg',
+    down: '90deg',
+  };
+
   return (
     <SelectDropdown
+      defaultValue={defaultValue}
       data={filteredItems}
       onSelect={selectedItem => {
         onSelectItem(selectedItem);
@@ -70,16 +86,32 @@ export const DropdownSelect: React.FC<IProps> = ({
         return (
           <View style={[{ ...styles.dropdownButtonStyle }, containerStyles]}>
             <Text style={[{ ...styles.txt_style }, fontStyles]}>
-              {(selectedItem && selectedItem.title) || selectTitle}
+              {selectedItem && selectedItem.icon ? (
+                <>
+                  <Text style={[{ ...styles.txt_style }, fontStyles]}>
+                    {selectedItem && selectedItem.icon ? (
+                      <>{`${selectedItem.icon + '  '} ${selectedItem.title}`}</>
+                    ) : (
+                      selectTitle
+                    )}
+                  </Text>
+                </>
+              ) : (
+                selectTitle
+              )}
             </Text>
-            {IconBtnNamesEnum.Left && IconBtnNamesEnum.Right && (
+            {IconBtnNamesEnum.Right && (
               <Icon
-                name={isOpened ? IconBtnNamesEnum.Left : IconBtnNamesEnum.Right}
+                name={IconBtnNamesEnum.Right}
                 size={iconSize}
                 color={iconColor}
-                additionalStyle={
-                  isOpened ? { transform: [{ rotate: '-90deg' }] } : {}
-                }
+                additionalStyle={{
+                  transform: `rotate(${
+                    isOpened
+                      ? '-90deg'
+                      : iconDirectionConfig[iconCloseDirection]
+                  })`,
+                }}
               />
             )}
           </View>
@@ -92,17 +124,23 @@ export const DropdownSelect: React.FC<IProps> = ({
               ...styles.dropdownItemStyle,
               ...(isSelected && { backgroundColor: primaryGrey }),
             }}>
+            {item.icon &&
+              (itemIconType === 'image' ? (
+                <Icon name={item.icon} size={iconSize} color={iconColor} />
+              ) : (
+                <Txt content={item.icon} />
+              ))}
             <Text style={[{ ...styles.txt_style }, fontStyles]}>
               {item.title}
             </Text>
-            {item.icon && (
-              <Icon name={item.icon} size={iconSize} color={iconColor} />
-            )}
           </View>
         );
       }}
       showsVerticalScrollIndicator={false}
-      dropdownStyle={styles.dropdownMenuStyle}
+      dropdownStyle={{
+        ...styles.dropdownMenuStyle,
+        ...(openMenuStyles ? StyleSheet.flatten(openMenuStyles) : {}),
+      }}
     />
   );
 };
@@ -115,7 +153,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 50,
     paddingHorizontal: 16,
-    marginBottom: 24,
     backgroundColor: primaryWhite,
     borderRadius: 10,
   },
@@ -133,9 +170,10 @@ const styles = StyleSheet.create({
   dropdownItemStyle: {
     width: '100%',
     flexDirection: 'row',
-    paddingHorizontal: 12,
     justifyContent: 'space-between',
     alignItems: 'center',
+    gap: 12,
     paddingVertical: 8,
+    paddingHorizontal: 12,
   },
 });

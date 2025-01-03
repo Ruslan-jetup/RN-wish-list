@@ -10,7 +10,6 @@ import {
   DefaultHeaderLayout,
   primaryBlue,
   ScreenLayout,
-  storeDataHelper,
   TopBgClouds,
   Txt,
 } from 'shared';
@@ -25,23 +24,25 @@ import {
 import { useNavigationStore, useUserInfoStore } from 'store';
 import _ from 'lodash';
 import { PremiumPeriodAtom } from './atoms';
+import { useProfileActions } from 'modules/account';
 
 export const PremiumScreen: React.FC = () => {
   const { setUserInfo, userInfo } = useUserInfoStore();
-    const { setActiveModule } = useNavigationStore();
+  const { setActiveModule } = useNavigationStore();
+  const { storeUserData } = useProfileActions();
 
   const [selectedPeriod, setSelectedPeriod] = useState(userInfo.premiumPeriod);
 
   const onClosePress = () => {
     setUserInfo({ premiumPeriod: PremiumPeriodEnum.NoPremium });
     userInfo.premiumPeriod === PremiumPeriodEnum.NoPremium &&
-      storeDataHelper(userInfo);
+      storeUserData(userInfo);
 
     setActiveModule(NavigationModuleKey.App);
   };
 
   const onSubscribePress = () => {
-    storeDataHelper(userInfo);
+    storeUserData(userInfo);
     setActiveModule(NavigationModuleKey.App);
   };
 

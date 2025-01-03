@@ -30,7 +30,7 @@ export const AuthNicknameScreen = () => {
       if (!values.userName) {
         return;
       }
-      setUserInfo({ userNickName: values.userName });
+      setUserInfo({ nickName: values.userName });
       navigate(RouteKey.AuthUserCountry);
     });
   };
@@ -63,7 +63,7 @@ export const AuthNicknameScreen = () => {
             onChange={(value: string) => setField('userName', value)}
             placeholder={'Name'}
             placeholderTextColor={grey}
-            style={styles.input}
+            inputStyle={styles.input}
           />
         </View>
 

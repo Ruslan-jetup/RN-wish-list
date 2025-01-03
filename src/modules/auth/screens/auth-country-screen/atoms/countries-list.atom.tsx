@@ -22,7 +22,7 @@ const renderItem = ({ item, index }: { item: ICountry; index: number }) => {
 
   return (
     <TouchableWithoutFeedback
-      key={item.isoCode}
+      key={item.dialCode}
       onPress={() => onCountryItemPress(item.name, item.flag)}>
       <View style={[styles.container, !isLastItem && styles.border_bottom]}>
         <Txt content={item.flag} />

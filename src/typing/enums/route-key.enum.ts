@@ -12,4 +12,7 @@ export enum RouteKey {
   AuthUserPhoto = 'auth-user-photo',
   AuthAvatarCrop = 'auth-avatar-crop',
   AuthPremium = 'auth-premium',
+
+  CreateProfile = 'create-profile',
+  EditProfile = 'edit-profile',
 }

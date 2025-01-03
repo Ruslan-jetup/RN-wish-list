@@ -9,16 +9,16 @@ import {
   useForm,
   useNav,
 } from 'shared';
-import { FontWeightEnum, IconBtnNamesEnum, ICountry, RouteKey } from 'typing';
+import { FontWeightEnum, IconBtnNamesEnum, RouteKey } from 'typing';
 import { CountriesListAtom, UserCountryInputAtom } from './atoms';
-import { useUserInfoStore } from 'store';
+import { useGlobalStore, useUserInfoStore } from 'store';
 import CountryList from 'country-list-with-dial-code-and-flag';
 
 export const AuthCountryScreen: React.FC = () => {
   const [isInFocus, setInFocus] = useState<boolean>(false);
   const [currentCountryFlag, setCurrentCountryFlag] = useState<string>('');
-  const [countriesList, setCountriesList] = useState<ICountry[]>([]);
 
+  const { countriesList, setCountriesList } = useGlobalStore();
   const { navigate, goBack } = useNav();
   const { setUserInfo } = useUserInfoStore();
 
@@ -109,6 +109,7 @@ export const AuthCountryScreen: React.FC = () => {
               countriesList={filteredCountries.map(country => ({
                 name: country.name,
                 flag: country.flag,
+                dialCode: country.dialCode,
               }))}
               onCountryItemPress={onCountryItemPress}
             />

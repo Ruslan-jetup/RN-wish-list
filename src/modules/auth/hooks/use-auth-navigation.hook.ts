@@ -4,14 +4,14 @@ import { NavigationModuleKey } from 'typing';
 import { useNavigationStore, useUserInfoStore } from 'store';
 
 export const useAuthNavigation = () => {
-  const {  setActiveModule } = useNavigationStore();
+  const { setActiveModule } = useNavigationStore();
   const { setUserInfo } = useUserInfoStore();
 
-  const getUserAuthData = useCallback(async () => {
+  const getUserData = useCallback(async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('auth-user-data');
+      const jsonValue = await AsyncStorage.getItem('user-data');
       const parsedValue = jsonValue ? JSON.parse(jsonValue) : null;
-      if (parsedValue) {
+      if (parsedValue.nickName) {
         setUserInfo(parsedValue);
         setActiveModule(NavigationModuleKey.App);
       } else {
@@ -20,9 +20,9 @@ export const useAuthNavigation = () => {
     } catch (error) {
       //
     }
-  }, [setActiveModule, setUserInfo]);
+  }, [setUserInfo]);
 
   return {
-    getUserAuthData,
+    getUserData,
   };
 };

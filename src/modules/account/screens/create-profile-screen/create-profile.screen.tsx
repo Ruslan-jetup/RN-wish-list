@@ -1,40 +1,50 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { useNavigationStore, useUserInfoStore } from 'store';
+import { useGlobalStore, useUserInfoStore } from 'store';
 import {
   DropdownSelect,
   ModalComponent,
   ScreenLayout,
   TopBgClouds,
   Txt,
-  storeDataHelper,
-  useResetUserStore,
+  useNav,
 } from 'shared';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {
-  IconBtnNamesEnum,
-  NavigationModuleKey,
-  PremiumPeriodEnum,
-} from 'typing';
+import { IUserInfo, PremiumPeriodEnum, RouteKey } from 'typing';
 import { ScrollView } from 'react-native';
 import { LegalInfoAtom, NotificationAtom, UserInfoAtom } from './atoms';
+import { ResetButtons } from 'modules/account/components';
+import { useProfileActions } from 'modules/account/hooks';
 import CountryList from 'country-list-with-dial-code-and-flag';
-import { ResetButtons } from 'modules/settings/components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface ICountries {
-  title: string;
-  icon?: IconBtnNamesEnum;
-}
+const updateAsyncStorage = async (key: keyof IUserInfo, value: any) => {
+  try {
+    const existingData = await AsyncStorage.getItem('user-data');
+    const parsedData = existingData ? JSON.parse(existingData) : {};
+    const updatedData = { ...parsedData, [key]: value };
+    await AsyncStorage.setItem('user-data', JSON.stringify(updatedData));
+  } catch (error) {
+    console.error('Failed to update AsyncStorage:', error);
+  }
+};
 
 export const CreateProfileScreen = () => {
-  const [countries, setCountries] = useState<ICountries[]>([]);
-  const [isModalVisible, setModalVisible] = useState(false);
-  const [actionType, setActionType] = useState<'logout' | 'delete'>();
-
-  const { setActiveModule } = useNavigationStore();
   const { setUserInfo, userInfo } = useUserInfoStore();
+  const { navigate } = useNav();
+  const {
+    showModal,
+    isModalVisible,
+    setModalVisible,
+    onConfirmModal,
+    actionType,
+  } = useProfileActions();
 
-  const { resetUserStore } = useResetUserStore();
+  const { countriesList, setCountriesList } = useGlobalStore();
+
+  useEffect(() => {
+    const countries = CountryList.getAll();
+    setCountriesList(countries);
+  }, []);
 
   const premiumTitleConfig = {
     [PremiumPeriodEnum.NoPremium]: 'Upgrade to premium',
@@ -42,73 +52,36 @@ export const CreateProfileScreen = () => {
     [PremiumPeriodEnum.Year]: 'One year',
   };
 
-  useEffect(() => {
-    const countriesData = CountryList.getAll();
-
-    const listCountries = countriesData.map(item => ({
-      title: item.name,
-    }));
-
-    setCountries(listCountries);
-  }, []);
-
-  useEffect(() => {
-    storeDataHelper(userInfo);
-  }, [userInfo]);
-
-  const handleLogout = async () => {
-    try {
-      resetUserStore();
-      setUserInfo({
-        userNickName: '',
-        userCountry: '',
-        userAvatarUri: '',
-      });
-      await AsyncStorage.removeItem('auth-user-data');
-      setActiveModule(NavigationModuleKey.Auth);
-    } catch (error) {
-      //
-    }
+  const onEditPress = () => {
+    navigate(RouteKey.EditProfile);
   };
 
-  const handleDeleteEntry = async () => {
-    resetUserStore();
-    storeDataHelper(userInfo);
+  const onNotificationChange = async () => {
+    const newValue = !userInfo.notification;
+    setUserInfo({ notification: newValue });
+    await updateAsyncStorage('notification', newValue);
   };
 
-  const onEditPress = () => {};
-
-  const onNotificationChange = () => {
-    setUserInfo({ notification: !userInfo.notification });
-  };
-
-  const onSelectPremium = (val: { title: string }) => {
+  const onSelectPremium = async (val: { title: string }) => {
+    let newPremiumPeriod = PremiumPeriodEnum.NoPremium;
     if (val.title === 'One month') {
-      setUserInfo({ premiumPeriod: PremiumPeriodEnum.Month });
+      newPremiumPeriod = PremiumPeriodEnum.Month;
     } else if (val.title === 'One year') {
-      setUserInfo({ premiumPeriod: PremiumPeriodEnum.Year });
-    } else {
-      setUserInfo({ premiumPeriod: PremiumPeriodEnum.NoPremium });
+      newPremiumPeriod = PremiumPeriodEnum.Year;
     }
+    setUserInfo({ premiumPeriod: newPremiumPeriod });
+    await updateAsyncStorage('premiumPeriod', newPremiumPeriod);
   };
 
-  const onSelectCountry = (val: any) => {
-    setUserInfo({ userCountry: val.title });
+  const onSelectCountry = async (val: any) => {
+    const newCountry = val.title;
+    setUserInfo({ userCountry: newCountry });
+    await updateAsyncStorage('userCountry', newCountry);
   };
 
-  const showModal = (type: 'logout' | 'delete') => {
-    setActionType(type);
-    setModalVisible(true);
-  };
-
-  const handleConfirm = () => {
-    setModalVisible(false);
-    if (actionType === 'logout') {
-      handleLogout();
-    } else if (actionType === 'delete') {
-      handleDeleteEntry();
-    }
-  };
+  const transformedCountriesList = countriesList.map(country => ({
+    title: country.name,
+  }));
 
   return (
     <ScreenLayout viewStyle={styles.container}>
@@ -117,7 +90,7 @@ export const CreateProfileScreen = () => {
       <UserInfoAtom
         avatarUrl={userInfo.userAvatarUri}
         email={userInfo.email}
-        name={userInfo.userNickName}
+        name={userInfo.nickName}
         onEditPress={onEditPress}
       />
 
@@ -134,6 +107,8 @@ export const CreateProfileScreen = () => {
             { title: premiumTitleConfig[PremiumPeriodEnum.Year] },
           ]}
           onSelectItem={onSelectPremium}
+          iconCloseDirection="right"
+          containerStyles={{ marginBottom: 24 }}
         />
 
         <Txt content={'Notification'} style={styles.label} />
@@ -145,9 +120,11 @@ export const CreateProfileScreen = () => {
         <Txt content={'Location'} style={styles.label} />
         <DropdownSelect
           selectTitle={userInfo.userCountry ? userInfo.userCountry : 'Location'}
-          selectItems={countries}
+          selectItems={transformedCountriesList}
           showSearch={true}
           onSelectItem={onSelectCountry}
+          iconCloseDirection="right"
+          containerStyles={{ marginBottom: 24 }}
         />
 
         <Txt content={'Legal information'} style={styles.label} />
@@ -167,7 +144,7 @@ export const CreateProfileScreen = () => {
             : 'Are you sure you want to delete this entry?'
         }
         onClose={() => setModalVisible(false)}
-        onConfirm={handleConfirm}
+        onConfirm={onConfirmModal}
         onCancel={() => setModalVisible(false)}
       />
     </ScreenLayout>
@@ -177,10 +154,6 @@ export const CreateProfileScreen = () => {
 const styles = StyleSheet.create({
   container: {
     paddingBottom: 142,
-  },
-  buttons_container: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   label: {
     marginBottom: 8,

@@ -1,12 +1,15 @@
 import React from 'react';
-import {Modal, StyleSheet, Text, View, TouchableOpacity, StatusBar} from 'react-native';
-import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import {
-  primaryBlack,
-  primaryBlue,
-  primaryWhite,
-} from 'shared/configs';
-import {FontFamiliesEnum, FontWeightEnum} from 'typing';
+  Modal,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  StatusBar,
+} from 'react-native';
+import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
+import { primaryBlack, primaryBlue, primaryWhite } from 'shared/configs';
+import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface ModalComponentProps {
   isVisible: boolean;
@@ -24,7 +27,7 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
   onCancel,
 }) => {
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={styles.container}>
       {isVisible && (
         <StatusBar barStyle="light-content" backgroundColor="#00000080" />
       )}
@@ -65,6 +68,9 @@ export const ModalComponent: React.FC<ModalComponentProps> = ({
 };
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'absolute',
+  },
   centeredView: {
     flex: 1,
     justifyContent: 'center',
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,

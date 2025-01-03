@@ -15,7 +15,7 @@ export const WelcomeScreen: React.FC = () => {
   useEffect(() => {
     setSelectedImg('');
     setUserInfo({
-      userNickName: '',
+      nickName: '',
       userCountry: '',
       userAvatarUri: '',
       premiumPeriod: PremiumPeriodEnum.NoPremium,

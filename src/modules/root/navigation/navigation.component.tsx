@@ -4,15 +4,15 @@ import { AuthNavigationGroup, AppNavigationGroup } from '../navigation-groups';
 import { navigationRef } from 'services';
 import { useNavigationStore } from 'store';
 import { LoadingScreen } from '../screens';
-import { useAuthNavigation } from 'shared';
 import { useEffect } from 'react';
+import { useAuthNavigation } from 'modules/auth';
 
 export const Navigation: React.FC = () => {
   const { activeModule } = useNavigationStore();
-  const { getUserAuthData } = useAuthNavigation();
+  const { getUserData } = useAuthNavigation();
 
   useEffect(() => {
-    getUserAuthData();
+    getUserData();
   }, []);
 
   const modules = {

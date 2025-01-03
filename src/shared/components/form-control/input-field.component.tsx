@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import {
   TextInput,
   ViewStyle,
@@ -7,16 +7,17 @@ import {
   StyleSheet,
   TextStyle,
 } from 'react-native';
-import {Txt} from '../typography';
-import {$size} from 'shared/helpers';
-import {errorsColor, primaryBlack, primaryWhite} from 'shared/configs';
+import { Txt } from '../typography';
+import { $size } from 'shared/helpers';
+import { errorsColor, primaryBlack, primaryWhite } from 'shared/configs';
 
 interface IProps {
   placeholder?: string;
   value?: string;
   placeholderTextColor?: string;
   onChange?: (value: string) => void;
-  style?: ViewStyle | TextStyle;
+  inputStyle?: ViewStyle | TextStyle;
+  containerStyle?: ViewStyle | TextStyle;
   maxLength?: number;
   error?: string;
   keyboardType?: KeyboardTypeOptions;
@@ -25,13 +26,13 @@ interface IProps {
   label?: string;
   inputProps?: Record<string, any>;
 }
-export const TextField: FC<IProps> = ({inputProps = {}, ...props}) => {
+export const TextField: FC<IProps> = ({ inputProps = {}, ...props }) => {
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.containerStyle]}>
       {props.label ? <Txt content={props.label} style={styles.label} /> : null}
       <TextInput
         placeholder={props.placeholder}
-        style={[styles.input, props.style]}
+        style={[styles.input, props.inputStyle]}
         placeholderTextColor={props.placeholderTextColor}
         value={props.value}
         maxLength={props.maxLength}
@@ -71,7 +72,6 @@ const styles = StyleSheet.create({
   },
   label: {
     color: primaryBlack,
-    fontSize: $size(16),
     marginBottom: 8,
   },
 });

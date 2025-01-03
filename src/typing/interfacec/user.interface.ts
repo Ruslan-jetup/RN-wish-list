@@ -3,12 +3,13 @@ import { PremiumPeriodEnum } from 'typing/enums';
 export interface IUserInfo {
   firstName: string;
   lastName: string;
-  userNickName: string;
+  nickName: string;
   userAvatarUri: string;
   userCountry: string;
   email: string;
-  dateOfBirth: string;
-  phoneNumber: number | null;
+  dateOfBirth: Date | null;
+  phoneNumber: string;
+  dialCode: string;
   notification: boolean;
   premiumPeriod?: PremiumPeriodEnum;
 }

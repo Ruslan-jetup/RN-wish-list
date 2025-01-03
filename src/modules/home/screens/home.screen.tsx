@@ -22,7 +22,7 @@ export const HomeScreen: React.FC = () => {
       headerComponent={
         <ProfileHeaderLayout
           title={homeScreenMock.headerTitle}
-          userName={userInfo.userNickName}
+          userName={userInfo.nickName}
           userAvatarUrl={userInfo.userAvatarUri}
           onSearchPress={_.noop}
           subscribers={homeScreenMock.subscribers}

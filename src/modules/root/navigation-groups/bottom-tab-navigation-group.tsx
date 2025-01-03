@@ -3,7 +3,11 @@ import {
   createBottomTabNavigator,
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
-import { HomeScreen, SearchCommonScreen, CreateProfileScreen } from 'modules';
+import {
+  HomeScreen,
+  SearchCommonScreen,
+  AccountNavigationGroup,
+} from 'modules';
 import { ITopTabItem } from 'typing';
 import { TopTabContentItem } from 'shared/components/top-tabs';
 import { Txt } from 'shared/components/typography';
@@ -74,7 +78,7 @@ export const BottomTabNavigationGroup = () => {
         name={'Search'}
         children={() => <SearchCommonScreen tabs={wishTabs} />}
       />
-      <Tab.Screen name={'Settings'} component={CreateProfileScreen} />
+      <Tab.Screen name={'Settings'} component={AccountNavigationGroup} />
     </Tab.Navigator>
   );
 };

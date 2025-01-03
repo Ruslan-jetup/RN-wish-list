@@ -8,4 +8,4 @@ export * from './modal.component';
 export * from './context-menu.component';
 export * from './form-control';
 export * from './top-tabs';
-export * from './top-bg-clouds';
+export * from './top-bg-clouds.component';

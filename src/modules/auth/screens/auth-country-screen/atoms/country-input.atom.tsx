@@ -45,7 +45,7 @@ export const UserCountryInputAtom: React.FC<IProps> = ({
           onBlur={onBlurInput}
           placeholder={'Country'}
           placeholderTextColor={grey}
-          style={{
+          inputStyle={{
             ...styles.input,
             ...(flagUrl && !isInFocus && styles.input_flag),
           }}
