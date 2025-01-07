@@ -2,10 +2,9 @@ import { StyleProp, ViewStyle } from 'react-native';
 // @ts-ignore
 import SwitchSelector from 'react-native-switch-selector';
 import { primaryBlack, primaryBlue, secondaryBlue } from 'shared/configs';
-import { HomeSwitchEnum } from 'typing';
 
 interface IProps {
-  onPress: (val: string) => void;
+  onPress: (val: any) => void;
   labelsArr?: string[];
   borderWidth?: number;
   borderColor?: string;
@@ -18,7 +17,7 @@ interface IProps {
 
 export const LargeSwitch: React.FC<IProps> = ({
   onPress,
-  labelsArr = [HomeSwitchEnum.Lists, HomeSwitchEnum.Wish],
+  labelsArr = ['lists', 'wish'],
   borderWidth = 1,
   borderColor = primaryBlue,
   borderRadius = 20,

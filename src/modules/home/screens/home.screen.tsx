@@ -1,20 +1,27 @@
 import { homeScreenMock } from 'mock';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import { ProfileHeaderLayout, ScreenLayout } from 'shared/components/layouts';
 import _ from 'lodash';
 import { primaryWhite } from 'shared/configs';
 import { useUserInfoStore } from 'store';
-import { LargeSwitch } from 'shared';
-import { HomeList, HomeWish } from '../components';
+import { Txt } from 'shared';
+
 import { useState } from 'react';
-import { HomeSwitchEnum } from 'typing';
+import { ListsWishSwitcherContent } from 'shared/components/lists-wish-switcher-content';
 
 export const HomeScreen: React.FC = () => {
-  const [switchValue, setSwitchValue] = useState<string>(HomeSwitchEnum.Lists);
+  const [activeSwitchTab, setActiveSwitchTab] = useState<'lists' | 'wish'>(
+    'lists',
+  );
   const { userInfo } = useUserInfoStore();
 
-  const onSwitchToggle = (val: string) => {
-    setSwitchValue(val);
+  const onToggleContentSwitch = (val: 'lists' | 'wish') => {
+    setActiveSwitchTab(val);
+  };
+
+  const switchTabContentConfig = {
+    lists: <Txt content={'Lists content'} />,
+    wish: <Txt content={'Wish content'} />,
   };
 
   return (
@@ -32,23 +39,11 @@ export const HomeScreen: React.FC = () => {
         />
       }>
       <StatusBar barStyle="dark-content" backgroundColor={primaryWhite} />
-      <View style={styles.container}>
-        <LargeSwitch
-          onPress={onSwitchToggle}
-          additionalStyles={styles.switch}
-        />
-        {switchValue === HomeSwitchEnum.Lists ? <HomeList /> : <HomeWish />}
-      </View>
+      <ListsWishSwitcherContent
+        onToggleContentSwitch={onToggleContentSwitch}
+        activeTab={activeSwitchTab}
+        children={switchTabContentConfig[activeSwitchTab]}
+      />
     </ScreenLayout>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: 24,
-  },
-  switch: {
-    marginBottom: 16,
-  },
-});

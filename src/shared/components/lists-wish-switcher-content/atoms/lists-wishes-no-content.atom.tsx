@@ -5,13 +5,13 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Txt } from 'shared';
-import { FontWeightEnum, HomeSwitchEnum } from 'typing';
+import { FontWeightEnum } from 'typing';
 
 interface IProps {
-  activeTab: HomeSwitchEnum;
+  activeTab: 'lists' | 'wish';
 }
 
-export const NoData: React.FC<IProps> = ({ activeTab }) => {
+export const ListsWishNoContentAtom: React.FC<IProps> = ({ activeTab }) => {
   const { width } = useWindowDimensions();
 
   const containerWidth = (width / 100) * 53;
@@ -19,13 +19,13 @@ export const NoData: React.FC<IProps> = ({ activeTab }) => {
     <View style={{ ...styles.container, width: containerWidth }}>
       <View style={styles.img_container}>
         <ImageBackground
-          source={require('../../../../assets/images/frame_3.png')}
+          source={require('../../../../../assets/images/frame_3.png')}
           style={styles.img}
         />
       </View>
       <Txt
         content={
-          activeTab === HomeSwitchEnum.Lists
+          activeTab === 'lists'
             ? 'Your wish list is empty :('
             : "You don't have any wishes yet :("
         }
