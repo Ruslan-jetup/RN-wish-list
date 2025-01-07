@@ -1,5 +1,6 @@
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import {
+  AvatarCrop,
   BaseButton,
   DefaultHeaderLayout,
   primaryBlack,
@@ -18,7 +19,7 @@ import { useUserInfoStore } from 'store';
 
 export const ProfilePhotoScreen: React.FC = () => {
   const { goBack, navigate } = useNav();
-  const { setSelectedImg } = useUserInfoStore();
+  const { selectedImg, setSelectedImg, setUserInfo } = useUserInfoStore();
 
   const onBackPress = () => {
     goBack();
@@ -33,7 +34,6 @@ export const ProfilePhotoScreen: React.FC = () => {
 
     if (img?.assets?.[0]?.uri) {
       setSelectedImg(img.assets[0].uri);
-      navigate(RouteKey.AuthAvatarCrop);
     }
   };
 
@@ -48,69 +48,82 @@ export const ProfilePhotoScreen: React.FC = () => {
 
     if (img?.assets?.[0]?.uri) {
       setSelectedImg(img.assets[0].uri);
-      navigate(RouteKey.AuthAvatarCrop);
     }
   };
 
   const onSkipPress = () => {
-     navigate(RouteKey.AuthPremium);
+    navigate(RouteKey.AuthPremium);
+  };
+
+  const onCropDone = (uri: string) => {
+    setUserInfo({ userAvatarUri: uri });
+    navigate(RouteKey.AuthPremium);
   };
 
   return (
-    <ScreenLayout>
-      <View style={styles.container}>
-        <View>
-          <DefaultHeaderLayout
-            onRightBtnPress={onSkipPress}
-            rightBtnTitle="Skip"
-            rightBtnAdditionalTextStyles={{color: primaryBlack}}
-            showBackBtn={true}
-            onBackBtnPress={onBackPress}
-            headerAdditionalStyles={styles.header}
-          />
+    <>
+      {selectedImg ? (
+        <AvatarCrop
+          onCropCancel={() => setSelectedImg('')}
+          onCropDone={onCropDone}
+        />
+      ) : (
+        <ScreenLayout>
+          <View style={styles.container}>
+            <View>
+              <DefaultHeaderLayout
+                onRightBtnPress={onSkipPress}
+                rightBtnTitle="Skip"
+                rightBtnAdditionalTextStyles={{ color: primaryBlack }}
+                showBackBtn={true}
+                onBackBtnPress={onBackPress}
+                headerAdditionalStyles={styles.header}
+              />
 
-          <Txt
-            content={'Add a profile photo'}
-            fontSize={26}
-            lineHeight={38}
-            fontWeight={FontWeightEnum.Bold}
-          />
+              <Txt
+                content={'Add a profile photo'}
+                fontSize={26}
+                lineHeight={38}
+                fontWeight={FontWeightEnum.Bold}
+              />
 
-          <Txt
-            content={'So that your friends can recognize you!'}
-            style={styles.subtitle}
-          />
+              <Txt
+                content={'So that your friends can recognize you!'}
+                style={styles.subtitle}
+              />
 
-          <View style={styles.background_container}>
-            <ImageBackground
-              source={require('../../../../assets/images/frame_4.png')}
-              style={styles.imageBackground}
-              resizeMode="contain"
-            />
+              <View style={styles.background_container}>
+                <ImageBackground
+                  source={require('../../../../assets/images/frame_4.png')}
+                  style={styles.imageBackground}
+                  resizeMode="contain"
+                />
+              </View>
+            </View>
+
+            <View>
+              <BaseButton
+                mode="primary"
+                size="large"
+                title={'Photo library'}
+                onPress={onLibraryPress}
+              />
+
+              <BaseButton
+                mode="secondary"
+                size="large"
+                title={'Camera'}
+                onPress={onCameraPress}
+                additionalBtnStyles={{
+                  backgroundColor: 'transparent',
+                  marginTop: 8,
+                }}
+              />
+            </View>
           </View>
-        </View>
-
-        <View>
-          <BaseButton
-            mode="primary"
-            size="large"
-            title={'Photo library'}
-            onPress={onLibraryPress}
-          />
-
-          <BaseButton
-            mode="secondary"
-            size="large"
-            title={'Camera'}
-            onPress={onCameraPress}
-            additionalBtnStyles={{
-              backgroundColor: 'transparent',
-              marginTop: 8,
-            }}
-          />
-        </View>
-      </View>
-    </ScreenLayout>
+        </ScreenLayout>
+      )}
+    </>
   );
 };
 

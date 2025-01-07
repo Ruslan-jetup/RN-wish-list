@@ -2,8 +2,7 @@ import React from 'react';
 import { Modal, StatusBar, StyleSheet, View } from 'react-native';
 import { IconBtnNamesEnum } from 'typing';
 import { primaryBlue, primaryWhite } from 'shared/configs';
-import { AvatarCrop } from '../avatar-crop.component';
-import { BaseButton, IconBtn } from 'shared';
+import { AvatarCrop, BaseButton, IconBtn } from 'shared';
 
 interface IProps {
   onLibraryPress: () => void;

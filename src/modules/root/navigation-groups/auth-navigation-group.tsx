@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {
   AuthCountryScreen,
-  AuthAvatarCropScreen,
   AuthNicknameScreen,
   CreateAccountScreen,
   PremiumScreen,
@@ -40,10 +39,6 @@ export const AuthNavigationGroup = () => {
       <Stack.Screen
         name={RouteKey.AuthUserPhoto}
         component={ProfilePhotoScreen}
-      />
-      <Stack.Screen
-        name={RouteKey.AuthAvatarCrop}
-        component={AuthAvatarCropScreen}
       />
       <Stack.Screen name={RouteKey.AuthPremium} component={PremiumScreen} />
     </Stack.Navigator>
