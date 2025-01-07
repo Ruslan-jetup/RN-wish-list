@@ -11,7 +11,7 @@ export const useAuthNavigation = () => {
     try {
       const jsonValue = await AsyncStorage.getItem('user-data');
       const parsedValue = jsonValue ? JSON.parse(jsonValue) : null;
-      if (parsedValue.nickName) {
+      if (parsedValue) {
         setUserInfo(parsedValue);
         setActiveModule(NavigationModuleKey.App);
       } else {
