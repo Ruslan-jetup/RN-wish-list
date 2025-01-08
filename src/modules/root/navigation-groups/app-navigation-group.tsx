@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { RouteKey } from 'typing';
 import { BottomTabNavigationGroup } from './bottom-tab-navigation-group';
 

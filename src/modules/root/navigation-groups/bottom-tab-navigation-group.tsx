@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   createBottomTabNavigator,
   BottomTabBarProps,
@@ -13,7 +12,7 @@ import { TopTabContentItem } from 'shared/components/top-tabs';
 import { Txt } from 'shared/components/typography';
 import { searchMockData } from 'mock';
 import { BottomTadBar } from '../bottom-tab-bar/bottom-tab-bar';
-import _ from 'lodash';
+import { ListsWishEditorScreen } from 'shared';
 
 const Tab = createBottomTabNavigator();
 
@@ -57,7 +56,7 @@ const wishTabs: ITopTabItem[] = [
 
 export const BottomTabNavigationGroup = () => {
   const renderCustomTabBar = (props: BottomTabBarProps) => (
-    <BottomTadBar props={props} onAddBtnPress={_.noop} />
+    <BottomTadBar props={props} />
   );
 
   return (
@@ -73,7 +72,7 @@ export const BottomTabNavigationGroup = () => {
         name={'Friends'}
         children={() => <SearchCommonScreen tabs={friendsTabs} />}
       />
-      <Tab.Screen name={'Add'} component={HomeScreen} />
+      <Tab.Screen name={'Add'} component={ListsWishEditorScreen} />
       <Tab.Screen
         name={'Search'}
         children={() => <SearchCommonScreen tabs={wishTabs} />}

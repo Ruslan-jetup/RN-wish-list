@@ -1,15 +1,14 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { IconBtnNamesEnum } from 'typing';
+import { IconBtnNamesEnum, ListsWishEditorModeEnum } from 'typing';
 import { TabBarBgAtom } from './atoms/tab-bar-background.atom';
-import { TabAddBtnAtom } from './atoms/tab-add-btn.atom';
+import { TabAddBtn } from './atoms/tab-add-btn.atom';
 import { primaryBlue } from 'shared/configs';
 import { TabBarItemAtom } from './atoms';
 
 interface IProps {
   props: BottomTabBarProps;
-  onAddBtnPress: () => void;
 }
 
 const tabsIcons: string[] = [
@@ -22,9 +21,14 @@ const tabsIcons: string[] = [
 
 export const BottomTadBar: React.FC<IProps> = ({
   props: { state, navigation },
-  onAddBtnPress,
 }) => {
   const [selectedTab, setSelectedTab] = useState('Home');
+  const [isAddMenuVisible, setAddMenuVisible] = useState<boolean>(false);
+
+  const toggleAddMenu = (currentTab: string) => {
+    setAddMenuVisible(!isAddMenuVisible);
+    setSelectedTab(currentTab);
+  };
 
   const { width } = useWindowDimensions();
   const HEIGHT = 96;
@@ -32,6 +36,11 @@ export const BottomTadBar: React.FC<IProps> = ({
   const onTabPress = (routeName: string) => {
     setSelectedTab(routeName);
     navigation.navigate(routeName);
+  };
+
+  const onAddEditorPress = (mode: ListsWishEditorModeEnum) => {
+    navigation.navigate('Add', { mode });
+    setAddMenuVisible(false);
   };
 
   return (
@@ -42,10 +51,14 @@ export const BottomTadBar: React.FC<IProps> = ({
           {state.routes.map((route, index) => {
             if (index === 2) {
               return (
-                <TabAddBtnAtom
+                <TabAddBtn
+                  route={route.name}
                   key={index}
                   iconColor={primaryBlue}
-                  onPress={onAddBtnPress}
+                  onPress={toggleAddMenu}
+                  isAddMenuVisible={isAddMenuVisible}
+                  onOpenEditor={onAddEditorPress}
+                  toggleAddMenu={() => setAddMenuVisible(!isAddMenuVisible)}
                 />
               );
             }
@@ -78,11 +91,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  btns_group: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  },
   tabs_container: {
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     width: '100%',
     height: '100%',
     paddingTop: 12,

@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
-import {primaryBlue, primaryGrey, primaryWhite} from 'shared/configs';
-import {FontFamiliesEnum, FontWeightEnum} from 'typing';
+import { primaryBlue, primaryGrey, primaryWhite } from 'shared/configs';
+import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface ContextMenuProps {
   isVisible: boolean;
   toggleContextMenu: () => void;
-  options: {label: string; onPress: () => void}[];
+  options: { label: string; onPress: () => void }[];
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({
@@ -19,13 +19,14 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     <Modal
       isVisible={isVisible}
       onBackdropPress={toggleContextMenu}
-      style={styles.modal}>
+      style={styles.modal}
+      statusBarTranslucent={true}>
       {isVisible && (
         <React.Fragment>
           <View style={styles.menu}>
             {options.map((option, index) => (
               <React.Fragment key={index}>
-                <TouchableOpacity  onPress={option.onPress}>
+                <TouchableOpacity onPress={option.onPress}>
                   <Text style={styles.menuItem}>{option.label}</Text>
                 </TouchableOpacity>
                 {index < options.length - 1 && (
@@ -39,7 +40,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
             <TouchableOpacity
               onPress={toggleContextMenu}
               style={styles.cancelButton}>
-              <Text style={styles.cancelText}>Відмінити</Text>
+              <Text style={styles.cancelText}>Cancel</Text>
             </TouchableOpacity>
           </View>
         </React.Fragment>
@@ -74,7 +75,9 @@ const styles = StyleSheet.create({
   },
   cancelContainer: {
     backgroundColor: 'transparent',
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingTop: 16,
+    paddingBottom: 50,
   },
   cancelButton: {
     padding: 10,
