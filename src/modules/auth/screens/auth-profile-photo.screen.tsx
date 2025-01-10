@@ -1,6 +1,6 @@
 import { ImageBackground, StyleSheet, View } from 'react-native';
 import {
-  AvatarCrop,
+
   BaseButton,
   DefaultHeaderLayout,
   primaryBlack,
@@ -15,11 +15,13 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import { useUserInfoStore } from 'store';
+import { useCoverImgSetterStore, useUserInfoStore } from 'store';
+import { CoverImgCropper } from 'shared/components/cover-img-setter';
 
 export const ProfilePhotoScreen: React.FC = () => {
   const { goBack, navigate } = useNav();
-  const { selectedImg, setSelectedImg, setUserInfo } = useUserInfoStore();
+  const {  setUserInfo } = useUserInfoStore();
+   const { selectedImg, setSelectedImg } = useCoverImgSetterStore();
 
   const onBackPress = () => {
     goBack();
@@ -63,9 +65,10 @@ export const ProfilePhotoScreen: React.FC = () => {
   return (
     <>
       {selectedImg ? (
-        <AvatarCrop
+        <CoverImgCropper
           onCropCancel={() => setSelectedImg('')}
           onCropDone={onCropDone}
+          selectedImg={selectedImg}
         />
       ) : (
         <ScreenLayout>

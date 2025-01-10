@@ -4,8 +4,6 @@ import { create } from 'zustand';
 interface IProfilePhotoStore {
   userInfo: IUserInfo;
   setUserInfo: (updates: Partial<IUserInfo>) => void;
-  selectedImg: string;
-  setSelectedImg: (uri: string) => void;
 }
 
 export const useUserInfoStore = create<IProfilePhotoStore>(set => ({
@@ -26,6 +24,4 @@ export const useUserInfoStore = create<IProfilePhotoStore>(set => ({
     set(state => ({
       userInfo: { ...state.userInfo, ...updates },
     })),
-  selectedImg: '',
-  setSelectedImg: uri => set({ selectedImg: uri }),
 }));

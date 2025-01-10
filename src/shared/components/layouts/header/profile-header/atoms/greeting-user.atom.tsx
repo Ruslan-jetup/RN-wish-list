@@ -1,8 +1,8 @@
-import {userDefaultAva} from 'mock';
-import {Image, View, StyleSheet} from 'react-native';
-import {IconBtn} from 'shared/components/buttons';
-import {Txt} from 'shared/components/typography';
-import {primaryBlue, secondaryBlue} from 'shared/configs';
+import {  View, StyleSheet } from 'react-native';
+import { IconBtn } from 'shared/components/buttons';
+import { CoverImageSetter } from 'shared/components/cover-img-setter';
+import { Txt } from 'shared/components/typography';
+import { primaryBlue, secondaryBlue } from 'shared/configs';
 import {
   ActiveScreenEnum,
   FontFamiliesEnum,
@@ -13,11 +13,11 @@ import {
 interface IProps {
   title: string;
   userName: string;
-  userAvatarUrl: string;
+  userAvatarUrl: string | number;
   onSearchPress: () => void;
   onDotsPress: () => void;
   activeScreen: ActiveScreenEnum;
-  loading?: boolean
+  loading?: boolean;
 }
 
 export const GreetingUserAtom: React.FC<IProps> = ({
@@ -33,12 +33,7 @@ export const GreetingUserAtom: React.FC<IProps> = ({
     <View style={styles.container}>
       <View style={styles.user_container}>
         <View style={styles.avatar_container}>
-          <Image
-            style={styles.avatar}
-            source={
-              userAvatarUrl ? {uri: `file://${userAvatarUrl}`} : userDefaultAva
-            }
-          />
+          <CoverImageSetter imageUrl={userAvatarUrl} />
         </View>
         <View>
           <Txt
@@ -63,7 +58,10 @@ export const GreetingUserAtom: React.FC<IProps> = ({
           onIconBtnPress={onSearchPress}
           size={24}
           color={primaryBlue}
-          additionalStyles={{backgroundColor: secondaryBlue, borderRadius: 10}}
+          additionalStyles={{
+            backgroundColor: secondaryBlue,
+            borderRadius: 10,
+          }}
           loading={loading}
         />
       ) : (

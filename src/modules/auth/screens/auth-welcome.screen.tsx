@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
-import { useUserInfoStore } from 'store';
+import { useCoverImgSetterStore, useUserInfoStore } from 'store';
 import {
   FontFamiliesEnum,
   FontWeightEnum,
@@ -10,7 +10,8 @@ import {
 } from 'typing';
 
 export const WelcomeScreen: React.FC = () => {
-  const { setSelectedImg, setUserInfo } = useUserInfoStore();
+  const {  setUserInfo } = useUserInfoStore();
+  const { setSelectedImg } = useCoverImgSetterStore();
 
   useEffect(() => {
     setSelectedImg('');

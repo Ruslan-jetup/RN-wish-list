@@ -1,15 +1,14 @@
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { IconBtn, primaryBlue, secondaryBlue, Txt } from 'shared';
+import { CoverImageSetter } from 'shared/components/cover-img-setter';
 import { FontWeightEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   name: string;
-  avatarUrl: string;
+  avatarUrl: string | number;
   email: string;
   onEditPress: () => void;
 }
-
-const defaultAvatar = require('../../../../../../assets/images/frame_4.png');
 
 export const UserInfoAtom: React.FC<IProps> = ({
   name,
@@ -21,10 +20,7 @@ export const UserInfoAtom: React.FC<IProps> = ({
     <View style={styles.container}>
       <View style={styles.left_content}>
         <View style={styles.avatar_container}>
-          <Image
-            source={avatarUrl ? { uri: `file://${avatarUrl}` } : defaultAvatar}
-            style={styles.avatar}
-          />
+          <CoverImageSetter imageUrl={avatarUrl} />
         </View>
 
         <View>

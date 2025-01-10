@@ -8,7 +8,7 @@ import { primaryWhite } from 'shared/configs';
 interface IProps {
   title: string;
   userName: string;
-  userAvatarUrl: string;
+  userAvatarUrl: string | number;
   onSearchPress: () => void;
   onDotsPress: () => void;
   subscribers: number;

@@ -4,7 +4,7 @@ export interface IUserInfo {
   firstName: string;
   lastName: string;
   nickName: string;
-  userAvatarUri: string;
+  userAvatarUri: string | number;
   userCountry: string;
   email: string;
   dateOfBirth: Date | null;

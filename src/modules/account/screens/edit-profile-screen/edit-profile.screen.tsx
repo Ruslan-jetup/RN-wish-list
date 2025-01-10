@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { AvatarSetter, ResetButtons } from 'modules/account/components';
+import { ResetButtons } from 'modules/account/components';
 import { useProfileActions } from 'modules/account/hooks';
 import { ScrollView, StyleSheet } from 'react-native';
 import {
   BaseButton,
   DatePickerInput,
+  DefaultHeaderLayout,
   ModalComponent,
   ScreenLayout,
   TextField,
@@ -18,6 +19,7 @@ import dayjs from 'dayjs';
 import { PhoneInputAtom } from './atoms';
 import { validateUserInfo } from 'modules/account/validations';
 import { RouteKey } from 'typing';
+import { CoverImageSetter } from 'shared/components/cover-img-setter';
 
 export const EditProfileScreen = () => {
   const { countriesList } = useGlobalStore();
@@ -37,6 +39,8 @@ export const EditProfileScreen = () => {
     storeUserData,
     getUserData,
   } = useProfileActions();
+
+  const { goBack } = useNav();
 
   useEffect(() => {
     getUserData().then(userData => {
@@ -80,15 +84,30 @@ export const EditProfileScreen = () => {
     });
   };
 
+  const storeAvatarPath = (path: string | number) => {
+    storeUserData({ ...userInfo, userAvatarUri: path });
+    setUserInfo({ userAvatarUri: path });
+  };
+
+  const onBackPress = () => {
+    goBack();
+  };
+
   return (
     <ScreenLayout viewStyle={styles.container}>
       <TopBgClouds />
 
-      <AvatarSetter
+      <DefaultHeaderLayout
+        showBackBtn={true}
+        onBackBtnPress={onBackPress}
+      />
+
+      <CoverImageSetter
+        onSaveImgPath={storeAvatarPath}
+        imageUrl={userInfo.userAvatarUri}
         size={120}
-        avatarUrl={userInfo.userAvatarUri}
-        additionalStyle={styles.avatar}
         showEditor={true}
+        additionalStyle={styles.avatar}
       />
 
       <ScrollView style={styles.scroll_container}>

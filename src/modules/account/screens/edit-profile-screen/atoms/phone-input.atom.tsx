@@ -38,6 +38,7 @@ export const PhoneInputAtom: React.FC<IProps> = ({
         showSearch={true}
       />
       <MaskInput
+        keyboardType="number-pad"
         placeholder="Phone number"
         value={phoneNumberValue}
         style={styles.input}

@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { CropView } from 'react-native-image-crop-tools';
-import { useUserInfoStore } from 'store';
 import { primaryBlack, primaryWhite } from 'shared/configs';
 import { FontWeightEnum } from 'typing';
 import { BaseButton, ScreenLayout } from 'shared';
@@ -9,11 +8,14 @@ import { BaseButton, ScreenLayout } from 'shared';
 interface IProps {
   onCropDone: (uri: string) => void;
   onCropCancel: () => void;
+  selectedImg: any;
 }
 
-export const AvatarCrop: React.FC<IProps> = ({ onCropDone, onCropCancel }) => {
-  const { selectedImg } = useUserInfoStore();
-
+export const CoverImgCropper: React.FC<IProps> = ({
+  onCropDone,
+  onCropCancel,
+  selectedImg,
+}) => {
   const cropRef = useRef<any>(null);
 
   const onCrop = (uri: string) => {

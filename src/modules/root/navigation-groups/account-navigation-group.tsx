@@ -1,7 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import { RouteKey } from 'typing';
-
 import { EditProfileScreen, CreateProfileScreen } from 'modules/account';
 
 const Stack = createNativeStackNavigator();

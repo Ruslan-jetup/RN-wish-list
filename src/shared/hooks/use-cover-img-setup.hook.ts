@@ -4,10 +4,13 @@ import {
   launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
-import { useUserInfoStore } from 'store';
+import { useState } from 'react';
+import { useCoverImgSetterStore } from 'store';
 
-export const useAvatarSetup = () => {
-  const { setSelectedImg } = useUserInfoStore();
+export const useCoverImgSetup = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const { selectedImg, setSelectedImg } = useCoverImgSetterStore();
 
   const onLibraryPress = async () => {
     let options: ImageLibraryOptions = {
@@ -36,6 +39,10 @@ export const useAvatarSetup = () => {
   };
 
   return {
+    showModal,
+    setShowModal,
+    selectedImg,
+    setSelectedImg,
     onLibraryPress,
     onCameraPress,
   };

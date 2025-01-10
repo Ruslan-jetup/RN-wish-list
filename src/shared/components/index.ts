@@ -9,4 +9,3 @@ export * from './context-menu.component';
 export * from './form-control';
 export * from './top-tabs';
 export * from './top-bg-clouds.component';
-export * from './avatar-crop.component';
