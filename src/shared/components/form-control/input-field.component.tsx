@@ -24,12 +24,18 @@ interface IProps {
   onFocus?: () => void;
   onBlur?: () => void;
   label?: string;
+  labelStyles?: ViewStyle | TextStyle;
   inputProps?: Record<string, any>;
 }
 export const TextField: FC<IProps> = ({ inputProps = {}, ...props }) => {
   return (
     <View style={[styles.container, props.containerStyle]}>
-      {props.label ? <Txt content={props.label} style={styles.label} /> : null}
+      {props.label ? (
+        <Txt
+          content={props.label}
+          style={{ ...styles.label, ...props.labelStyles }}
+        />
+      ) : null}
       <TextInput
         placeholder={props.placeholder}
         style={[styles.input, props.inputStyle]}
@@ -63,7 +69,6 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 50,
-    marginBottom: 3,
     paddingHorizontal: $size(16, 14),
     fontSize: 16,
     color: primaryBlack,
@@ -71,7 +76,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   label: {
-    color: primaryBlack,
+    color: '#514F50',
     marginBottom: 8,
   },
 });

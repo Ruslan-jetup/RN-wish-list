@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 import { useGlobalStore, useUserInfoStore } from 'store';
 import {
   DropdownSelect,
+  LargeSwitch,
   ModalComponent,
   ScreenLayout,
   TopBgClouds,
@@ -11,7 +12,7 @@ import {
 } from 'shared';
 import { IUserInfo, PremiumPeriodEnum, RouteKey } from 'typing';
 import { ScrollView } from 'react-native';
-import { LegalInfoAtom, NotificationAtom, UserInfoAtom } from './atoms';
+import { LegalInfoAtom, UserInfoAtom } from './atoms';
 import { ResetButtons } from 'modules/account/components';
 import { useProfileActions } from 'modules/account/hooks';
 import CountryList from 'country-list-with-dial-code-and-flag';
@@ -111,10 +112,12 @@ export const CreateProfileScreen = () => {
           containerStyles={{ marginBottom: 24 }}
         />
 
-        <Txt content={'Notification'} style={styles.label} />
-        <NotificationAtom
-          onNotificationChange={onNotificationChange}
+        <LargeSwitch
+          label="Notification"
+          title="Reminders"
+          onSwitchToggle={onNotificationChange}
           value={userInfo.notification}
+          labelStyle={styles.notification_label}
         />
 
         <Txt content={'Location'} style={styles.label} />
@@ -157,6 +160,9 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
+    color: '#514F50',
+  },
+  notification_label: {
     color: '#514F50',
   },
 });

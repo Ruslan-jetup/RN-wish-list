@@ -209,5 +209,6 @@ const styles = StyleSheet.create({
   },
   label: {
     marginBottom: 8,
+    color: '#514F50',
   },
 });

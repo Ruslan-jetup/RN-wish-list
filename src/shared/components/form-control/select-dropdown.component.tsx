@@ -25,6 +25,7 @@ interface IProps {
   onSelectItem: (Item: any) => void;
   defaultValue?: string;
   iconCloseDirection?: 'right' | 'down';
+  label?: string;
 }
 
 export const DropdownSelect: React.FC<IProps> = ({
@@ -40,6 +41,7 @@ export const DropdownSelect: React.FC<IProps> = ({
   onSelectItem,
   defaultValue,
   iconCloseDirection = 'down',
+  label,
 }) => {
   const [filteredItems, setFilteredItems] =
     useState<ISelectedItem[]>(selectItems);
@@ -85,6 +87,7 @@ export const DropdownSelect: React.FC<IProps> = ({
       renderButton={(selectedItem, isOpened) => {
         return (
           <View style={[{ ...styles.dropdownButtonStyle }, containerStyles]}>
+            {label && <Txt style={styles.label} content={label} />}
             <Text style={[{ ...styles.txt_style }, fontStyles]}>
               {selectedItem && selectedItem.icon ? (
                 <>
@@ -147,6 +150,7 @@ export const DropdownSelect: React.FC<IProps> = ({
 
 const styles = StyleSheet.create({
   dropdownButtonStyle: {
+    position: 'relative',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -155,6 +159,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     backgroundColor: primaryWhite,
     borderRadius: 10,
+  },
+  label: {
+    position: 'absolute',
+    top: -31,
+    color: '#514F50',
   },
   txt_style: {
     flex: 1,

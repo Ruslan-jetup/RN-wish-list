@@ -139,7 +139,6 @@ export const CoverImageSetter: React.FC<IProps> = ({
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    borderRadius: 50,
   },
   image_container: {
     borderRadius: '50%',
@@ -154,6 +153,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
     backgroundColor: primaryWhite,
-    borderRadius: 50,
+    borderRadius: '50%',
   },
 });

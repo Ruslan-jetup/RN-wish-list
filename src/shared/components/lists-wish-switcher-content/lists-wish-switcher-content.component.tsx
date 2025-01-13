@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { LargeSwitch } from '../switch';
+import { TabsSwitch } from '../switch';
 import { ListsWishNoContentAtom } from './atoms';
 
 interface IProps {
@@ -16,7 +16,7 @@ export const ListsWishSwitcherContent: React.FC<IProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <LargeSwitch
+      <TabsSwitch
         onPress={onToggleContentSwitch}
         additionalStyles={styles.switch}
       />

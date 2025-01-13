@@ -6,6 +6,7 @@ import { TabBarBgAtom } from './atoms/tab-bar-background.atom';
 import { TabAddBtn } from './atoms/tab-add-btn.atom';
 import { primaryBlue } from 'shared/configs';
 import { TabBarItemAtom } from './atoms';
+import { useNavigationStore } from 'store';
 
 interface IProps {
   props: BottomTabBarProps;
@@ -22,62 +23,75 @@ const tabsIcons: string[] = [
 export const BottomTadBar: React.FC<IProps> = ({
   props: { state, navigation },
 }) => {
-  const [selectedTab, setSelectedTab] = useState('Home');
   const [isAddMenuVisible, setAddMenuVisible] = useState<boolean>(false);
+
+  const {
+    isBottomBarVisible,
+    setBottomBarVisible,
+    activeBottomBarTab,
+    setActiveBottomBarTab,
+  } = useNavigationStore();
 
   const toggleAddMenu = (currentTab: string) => {
     setAddMenuVisible(!isAddMenuVisible);
-    setSelectedTab(currentTab);
+    setActiveBottomBarTab(currentTab);
   };
 
   const { width } = useWindowDimensions();
   const HEIGHT = 96;
 
   const onTabPress = (routeName: string) => {
-    setSelectedTab(routeName);
+    setActiveBottomBarTab(routeName);
     navigation.navigate(routeName);
   };
 
   const onAddEditorPress = (mode: ListsWishEditorModeEnum) => {
     navigation.navigate('Add', { mode });
     setAddMenuVisible(false);
+    setBottomBarVisible(false);
   };
 
   return (
-    <View
-      style={{ ...styles.position_container, width: width, height: HEIGHT }}>
-      <View style={styles.static_container}>
-        <View style={styles.tabs_container}>
-          {state.routes.map((route, index) => {
-            if (index === 2) {
+    isBottomBarVisible && (
+      <View
+        style={{
+          ...styles.position_container,
+          width: width,
+          height: HEIGHT,
+        }}>
+        <View style={styles.static_container}>
+          <View style={styles.tabs_container}>
+            {state.routes.map((route, index) => {
+              if (index === 2) {
+                return (
+                  <TabAddBtn
+                    route={route.name}
+                    key={index}
+                    iconColor={primaryBlue}
+                    onPress={toggleAddMenu}
+                    isAddMenuVisible={isAddMenuVisible}
+                    onOpenEditor={onAddEditorPress}
+                    toggleAddMenu={() => setAddMenuVisible(!isAddMenuVisible)}
+                  />
+                );
+              }
               return (
-                <TabAddBtn
-                  route={route.name}
+                <TabBarItemAtom
                   key={index}
-                  iconColor={primaryBlue}
-                  onPress={toggleAddMenu}
-                  isAddMenuVisible={isAddMenuVisible}
-                  onOpenEditor={onAddEditorPress}
-                  toggleAddMenu={() => setAddMenuVisible(!isAddMenuVisible)}
+                  index={index}
+                  route={route.name}
+                  selectedTab={activeBottomBarTab}
+                  tabsIcons={tabsIcons}
+                  onTabPress={onTabPress}
                 />
               );
-            }
-            return (
-              <TabBarItemAtom
-                key={index}
-                index={index}
-                route={route.name}
-                selectedTab={selectedTab}
-                tabsIcons={tabsIcons}
-                onTabPress={onTabPress}
-              />
-            );
-          })}
-        </View>
+            })}
+          </View>
 
-        <TabBarBgAtom width={width} height={HEIGHT} />
+          <TabBarBgAtom width={width} height={HEIGHT} />
+        </View>
       </View>
-    </View>
+    )
   );
 };
 
