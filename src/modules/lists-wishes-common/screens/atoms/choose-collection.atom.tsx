@@ -4,10 +4,10 @@ import { primaryWhite } from 'shared/configs';
 import { IconBtnNamesEnum } from 'typing';
 
 interface IProps {
-  collectionCoverImg: string | number;
+  collectionCoverImg?: string | number;
 }
 
-const defaultImg = require('../../../../assets/images/frame_10.png');
+const defaultImg = require('../../../../../assets//images/frame_10.png');
 
 export const ChooseCollectionAtom: React.FC<IProps> = ({
   collectionCoverImg,

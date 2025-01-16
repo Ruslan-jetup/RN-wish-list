@@ -12,7 +12,7 @@ import { TopTabContentItem } from 'shared/components/top-tabs';
 import { Txt } from 'shared/components/typography';
 import { searchMockData } from 'mock';
 import { BottomTadBar } from '../bottom-tab-bar/bottom-tab-bar';
-import { ListsWishEditorScreen } from 'shared';
+import { ListsWishEditorWidget } from 'modules/lists-wishes-common/widgets';
 
 const Tab = createBottomTabNavigator();
 
@@ -72,7 +72,7 @@ export const BottomTabNavigationGroup = () => {
         name={'Friends'}
         children={() => <SearchCommonScreen tabs={friendsTabs} />}
       />
-      <Tab.Screen name={'Add'} component={ListsWishEditorScreen} />
+      <Tab.Screen name={'Add'} component={ListsWishEditorWidget} />
       <Tab.Screen
         name={'Search'}
         children={() => <SearchCommonScreen tabs={wishTabs} />}

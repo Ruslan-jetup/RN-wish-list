@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
-import { primaryBlue, primaryGrey, primaryWhite } from 'shared/configs';
+import { primaryBlue, primaryGrey, primaryWhite, primaryBlack } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface ContextMenuProps {
@@ -19,6 +19,8 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     <Modal
       isVisible={isVisible}
       onBackdropPress={toggleContextMenu}
+      backdropColor={primaryBlack}
+      backdropOpacity={0.4}
       style={styles.modal}
       statusBarTranslucent={true}>
       {isVisible && (

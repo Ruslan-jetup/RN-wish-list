@@ -1,6 +1,6 @@
-import { ListsWishEditorModeEnum } from 'typing';
+import { ListsWishEditorModeEnum } from '../typing';
 
-export const ListsWishEditorTitleConfig = {
+export const listsWishEditorTitleConfig = {
   [ListsWishEditorModeEnum.AddWish]: 'Add a wish',
   [ListsWishEditorModeEnum.EditWish]: 'Edit wish',
   [ListsWishEditorModeEnum.CreateList]: 'Create a list',

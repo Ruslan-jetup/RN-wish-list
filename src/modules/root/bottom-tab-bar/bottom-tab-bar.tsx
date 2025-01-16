@@ -1,12 +1,13 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { IconBtnNamesEnum, ListsWishEditorModeEnum } from 'typing';
+import { IconBtnNamesEnum } from 'typing';
 import { TabBarBgAtom } from './atoms/tab-bar-background.atom';
 import { TabAddBtn } from './atoms/tab-add-btn.atom';
 import { primaryBlue } from 'shared/configs';
 import { TabBarItemAtom } from './atoms';
 import { useNavigationStore } from 'store';
+import { ListsWishEditorModeEnum } from 'modules/lists-wishes-common';
 
 interface IProps {
   props: BottomTabBarProps;

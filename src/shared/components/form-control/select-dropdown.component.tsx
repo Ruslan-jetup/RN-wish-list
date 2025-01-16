@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import { primaryBlack, primaryGrey, primaryWhite } from 'shared/configs';
+import { errorsColor, primaryBlack, primaryGrey, primaryWhite } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
 import { Icon } from '../icon.component';
 import { useState, useEffect } from 'react';
@@ -26,6 +26,7 @@ interface IProps {
   defaultValue?: string;
   iconCloseDirection?: 'right' | 'down';
   label?: string;
+  error?: string
 }
 
 export const DropdownSelect: React.FC<IProps> = ({
@@ -42,6 +43,7 @@ export const DropdownSelect: React.FC<IProps> = ({
   defaultValue,
   iconCloseDirection = 'down',
   label,
+  error,
 }) => {
   const [filteredItems, setFilteredItems] =
     useState<ISelectedItem[]>(selectItems);
@@ -117,6 +119,7 @@ export const DropdownSelect: React.FC<IProps> = ({
                 }}
               />
             )}
+            {error && <Txt style={styles.error} content={error} />}
           </View>
         );
       }}
@@ -184,5 +187,13 @@ const styles = StyleSheet.create({
     gap: 12,
     paddingVertical: 8,
     paddingHorizontal: 12,
+  },
+  error: {
+    position: 'absolute',
+    bottom: -15,
+    paddingLeft: 10,
+    color: errorsColor,
+    lineHeight: 13,
+    fontSize: 12,
   },
 });

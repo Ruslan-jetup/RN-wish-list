@@ -1,8 +1,9 @@
+import { ListsWishEditorModeEnum } from 'modules/lists-wishes-common';
 import React from 'react';
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { ContextMenu } from 'shared';
 import { Icon } from 'shared/components/icon.component';
-import { IconBtnNamesEnum, ListsWishEditorModeEnum } from 'typing';
+import { IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   iconColor?: string;

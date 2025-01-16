@@ -1,14 +1,8 @@
-import { useState } from 'react';
-import {
-  FontFamiliesEnum,
-  FontWeightEnum,
-  ListsWishEditorModeEnum,
-} from 'typing';
+import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 import { ChooseCollectionAtom } from './atoms';
 import {
   ScrollView,
   StyleSheet,
-  TextInput,
   useWindowDimensions,
   View,
 } from 'react-native';
@@ -18,71 +12,56 @@ import {
   DropdownSelect,
   LargeSwitch,
   ScreenLayout,
+  TextArea,
   TextField,
-  Txt,
 } from 'shared/components';
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
-import {
-  grey,
-  ListsWishEditorTitleConfig,
-  primaryBlack,
-  primaryWhite,
-} from 'shared/configs';
-import { useNavigationStore } from 'store';
-import { useNav } from 'shared/hooks';
+import { primaryBlack, primaryWhite } from 'shared/configs';
 
-const CURRENCY = [
-  { title: 'USD' },
-  { title: 'EUR' },
-  { title: 'JPY' },
-  { title: 'GBP' },
-  { title: 'AUD' },
-  { title: 'UAH' },
-];
+import { ICurrency, IListsWishEditorForm, ListsWishEditorModeEnum } from 'modules';
+import { FormErrors } from 'shared/hooks';
 
-type ModeType = keyof typeof ListsWishEditorTitleConfig;
+interface IProps {
+  onChangeField: (key: keyof IListsWishEditorForm, val: any) => void;
+  values: IListsWishEditorForm;
+  errors: FormErrors<IListsWishEditorForm>;
+  editorMode: ListsWishEditorModeEnum;
+  currenciesList: ICurrency[];
+  editorTitle: string;
+  onHideWishesToggle: () => void;
+  onSelectCurrency: (currency: ICurrency) => void;
+  onBackBtnPress: () => void;
+  onSaveImagePath: (path: string | number) => void;
+  onSubmitEditorForm: () => void;
+}
 
-export const ListsWishEditorScreen = ({ route }: any) => {
-  const [imgPath, setImgPath] = useState<string | number>('');
-  const [hideSwitchValue, setHideSwitchValue] = useState<boolean>(false);
-  const [currency, setCurrency] = useState<string>('');
-
-  const { setBottomBarVisible, setActiveBottomBarTab } = useNavigationStore();
+export const ListsWishEditorScreen: React.FC<IProps> = ({
+  onChangeField,
+  values,
+  errors,
+  editorMode,
+  currenciesList,
+  editorTitle,
+  onHideWishesToggle,
+  onSelectCurrency,
+  onBackBtnPress,
+  onSaveImagePath,
+  onSubmitEditorForm,
+}) => {
   const { width } = useWindowDimensions();
-  const { mode } = route.params as { mode: ModeType };
-  const { goBack } = useNav();
-
   const priceInputsWidth = width / 2 - 30;
-
-  const saveImg = (path: any) => {
-    setImgPath(path);
-  };
-
-  const onSelectItem = (item: { title: string }) => {
-    setCurrency(item.title);
-  };
-
-  const onHideWishToggle = () => {
-    setHideSwitchValue(!hideSwitchValue);
-  };
-
-  const onBackBtnPress = () => {
-    setBottomBarVisible(true);
-    setActiveBottomBarTab('Home');
-    goBack();
-  };
 
   return (
     <ScreenLayout>
       <DefaultHeaderLayout
-        title={ListsWishEditorTitleConfig[mode]}
+        title={editorTitle}
         showBackBtn={true}
         onBackBtnPress={onBackBtnPress}
       />
       <ScrollView contentContainerStyle={styles.scroll_view}>
         <CoverImageSetter
-          onSaveImgPath={saveImg}
-          imageUrl={imgPath}
+          onSaveImgPath={onSaveImagePath}
+          imageUrl={values.coverImgPath}
           size={120}
           showEditor={true}
           additionalStyle={styles.cover_img}
@@ -91,6 +70,9 @@ export const ListsWishEditorScreen = ({ route }: any) => {
           containerStyle={{ marginBottom: 24 }}
           label="Name wish"
           placeholder="Enter wish name"
+          error={errors?.itemName}
+          value={values?.itemName}
+          onChange={val => onChangeField('itemName', val)}
         />
 
         <View style={styles.price_container}>
@@ -98,14 +80,19 @@ export const ListsWishEditorScreen = ({ route }: any) => {
             containerStyle={{ width: priceInputsWidth }}
             label="Price"
             placeholder="Enter price"
+            error={errors?.price}
+            value={(values?.price ?? '').toString()}
+            onChange={val => onChangeField('price', val)}
+            keyboardType="number-pad"
           />
 
           <DropdownSelect
-            onSelectItem={onSelectItem}
-            selectItems={CURRENCY}
-            selectTitle={currency ? currency : 'Select a currency'}
+            onSelectItem={onSelectCurrency}
+            selectItems={currenciesList}
+            selectTitle={values?.currency || 'Select a currency'}
             label="Currency"
             containerStyles={{ width: priceInputsWidth, alignSelf: 'flex-end' }}
+            error={errors.currency}
           />
         </View>
 
@@ -113,32 +100,35 @@ export const ListsWishEditorScreen = ({ route }: any) => {
           containerStyle={{ marginBottom: 24 }}
           label="URL"
           placeholder="Add website URL"
+          error={errors?.itemUrl}
+          value={values?.itemUrl}
+          onChange={val => onChangeField('itemUrl', val)}
         />
 
-        {(mode === ListsWishEditorModeEnum.CreateList ||
-          mode === ListsWishEditorModeEnum.EditList) && (
-          <ChooseCollectionAtom collectionCoverImg={''} />
+        {(editorMode === ListsWishEditorModeEnum.CreateList ||
+          editorMode === ListsWishEditorModeEnum.EditList) && (
+          <ChooseCollectionAtom />
         )}
 
-        <Txt style={styles.description_label} content={'Description'} />
-        <TextInput
-          style={styles.description_input}
+        <TextArea
           placeholder="Enter a description"
-          multiline={true}
-          placeholderTextColor={grey}
+          title="Description"
+          error={errors?.description}
+          value={values?.description}
+          onValueChange={val => onChangeField('description', val)}
         />
 
         <LargeSwitch
           title="Hide wishes from other users"
-          onSwitchToggle={onHideWishToggle}
-          value={hideSwitchValue}
+          onSwitchToggle={onHideWishesToggle}
+          value={values?.hideWishes ? values?.hideWishes : false}
         />
 
         <BaseButton
           title="Save"
           mode="primary"
           size="large"
-          onPress={() => {}}
+          onPress={onSubmitEditorForm}
         />
       </ScrollView>
     </ScreenLayout>
