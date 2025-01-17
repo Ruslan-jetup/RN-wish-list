@@ -1,12 +1,12 @@
 import { AxiosHeaders, AxiosResponse } from 'axios';
 import { wishesMockData } from '../mock';
-import { IWishItem } from '../typing';
+import { IListsWishItem } from '../typing';
 import UUID from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const addWishReq = async (payload: Omit<IWishItem, 'id'>) => {
+export const addWishReq = async (payload: Omit<IListsWishItem, 'id'>) => {
   try {
-    const newWish: IWishItem = {
+    const newWish: IListsWishItem = {
       ...payload,
       id: UUID.v4(),
       creatingDate: new Date(),
@@ -24,7 +24,7 @@ export const addWishReq = async (payload: Omit<IWishItem, 'id'>) => {
 
 export const changeWishReq = async (
   id: string,
-  updatedFields: Partial<IWishItem>,
+  updatedFields: Partial<IListsWishItem>,
 ) => {
   console.log('id: ', id, 'updatedFields: ', updatedFields);
 };
@@ -35,16 +35,14 @@ export const createListReq = async (payload: any) => {
 
 export const changeListReq = async (
   id: string,
-  updatedFields: Partial<IWishItem>,
+  updatedFields: Partial<IListsWishItem>,
 ) => {
   console.log('id: ', id, 'updatedFields: ', updatedFields);
 };
 
 export const getListOfListsReq = async () => {};
 
-export const getWishesListReq = async (): Promise<
-  AxiosResponse<IWishItem[]>
-> => {
+export const getWishesListReq = async (): Promise<AxiosResponse<IListsWishItem[]>> => {
   return {
     status: 200,
     statusText: 'OK',

@@ -2,7 +2,7 @@ import { Omit } from 'lodash';
 import { CurrenciesEnum } from '../enums';
 
 
-export interface IWishItem {
+export interface IListsWishItem {
   id?: string;
   coverImgPath: string | number;
   creatingDate: Date;
@@ -15,6 +15,6 @@ export interface IWishItem {
 }
 
 export interface IListsWishEditorForm
-  extends Omit<IWishItem, 'id' | 'creatingDate'> {
+  extends Omit<IListsWishItem, 'id' | 'creatingDate'> {
   collection?: any;
 }

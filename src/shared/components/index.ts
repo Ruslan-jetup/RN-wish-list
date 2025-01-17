@@ -9,3 +9,6 @@ export * from './context-menu.component';
 export * from './form-control';
 export * from './top-tabs';
 export * from './top-bg-clouds.component';
+export * from './loader.component';
+export * from './cover-img-setter';
+export * from './lists-wish-switcher-content';

@@ -7,7 +7,7 @@ import {
   CurrenciesEnum,
   ICurrency,
   IListsWishEditorForm,
-  IWishItem,
+  IListsWishItem,
   useListsWishesStore,
 } from 'modules';
 import { listsWishEditorTitleConfig, successMessageConfig } from '../configs';
@@ -66,7 +66,7 @@ export const ListsWishEditorWidget = ({ route }: any) => {
   };
 
   const isItemNameUnique = (
-    list: IWishItem[] | null,
+    list: IListsWishItem[] | null,
     createdItemName: string,
   ): boolean => {
     if (!list) return true;

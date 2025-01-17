@@ -1,6 +1,6 @@
-import { CurrenciesEnum, IWishItem } from '../typing';
+import { CurrenciesEnum, IListsWishItem } from '../typing';
 
-export const wishesMockData: IWishItem[] = [
+export const wishesMockData: IListsWishItem[] = [
   {
     id: '1f4e9b36-1c63-4af5-891b-c37c6eafe1a7',
     coverImgPath: 'https://example.com/item1.jpg',

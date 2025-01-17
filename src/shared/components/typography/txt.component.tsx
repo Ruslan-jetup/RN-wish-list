@@ -1,7 +1,6 @@
-import {Text, TextStyle} from 'react-native';
+import { Text, TextStyle } from 'react-native';
 import { primaryBlack } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum } from 'typing';
-
 
 interface IProps {
   content?: string | number;
@@ -11,11 +10,12 @@ interface IProps {
   lineHeight?: number;
   color?: string;
   style?: TextStyle | TextStyle[];
+  optionalProps?: any;
 }
 
 interface IFonts {
-  [FontFamiliesEnum.poppins]: {[key: string]: string};
-  [FontFamiliesEnum.SFProText]: {[key: string]: string};
+  [FontFamiliesEnum.poppins]: { [key: string]: string };
+  [FontFamiliesEnum.SFProText]: { [key: string]: string };
 }
 
 const fonts: IFonts = {
@@ -39,9 +39,11 @@ export const Txt: React.FC<IProps> = ({
   color = primaryBlack,
   lineHeight = 24,
   style,
+  optionalProps = {},
 }) => {
   return (
     <Text
+      {...optionalProps}
       style={[
         {
           fontSize: fontSize,
