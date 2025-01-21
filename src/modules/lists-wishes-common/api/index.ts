@@ -39,9 +39,7 @@ export const changeWishReq = async (
 
     const creatingDate = new Date();
     const fieldsWithDate = { ...updatedFields, creatingDate };
-
     const updatedWish = { ...wishes[index], ...fieldsWithDate };
-    console.log(updatedWish);
     wishes[index] = updatedWish;
 
     await AsyncStorage.setItem('wishes', JSON.stringify(wishes));
@@ -111,4 +109,19 @@ export const getAllWishesReq = async (): Promise<
     },
     data: listData ?? [],
   };
+};
+
+export const deleteWishReq = async (id: string) => {
+  try {
+    const allWishes = await AsyncStorage.getItem('wishes');
+    const parsedWishes: IListsWishItem[] = allWishes
+      ? JSON.parse(allWishes)
+      : [];
+
+    const filteredWishes = parsedWishes.filter(item => item.id !== id);
+
+    await AsyncStorage.setItem('wishes', JSON.stringify(filteredWishes));
+  } catch {
+    //
+  }
 };

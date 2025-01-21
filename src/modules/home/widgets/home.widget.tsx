@@ -3,6 +3,7 @@ import { HomeScreen } from '../screens';
 import {
   ContextMenu,
   Loader,
+  ModalComponent,
   sortByDateHelper,
   Txt,
   useNav,
@@ -11,6 +12,7 @@ import {
 import { useNavigationStore, useUserInfoStore } from 'store';
 import { homeHeaderTitleConfig } from '../configs';
 import {
+  deleteWishReq,
   getAllWishesReq,
   IListsWishItem,
   ListsWishEditorModeEnum,
@@ -24,6 +26,7 @@ import { RouteKey } from 'typing';
 
 export const HomeWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const [allWishes, setAllWishes] = useState<IListsWishItem[] | null>(null);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [activeSwitchTab, setActiveSwitchTab] = useState<'lists' | 'wish'>(
@@ -35,7 +38,7 @@ export const HomeWidget = () => {
     toggler: toggleMoreMenu,
     setToggleValue: setMoreMenuVisible,
   } = useToggle(false);
-  const { setItemId, setEditorMode } = useListsWishesStore();
+  const { itemId, setItemId, setEditorMode } = useListsWishesStore();
   const { setBottomBarVisible, activeBottomBarTab, setActiveBottomBarTab } =
     useNavigationStore();
   const { navigate } = useNav();
@@ -114,7 +117,26 @@ export const HomeWidget = () => {
   };
 
   const onDeletePress = () => {
-    //
+    setDeleteModalVisible(true);
+    setMoreMenuVisible(false);
+  };
+
+  const onConfirmDeletePress = async () => {
+    try {
+      await deleteWishReq(itemId);
+      setDeleteModalVisible(false);
+      await fetchWishes();
+
+      Toast.show({
+        type: 'success',
+        text1: 'Wish successfully deleted',
+      });
+    } catch (e) {
+      Toast.show({
+        type: 'error',
+        text1: 'Failed to delete wish',
+      });
+    }
   };
 
   const onSearchBtnPress = () => {
@@ -141,7 +163,7 @@ export const HomeWidget = () => {
     },
     {
       label: 'Delete',
-      onPress: onDeletePress,
+      onPress: () => onDeletePress(),
     },
   ];
 
@@ -182,6 +204,18 @@ export const HomeWidget = () => {
         isVisible={isMoreMenuVisible}
         toggleContextMenu={onMenuCancelPress}
         options={contextMenuOptions}
+      />
+
+      <ModalComponent
+        isVisible={deleteModalVisible}
+        content={
+          activeSwitchTab === 'lists'
+            ? 'Are you sure you want to delete lists?'
+            : 'Are you sure you want to delete wish?'
+        }
+        onClose={() => setDeleteModalVisible(false)}
+        onConfirm={() => onConfirmDeletePress()}
+        onCancel={() => setDeleteModalVisible(false)}
       />
     </>
   );
