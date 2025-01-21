@@ -5,7 +5,7 @@ import {BaseButton, IconBtn} from 'shared/components/buttons';
 import {Txt} from 'shared/components/typography';
 
 interface IProps {
-  title?: string;
+  title?: string | null;
   showBackBtn?: boolean;
   onBackBtnPress?: () => void;
   onRightBtnPress?: () => void;

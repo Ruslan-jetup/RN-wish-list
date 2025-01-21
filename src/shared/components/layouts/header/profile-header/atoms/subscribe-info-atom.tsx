@@ -1,11 +1,11 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Txt } from 'shared/components/typography';
 import { primaryBlack } from 'shared/configs';
 import { FontFamiliesEnum, FontWeightEnum } from 'typing';
 
 interface IProps {
-  subscribers: number;
-  subscriptions: number;
+  subscribers: number | null;
+  subscriptions: number | null;
 }
 
 export const SubscribeInfoAtom: React.FC<IProps> = ({
@@ -14,9 +14,9 @@ export const SubscribeInfoAtom: React.FC<IProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View style={{...styles.text_container, ...styles.left_text_container}}>
+      <View style={{ ...styles.text_container, ...styles.left_text_container }}>
         <Txt
-          content={subscribers}
+          content={subscribers ? subscribers : 0}
           fontFamily={FontFamiliesEnum.poppins}
           fontSize={16}
           fontWeight={FontWeightEnum.SemiBold}
@@ -32,7 +32,7 @@ export const SubscribeInfoAtom: React.FC<IProps> = ({
       </View>
       <View style={styles.text_container}>
         <Txt
-          content={subscriptions}
+          content={subscriptions ? subscriptions : 0}
           fontFamily={FontFamiliesEnum.poppins}
           fontSize={16}
           fontWeight={FontWeightEnum.SemiBold}

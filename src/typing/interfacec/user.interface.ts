@@ -12,4 +12,6 @@ export interface IUserInfo {
   dialCode: string;
   notification: boolean;
   premiumPeriod?: PremiumPeriodEnum;
+  subscribers: number | null;
+  subscriptions: number | null;
 }

@@ -1,5 +1,9 @@
 export enum RouteKey {
   Home = 'home',
+  Friends = 'friends',
+  Search = 'search',
+  Setting = 'setting',
+  Add = 'add',
 
   Loading = 'loading',
 

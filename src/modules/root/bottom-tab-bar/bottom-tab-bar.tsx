@@ -1,13 +1,16 @@
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import React, { useState } from 'react';
 import { StyleSheet, useWindowDimensions, View } from 'react-native';
-import { IconBtnNamesEnum } from 'typing';
+import { IconBtnNamesEnum, RouteKey } from 'typing';
 import { TabBarBgAtom } from './atoms/tab-bar-background.atom';
 import { TabAddBtn } from './atoms/tab-add-btn.atom';
 import { primaryBlue } from 'shared/configs';
 import { TabBarItemAtom } from './atoms';
 import { useNavigationStore } from 'store';
-import { ListsWishEditorModeEnum } from 'modules/lists-wishes-common';
+import {
+  ListsWishEditorModeEnum,
+  useListsWishesStore,
+} from 'modules/lists-wishes-common';
 
 interface IProps {
   props: BottomTabBarProps;
@@ -25,7 +28,7 @@ export const BottomTadBar: React.FC<IProps> = ({
   props: { state, navigation },
 }) => {
   const [isAddMenuVisible, setAddMenuVisible] = useState<boolean>(false);
-
+  const { setEditorMode } = useListsWishesStore();
   const {
     isBottomBarVisible,
     setBottomBarVisible,
@@ -46,8 +49,9 @@ export const BottomTadBar: React.FC<IProps> = ({
     navigation.navigate(routeName);
   };
 
-  const onAddEditorPress = (mode: ListsWishEditorModeEnum) => {
-    navigation.navigate('Add', { mode });
+  const onAddMenuItemSelect = (mode: ListsWishEditorModeEnum) => {
+    navigation.navigate(RouteKey.Add);
+    setEditorMode(mode);
     setAddMenuVisible(false);
     setBottomBarVisible(false);
   };
@@ -71,7 +75,7 @@ export const BottomTadBar: React.FC<IProps> = ({
                     iconColor={primaryBlue}
                     onPress={toggleAddMenu}
                     isAddMenuVisible={isAddMenuVisible}
-                    onOpenEditor={onAddEditorPress}
+                    onOpenEditor={onAddMenuItemSelect}
                     toggleAddMenu={() => setAddMenuVisible(!isAddMenuVisible)}
                   />
                 );

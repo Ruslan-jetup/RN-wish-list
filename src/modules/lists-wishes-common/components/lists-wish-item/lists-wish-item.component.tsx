@@ -4,12 +4,7 @@ import { IListsWishItem, wishCountTitleConfig } from 'modules';
 import { FontWeightEnum, IconBtnNamesEnum } from 'typing';
 import { DEFAULT_COVER_IMG } from 'shared/constants';
 import { primaryBlue, primaryWhite } from 'shared/configs';
-import { ContextMenu, IconBtn, Txt } from 'shared';
-
-interface IMoreBtnOptionsItem {
-  label: string;
-  onPress: () => void;
-}
+import { IconBtn, Txt } from 'shared';
 
 interface IProps {
   itemData: IListsWishItem;
@@ -17,10 +12,7 @@ interface IProps {
   onCopyLinkPress: (link: string) => void;
   onMoreBtnPress: () => void;
   wishesCount?: number;
-  isMoreMenuVisible: boolean;
-  onMoreMenuToggle: () => void;
   onListsWishItemPress: (id: string) => void;
-  moreBtnMenuOptions: (id?: string) => IMoreBtnOptionsItem[];
 }
 
 export const ListsWishItem: React.FC<IProps> = ({
@@ -29,92 +21,84 @@ export const ListsWishItem: React.FC<IProps> = ({
   onCopyLinkPress,
   onMoreBtnPress,
   wishesCount,
-  isMoreMenuVisible,
-  onMoreMenuToggle,
   onListsWishItemPress,
-  moreBtnMenuOptions,
 }) => {
-  const coverImgSource = itemData.coverImgPath
-    ? itemData.coverImgPath
-    : DEFAULT_COVER_IMG;
+  const coverImgSource =
+    typeof itemData.coverImgPath === 'number'
+      ? itemData.coverImgPath
+      : { uri: `file://${itemData.coverImgPath}` };
 
   return (
-    <>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          if (itemData.id) {
-            onListsWishItemPress(itemData.id);
-          }
-        }}>
-        <View style={styles.container}>
-          <View style={styles.content_container}>
-            <View style={styles.img_container}>
-              <Image style={styles.img} source={coverImgSource} />
-            </View>
-            <View style={styles.text_container}>
-              <View>
-                <Txt
-                  optionalProps={{
-                    numberOfLines: 1,
-                  }}
-                  style={styles.title}
-                  content={itemData.itemName}
-                />
-
-                {type === 'wish' && (
-                  <Txt
-                    optionalProps={{
-                      numberOfLines: 1,
-                    }}
-                    style={styles.text_common}
-                    content={
-                      itemData.price + ' ' + itemData.currency?.toString()
-                    }
-                  />
-                )}
-              </View>
-
+    <TouchableWithoutFeedback
+      onPress={() => {
+        if (itemData.id) {
+          onListsWishItemPress(itemData.id);
+        }
+      }}>
+      <View style={styles.container}>
+        <View style={styles.content_container}>
+          <View style={styles.img_container}>
+            <Image
+              style={styles.img}
+              source={
+                itemData.coverImgPath ? coverImgSource : DEFAULT_COVER_IMG
+              }
+            />
+          </View>
+          <View style={styles.text_container}>
+            <View>
               <Txt
                 optionalProps={{
                   numberOfLines: 1,
                 }}
-                style={{ ...styles.text_common, ...styles.link }}
-                content={
-                  type === 'wish'
-                    ? itemData.itemUrl
-                    : wishCountTitleConfig(wishesCount ?? 0)
-                }
+                style={styles.title}
+                content={itemData.itemName}
               />
+
+              {type === 'wish' && (
+                <Txt
+                  optionalProps={{
+                    numberOfLines: 1,
+                  }}
+                  style={styles.text_common}
+                  content={itemData.price + ' ' + itemData.currency?.toString()}
+                />
+              )}
             </View>
-          </View>
 
-          <View style={styles.btn_container}>
-            <IconBtn
-              iconName={IconBtnNamesEnum.Dots}
-              onIconBtnPress={onMoreBtnPress}
+            <Txt
+              optionalProps={{
+                numberOfLines: 1,
+              }}
+              style={{ ...styles.text_common, ...styles.link }}
+              content={
+                type === 'wish'
+                  ? itemData.itemUrl
+                  : wishCountTitleConfig(wishesCount ?? 0)
+              }
             />
-
-            {type === 'wish' && (
-              <IconBtn
-                iconName={IconBtnNamesEnum.Copy}
-                onIconBtnPress={() => onCopyLinkPress(itemData.itemUrl)}
-                size={34}
-                color={primaryBlue}
-                additionalStyles={{ paddingVertical: 7, paddingLeft: 11 }}
-              />
-            )}
           </View>
         </View>
-      </TouchableWithoutFeedback>
 
-      <ContextMenu
-        isVisible={isMoreMenuVisible}
-        toggleContextMenu={() => {
-          onMoreMenuToggle();
-        }}
-        options={moreBtnMenuOptions(itemData.id)}
-      />
-    </>
+        <View style={styles.btn_container}>
+          <IconBtn
+            iconName={IconBtnNamesEnum.Dots}
+            onIconBtnPress={onMoreBtnPress}
+            size={16}
+          />
+
+          {type === 'wish' && (
+            <IconBtn
+              iconName={IconBtnNamesEnum.Copy}
+              onIconBtnPress={() => onCopyLinkPress(itemData.itemUrl)}
+              size={30}
+              color={primaryBlue}
+              additionalStyles={{ paddingVertical: 8, paddingLeft: 10 }}
+            />
+          )}
+        </View>
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -9,12 +9,12 @@ interface IProps {
   title: string;
   userName: string;
   userAvatarUrl: string | number;
-  onSearchPress: () => void;
-  onDotsPress: () => void;
-  subscribers: number;
-  subscriptions: number;
+  onSearchPress?: () => void;
+  onDotsPress?: () => void;
+  subscribers: number | null;
+  subscriptions: number | null;
   activeScreen: ActiveScreenEnum;
-  loading?: boolean
+  loading?: boolean;
 }
 
 export const ProfileHeaderLayout: React.FC<IProps> = ({

@@ -1,4 +1,4 @@
-import {  View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { IconBtn } from 'shared/components/buttons';
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
 import { Txt } from 'shared/components/typography';
@@ -9,13 +9,14 @@ import {
   FontWeightEnum,
   IconBtnNamesEnum,
 } from 'typing';
+import _ from 'lodash';
 
 interface IProps {
   title: string;
   userName: string;
   userAvatarUrl: string | number;
-  onSearchPress: () => void;
-  onDotsPress: () => void;
+  onSearchPress?: () => void;
+  onDotsPress?: () => void;
   activeScreen: ActiveScreenEnum;
   loading?: boolean;
 }
@@ -55,7 +56,7 @@ export const GreetingUserAtom: React.FC<IProps> = ({
       {activeScreen === ActiveScreenEnum.Home ? (
         <IconBtn
           iconName={IconBtnNamesEnum.Search}
-          onIconBtnPress={onSearchPress}
+          onIconBtnPress={onSearchPress || _.noop}
           size={24}
           color={primaryBlue}
           additionalStyles={{
@@ -67,7 +68,7 @@ export const GreetingUserAtom: React.FC<IProps> = ({
       ) : (
         <IconBtn
           iconName={IconBtnNamesEnum.Dots}
-          onIconBtnPress={onDotsPress}
+          onIconBtnPress={onDotsPress || _.noop}
           size={16}
           loading={loading}
         />

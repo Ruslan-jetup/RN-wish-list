@@ -11,6 +11,7 @@ import {
   DefaultHeaderLayout,
   DropdownSelect,
   LargeSwitch,
+  Loader,
   ScreenLayout,
   TextArea,
   TextField,
@@ -18,7 +19,11 @@ import {
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
 import { primaryBlack, primaryWhite } from 'shared/configs';
 
-import { ICurrency, IListsWishEditorForm, ListsWishEditorModeEnum } from 'modules';
+import {
+  ICurrency,
+  IListsWishEditorForm,
+  ListsWishEditorModeEnum,
+} from 'modules';
 import { FormErrors } from 'shared/hooks';
 
 interface IProps {
@@ -27,12 +32,14 @@ interface IProps {
   errors: FormErrors<IListsWishEditorForm>;
   editorMode: ListsWishEditorModeEnum;
   currenciesList: ICurrency[];
-  editorTitle: string;
+  editorTitle: string | null;
   onHideWishesToggle: () => void;
   onSelectCurrency: (currency: ICurrency) => void;
   onBackBtnPress: () => void;
   onSaveImagePath: (path: string | number) => void;
   onSubmitEditorForm: () => void;
+  disableSaveBtn: boolean;
+  loading: boolean;
 }
 
 export const ListsWishEditorScreen: React.FC<IProps> = ({
@@ -47,6 +54,8 @@ export const ListsWishEditorScreen: React.FC<IProps> = ({
   onBackBtnPress,
   onSaveImagePath,
   onSubmitEditorForm,
+  disableSaveBtn,
+  loading,
 }) => {
   const { width } = useWindowDimensions();
   const priceInputsWidth = width / 2 - 30;
@@ -58,79 +67,87 @@ export const ListsWishEditorScreen: React.FC<IProps> = ({
         showBackBtn={true}
         onBackBtnPress={onBackBtnPress}
       />
-      <ScrollView contentContainerStyle={styles.scroll_view}>
-        <CoverImageSetter
-          onSaveImgPath={onSaveImagePath}
-          imageUrl={values.coverImgPath}
-          size={120}
-          showEditor={true}
-          additionalStyle={styles.cover_img}
-        />
-        <TextField
-          containerStyle={{ marginBottom: 24 }}
-          label="Name wish"
-          placeholder="Enter wish name"
-          error={errors?.itemName}
-          value={values?.itemName}
-          onChange={val => onChangeField('itemName', val)}
-        />
-
-        <View style={styles.price_container}>
+      {loading ? (
+        <Loader />
+      ) : (
+        <ScrollView contentContainerStyle={styles.scroll_view}>
+          <CoverImageSetter
+            onSaveImgPath={onSaveImagePath}
+            imageUrl={values.coverImgPath}
+            size={120}
+            showEditor={true}
+            additionalStyle={styles.cover_img}
+          />
           <TextField
-            containerStyle={{ width: priceInputsWidth }}
-            label="Price"
-            placeholder="Enter price"
-            error={errors?.price}
-            value={(values?.price ?? '').toString()}
-            onChange={val => onChangeField('price', val)}
-            keyboardType="number-pad"
+            containerStyle={{ marginBottom: 24 }}
+            label="Name wish"
+            placeholder="Enter wish name"
+            error={errors?.itemName}
+            value={values?.itemName}
+            onChange={val => onChangeField('itemName', val)}
           />
 
-          <DropdownSelect
-            onSelectItem={onSelectCurrency}
-            selectItems={currenciesList}
-            selectTitle={values?.currency || 'Select a currency'}
-            label="Currency"
-            containerStyles={{ width: priceInputsWidth, alignSelf: 'flex-end' }}
-            error={errors.currency}
+          <View style={styles.price_container}>
+            <TextField
+              containerStyle={{ width: priceInputsWidth }}
+              label="Price"
+              placeholder="Enter price"
+              error={errors?.price}
+              value={(values?.price ?? '').toString()}
+              onChange={val => onChangeField('price', val)}
+              keyboardType="number-pad"
+            />
+
+            <DropdownSelect
+              onSelectItem={onSelectCurrency}
+              selectItems={currenciesList}
+              selectTitle={values?.currency || 'Select a currency'}
+              label="Currency"
+              containerStyles={{
+                width: priceInputsWidth,
+                alignSelf: 'flex-end',
+              }}
+              error={errors.currency}
+            />
+          </View>
+
+          <TextField
+            containerStyle={{ marginBottom: 24 }}
+            label="URL"
+            placeholder="Add website URL"
+            error={errors?.itemUrl}
+            value={values?.itemUrl}
+            onChange={val => onChangeField('itemUrl', val)}
           />
-        </View>
 
-        <TextField
-          containerStyle={{ marginBottom: 24 }}
-          label="URL"
-          placeholder="Add website URL"
-          error={errors?.itemUrl}
-          value={values?.itemUrl}
-          onChange={val => onChangeField('itemUrl', val)}
-        />
+          {(editorMode === ListsWishEditorModeEnum.CreateList ||
+            editorMode === ListsWishEditorModeEnum.EditList) && (
+            <ChooseCollectionAtom />
+          )}
 
-        {(editorMode === ListsWishEditorModeEnum.CreateList ||
-          editorMode === ListsWishEditorModeEnum.EditList) && (
-          <ChooseCollectionAtom />
-        )}
+          <TextArea
+            placeholder="Enter a description"
+            title="Description"
+            error={errors?.description}
+            value={values?.description}
+            onValueChange={val => onChangeField('description', val)}
+          />
 
-        <TextArea
-          placeholder="Enter a description"
-          title="Description"
-          error={errors?.description}
-          value={values?.description}
-          onValueChange={val => onChangeField('description', val)}
-        />
+          <LargeSwitch
+            title="Hide wishes from other users"
+            onSwitchToggle={onHideWishesToggle}
+            value={values?.hideWishes ? values?.hideWishes : false}
+          />
 
-        <LargeSwitch
-          title="Hide wishes from other users"
-          onSwitchToggle={onHideWishesToggle}
-          value={values?.hideWishes ? values?.hideWishes : false}
-        />
-
-        <BaseButton
-          title="Save"
-          mode="primary"
-          size="large"
-          onPress={onSubmitEditorForm}
-        />
-      </ScrollView>
+          <BaseButton
+            title="Save"
+            mode="primary"
+            size="large"
+            onPress={onSubmitEditorForm}
+            disabled={disableSaveBtn}
+          />
+        </ScrollView>
+      )}
     </ScreenLayout>
   );
 };

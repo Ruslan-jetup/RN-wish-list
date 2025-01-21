@@ -5,7 +5,7 @@ import { CurrenciesEnum } from '../enums';
 export interface IListsWishItem {
   id?: string;
   coverImgPath: string | number;
-  creatingDate: Date;
+  creatingDate?: Date;
   itemName: string;
   price: number;
   currency: null | CurrenciesEnum;

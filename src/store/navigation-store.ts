@@ -1,4 +1,4 @@
-import { NavigationModuleKey } from 'typing';
+import { NavigationModuleKey, RouteKey } from 'typing';
 import { create } from 'zustand';
 
 interface INaviStore {
@@ -15,6 +15,6 @@ export const useNavigationStore = create<INaviStore>(set => ({
   setActiveModule: module => set({ activeModule: module }),
   isBottomBarVisible: true,
   setBottomBarVisible: val => set({ isBottomBarVisible: val }),
-  activeBottomBarTab: 'Home',
+  activeBottomBarTab: RouteKey.Home,
   setActiveBottomBarTab: tab => set({ activeBottomBarTab: tab }),
 }));

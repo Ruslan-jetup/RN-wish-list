@@ -1,7 +1,6 @@
 export * from './api';
 export * from './components';
 export * from './configs';
-export * from './mock';
 export * from './screens';
 export * from './services';
 export * from './store';

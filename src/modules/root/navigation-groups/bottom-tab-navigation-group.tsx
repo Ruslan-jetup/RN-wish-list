@@ -3,11 +3,11 @@ import {
   BottomTabBarProps,
 } from '@react-navigation/bottom-tabs';
 import {
-  HomeScreen,
   SearchCommonScreen,
   AccountNavigationGroup,
+  HomeWidget,
 } from 'modules';
-import { ITopTabItem } from 'typing';
+import { ITopTabItem, RouteKey } from 'typing';
 import { TopTabContentItem } from 'shared/components/top-tabs';
 import { Txt } from 'shared/components/typography';
 import { searchMockData } from 'mock';
@@ -61,23 +61,23 @@ export const BottomTabNavigationGroup = () => {
 
   return (
     <Tab.Navigator
-      initialRouteName={'Home'}
+      initialRouteName={RouteKey.Home}
       tabBar={(props: BottomTabBarProps) => renderCustomTabBar(props)}
       screenOptions={{
         headerShown: false,
         tabBarShowLabel: false,
       }}>
-      <Tab.Screen name={'Home'} component={HomeScreen} />
+      <Tab.Screen name={RouteKey.Home} component={HomeWidget} />
       <Tab.Screen
-        name={'Friends'}
+        name={RouteKey.Friends}
         children={() => <SearchCommonScreen tabs={friendsTabs} />}
       />
-      <Tab.Screen name={'Add'} component={ListsWishEditorWidget} />
+      <Tab.Screen name={RouteKey.Add} component={ListsWishEditorWidget} />
       <Tab.Screen
-        name={'Search'}
+        name={RouteKey.Search}
         children={() => <SearchCommonScreen tabs={wishTabs} />}
       />
-      <Tab.Screen name={'Settings'} component={AccountNavigationGroup} />
+      <Tab.Screen name={RouteKey.Setting} component={AccountNavigationGroup} />
     </Tab.Navigator>
   );
 };

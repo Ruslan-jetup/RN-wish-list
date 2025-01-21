@@ -1,6 +1,5 @@
 import { AxiosHeaders, AxiosResponse } from 'axios';
-import { wishesMockData } from '../mock';
-import { IListsWishItem } from '../typing';
+import { IListsWishEditorForm, IListsWishItem } from '../typing';
 import UUID from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,9 +23,31 @@ export const addWishReq = async (payload: Omit<IListsWishItem, 'id'>) => {
 
 export const changeWishReq = async (
   id: string,
-  updatedFields: Partial<IListsWishItem>,
+  updatedFields: IListsWishEditorForm,
 ) => {
-  console.log('id: ', id, 'updatedFields: ', updatedFields);
+  try {
+    const storedWishes = await AsyncStorage.getItem('wishes');
+    const wishes: IListsWishItem[] = storedWishes
+      ? JSON.parse(storedWishes)
+      : [];
+
+    const index = wishes.findIndex(wish => wish.id === id);
+
+    if (index === -1) {
+      throw new Error('Wish item not found');
+    }
+
+    const creatingDate = new Date();
+    const fieldsWithDate = { ...updatedFields, creatingDate };
+
+    const updatedWish = { ...wishes[index], ...fieldsWithDate };
+    console.log(updatedWish);
+    wishes[index] = updatedWish;
+
+    await AsyncStorage.setItem('wishes', JSON.stringify(wishes));
+  } catch (error) {
+    //
+  }
 };
 
 export const createListReq = async (payload: any) => {
@@ -40,9 +61,22 @@ export const changeListReq = async (
   console.log('id: ', id, 'updatedFields: ', updatedFields);
 };
 
-export const getListOfListsReq = async () => {};
+export const getWishItemReq = async (
+  id: string,
+): Promise<AxiosResponse<IListsWishItem>> => {
+  let wishData: IListsWishItem | null = null;
+  try {
+    const response = await getAllWishesReq();
+    const item = response.data.find(el => el.id === id);
+    wishData = item ?? null;
+  } catch {
+    //
+  }
 
-export const getWishesListReq = async (): Promise<AxiosResponse<IListsWishItem[]>> => {
+  if (!wishData) {
+    throw new Error('Wish item not found');
+  }
+
   return {
     status: 200,
     statusText: 'OK',
@@ -50,6 +84,31 @@ export const getWishesListReq = async (): Promise<AxiosResponse<IListsWishItem[]
     config: {
       headers: new AxiosHeaders(),
     },
-    data: wishesMockData,
+    data: wishData,
+  };
+};
+
+export const getAllListsReq = async () => {};
+
+export const getAllWishesReq = async (): Promise<
+  AxiosResponse<IListsWishItem[]>
+> => {
+  let listData: IListsWishItem[] | null = null;
+  try {
+    const storedWishes = await AsyncStorage.getItem('wishes');
+    if (storedWishes) {
+      listData = JSON.parse(storedWishes);
+    }
+  } catch (error) {
+    //
+  }
+  return {
+    status: 200,
+    statusText: 'OK',
+    headers: new AxiosHeaders(),
+    config: {
+      headers: new AxiosHeaders(),
+    },
+    data: listData ?? [],
   };
 };

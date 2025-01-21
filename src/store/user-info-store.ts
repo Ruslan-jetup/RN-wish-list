@@ -19,6 +19,8 @@ export const useUserInfoStore = create<IProfilePhotoStore>(set => ({
     dialCode: '',
     notification: false,
     premiumPeriod: PremiumPeriodEnum.NoPremium,
+    subscribers: null,
+    subscriptions: null,
   },
   setUserInfo: updates =>
     set(state => ({
