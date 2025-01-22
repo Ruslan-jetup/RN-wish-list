@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react';
 import { HomeScreen } from '../screens';
 import {
   ContextMenu,
-  Loader,
   ModalComponent,
-  sortByDateHelper,
   useNav,
   useToggle,
 } from 'shared';
@@ -16,13 +14,12 @@ import {
   getAllListsReq,
   getAllWishesReq,
   ListsWishEditorModeEnum,
-  ListsWishItem,
   useListsWishesStore,
 } from 'modules/lists-wishes-common';
-import { FlatList, StyleSheet } from 'react-native';
 import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import { RouteKey } from 'typing';
+import _ from 'lodash';
 
 export const HomeWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -197,54 +194,19 @@ export const HomeWidget = () => {
     },
   ];
 
-  const switchTabContentConfig = {
-    lists: isLoading ? (
-      <Loader />
-    ) : (
-      <FlatList
-        data={sortByDateHelper(allLists)}
-        renderItem={({ item }) => (
-          <ListsWishItem
-            type="lists"
-            itemData={item}
-            onCopyLinkPress={onCopyLinkPress}
-            onMoreBtnPress={() => item.id && onMoreBtnPress(item.id)}
-            onListsWishItemPress={onListsWishItemPress}
-          />
-        )}
-        keyExtractor={item => item.id || 'default-key'}
-        contentContainerStyle={styles.flat_list}
-      />
-    ),
-    wish: isLoading ? (
-      <Loader />
-    ) : (
-      <FlatList
-        data={sortByDateHelper(allWishes)}
-        renderItem={({ item }) => (
-          <ListsWishItem
-            type="wish"
-            itemData={item}
-            onCopyLinkPress={onCopyLinkPress}
-            onMoreBtnPress={() => item.id && onMoreBtnPress(item.id)}
-            onListsWishItemPress={onListsWishItemPress}
-          />
-        )}
-        keyExtractor={item => item.id || 'default-key'}
-        contentContainerStyle={styles.flat_list}
-      />
-    ),
-  };
-
   return (
     <>
       <HomeScreen
-        children={switchTabContentConfig[activeSwitchTab]}
         userInfo={userInfo}
         onToggleListsWishSwitch={onToggleActiveSwitchTab}
         activeSwitchTab={activeSwitchTab}
         onSearchBtnPress={onSearchBtnPress}
         headerTitle={headerTitle}
+        isLoading={isLoading}
+        listData={activeSwitchTab === 'wish' ? allWishes : allLists}
+        onCopyLinkPress={activeSwitchTab === 'wish' ? onCopyLinkPress : _.noop}
+        onMoreBtnPress={onMoreBtnPress}
+        onListsWishItemPress={onListsWishItemPress}
       />
 
       <ContextMenu
@@ -267,9 +229,3 @@ export const HomeWidget = () => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  flat_list: {
-    paddingBottom: 130,
-  },
-});

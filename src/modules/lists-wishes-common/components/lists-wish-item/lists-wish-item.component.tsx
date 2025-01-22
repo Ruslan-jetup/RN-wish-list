@@ -107,7 +107,6 @@ export const ListsWishItem: React.FC<IProps> = ({
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
