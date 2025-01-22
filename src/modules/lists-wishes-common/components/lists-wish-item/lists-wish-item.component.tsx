@@ -1,13 +1,15 @@
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Image, StyleSheet } from 'react-native';
-import { IListsWishItem, wishCountTitleConfig } from 'modules';
+import { IListItem, IWishItem, wishCountTitleConfig } from 'modules';
 import { FontWeightEnum, IconBtnNamesEnum } from 'typing';
 import { DEFAULT_COVER_IMG } from 'shared/constants';
 import { primaryBlue, primaryWhite } from 'shared/configs';
 import { IconBtn, Txt } from 'shared';
 
+type IListWishItem = Partial<IListItem & IWishItem>;
+
 interface IProps {
-  itemData: IListsWishItem;
+  itemData: IListWishItem;
   type: 'wish' | 'lists';
   onCopyLinkPress: (link: string) => void;
   onMoreBtnPress: () => void;
@@ -52,20 +54,22 @@ export const ListsWishItem: React.FC<IProps> = ({
                   numberOfLines: 1,
                 }}
                 style={styles.title}
-                content={itemData.itemName}
+                content={itemData.itemName || ''}
               />
-
               {type === 'wish' && (
                 <Txt
                   optionalProps={{
                     numberOfLines: 1,
                   }}
                   style={styles.text_common}
-                  content={itemData.price + ' ' + itemData.currency?.toString()}
+                  content={
+                    (itemData.price ?? '') +
+                    ' ' +
+                    (itemData.currency?.toString() ?? '')
+                  }
                 />
               )}
             </View>
-
             <Txt
               optionalProps={{
                 numberOfLines: 1,
@@ -73,7 +77,7 @@ export const ListsWishItem: React.FC<IProps> = ({
               style={{ ...styles.text_common, ...styles.link }}
               content={
                 type === 'wish'
-                  ? itemData.itemUrl
+                  ? itemData.itemUrl || ''
                   : wishCountTitleConfig(wishesCount ?? 0)
               }
             />
@@ -86,11 +90,12 @@ export const ListsWishItem: React.FC<IProps> = ({
             onIconBtnPress={onMoreBtnPress}
             size={16}
           />
-
           {type === 'wish' && (
             <IconBtn
               iconName={IconBtnNamesEnum.Copy}
-              onIconBtnPress={() => onCopyLinkPress(itemData.itemUrl)}
+              onIconBtnPress={() =>
+                itemData.itemUrl && onCopyLinkPress(itemData.itemUrl)
+              }
               size={30}
               color={primaryBlue}
               additionalStyles={{ paddingVertical: 8, paddingLeft: 10 }}
@@ -101,6 +106,7 @@ export const ListsWishItem: React.FC<IProps> = ({
     </TouchableWithoutFeedback>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {

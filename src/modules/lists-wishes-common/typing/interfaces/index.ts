@@ -1,2 +1,2 @@
-export * from './wish.interface';
+export * from './list-wish.interface';
 export * from './currency.interface';

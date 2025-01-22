@@ -5,16 +5,16 @@ import {
   Loader,
   ModalComponent,
   sortByDateHelper,
-  Txt,
   useNav,
   useToggle,
 } from 'shared';
 import { useNavigationStore, useUserInfoStore } from 'store';
 import { homeHeaderTitleConfig } from '../configs';
 import {
+  deleteListReq,
   deleteWishReq,
+  getAllListsReq,
   getAllWishesReq,
-  IListsWishItem,
   ListsWishEditorModeEnum,
   ListsWishItem,
   useListsWishesStore,
@@ -27,7 +27,6 @@ import { RouteKey } from 'typing';
 export const HomeWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
-  const [allWishes, setAllWishes] = useState<IListsWishItem[] | null>(null);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [activeSwitchTab, setActiveSwitchTab] = useState<'lists' | 'wish'>(
     'lists',
@@ -38,7 +37,15 @@ export const HomeWidget = () => {
     toggler: toggleMoreMenu,
     setToggleValue: setMoreMenuVisible,
   } = useToggle(false);
-  const { itemId, setItemId, setEditorMode } = useListsWishesStore();
+  const {
+    itemId,
+    setItemId,
+    setEditorMode,
+    allWishes,
+    setAllWishes,
+    allLists,
+    setAllLists,
+  } = useListsWishesStore();
   const { setBottomBarVisible, activeBottomBarTab, setActiveBottomBarTab } =
     useNavigationStore();
   const { navigate } = useNav();
@@ -53,7 +60,8 @@ export const HomeWidget = () => {
 
   useEffect(() => {
     if (activeBottomBarTab === RouteKey.Home) {
-      fetchWishes();
+      activeSwitchTab === 'wish' && fetchWishes();
+      activeSwitchTab === 'lists' && fetchLists();
     }
   }, [activeBottomBarTab, activeSwitchTab]);
 
@@ -63,6 +71,20 @@ export const HomeWidget = () => {
       try {
         const response = await getAllWishesReq();
         setAllWishes(response.data);
+        setLoading(false);
+      } catch {
+        //
+      }
+    }
+  };
+
+  const fetchLists = async () => {
+    if (activeSwitchTab === 'lists') {
+      setLoading(true);
+
+      try {
+        const response = await getAllListsReq();
+        setAllLists(response.data);
         setLoading(false);
       } catch {
         //
@@ -123,18 +145,26 @@ export const HomeWidget = () => {
 
   const onConfirmDeletePress = async () => {
     try {
-      await deleteWishReq(itemId);
+      activeSwitchTab === 'wish'
+        ? await deleteWishReq(itemId)
+        : await deleteListReq(itemId);
+
       setDeleteModalVisible(false);
-      await fetchWishes();
+
+      activeSwitchTab === 'wish' ? await fetchWishes() : await fetchLists();
 
       Toast.show({
         type: 'success',
-        text1: 'Wish successfully deleted',
+        text1: `${
+          activeSwitchTab === 'wish' ? 'Wish' : 'List'
+        } successfully deleted`,
       });
     } catch (e) {
       Toast.show({
         type: 'error',
-        text1: 'Failed to delete wish',
+        text1: `Failed to delete ${
+          activeSwitchTab === 'wish' ? 'wish' : 'list'
+        }`,
       });
     }
   };
@@ -168,7 +198,24 @@ export const HomeWidget = () => {
   ];
 
   const switchTabContentConfig = {
-    lists: <Txt content={'Lists content'} />,
+    lists: isLoading ? (
+      <Loader />
+    ) : (
+      <FlatList
+        data={sortByDateHelper(allLists)}
+        renderItem={({ item }) => (
+          <ListsWishItem
+            type="lists"
+            itemData={item}
+            onCopyLinkPress={onCopyLinkPress}
+            onMoreBtnPress={() => item.id && onMoreBtnPress(item.id)}
+            onListsWishItemPress={onListsWishItemPress}
+          />
+        )}
+        keyExtractor={item => item.id || 'default-key'}
+        contentContainerStyle={styles.flat_list}
+      />
+    ),
     wish: isLoading ? (
       <Loader />
     ) : (

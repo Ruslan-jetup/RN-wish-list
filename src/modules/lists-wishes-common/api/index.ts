@@ -1,11 +1,11 @@
 import { AxiosHeaders, AxiosResponse } from 'axios';
-import { IListsWishEditorForm, IListsWishItem } from '../typing';
+import { IListItem, IWishEditorForm, IWishItem } from '../typing';
 import UUID from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const addWishReq = async (payload: Omit<IListsWishItem, 'id'>) => {
+export const addWishReq = async (payload: Omit<IWishItem, 'id'>) => {
   try {
-    const newWish: IListsWishItem = {
+    const newWish: IWishItem = {
       ...payload,
       id: UUID.v4(),
       creatingDate: new Date(),
@@ -21,15 +21,10 @@ export const addWishReq = async (payload: Omit<IListsWishItem, 'id'>) => {
   }
 };
 
-export const changeWishReq = async (
-  id: string,
-  updatedFields: IListsWishEditorForm,
-) => {
+export const changeWishReq = async (id: string, updatedFields: IWishEditorForm) => {
   try {
     const storedWishes = await AsyncStorage.getItem('wishes');
-    const wishes: IListsWishItem[] = storedWishes
-      ? JSON.parse(storedWishes)
-      : [];
+    const wishes: IWishItem[] = storedWishes ? JSON.parse(storedWishes) : [];
 
     const index = wishes.findIndex(wish => wish.id === id);
 
@@ -48,21 +43,32 @@ export const changeWishReq = async (
   }
 };
 
-export const createListReq = async (payload: any) => {
-  console.log(payload);
+export const createListReq = async (payload: Omit<IListItem, 'id'>) => {
+  try {
+    const newList: IListItem = {
+      ...payload,
+      id: UUID.v4(),
+      creatingDate: new Date(),
+    };
+    const storedWishes = JSON.parse(
+      (await AsyncStorage.getItem('lists')) || '[]',
+    );
+    const updatedWishes = JSON.stringify([newList, ...storedWishes]);
+
+    await AsyncStorage.setItem('lists', updatedWishes);
+  } catch (error) {
+    //
+  }
 };
 
-export const changeListReq = async (
-  id: string,
-  updatedFields: Partial<IListsWishItem>,
-) => {
+export const changeListReq = async (id: string, updatedFields: Partial<IWishItem>) => {
   console.log('id: ', id, 'updatedFields: ', updatedFields);
 };
 
 export const getWishItemReq = async (
   id: string,
-): Promise<AxiosResponse<IListsWishItem>> => {
-  let wishData: IListsWishItem | null = null;
+): Promise<AxiosResponse<IWishItem>> => {
+  let wishData: IWishItem | null = null;
   try {
     const response = await getAllWishesReq();
     const item = response.data.find(el => el.id === id);
@@ -86,16 +92,12 @@ export const getWishItemReq = async (
   };
 };
 
-export const getAllListsReq = async () => {};
-
-export const getAllWishesReq = async (): Promise<
-  AxiosResponse<IListsWishItem[]>
-> => {
-  let listData: IListsWishItem[] | null = null;
+export const getAllListsReq = async (): Promise<AxiosResponse<IListItem[]>> => {
+  let listsData: IListItem[] | null = null;
   try {
-    const storedWishes = await AsyncStorage.getItem('wishes');
-    if (storedWishes) {
-      listData = JSON.parse(storedWishes);
+    const storedLists = await AsyncStorage.getItem('lists');
+    if (storedLists) {
+      listsData = JSON.parse(storedLists);
     }
   } catch (error) {
     //
@@ -107,20 +109,52 @@ export const getAllWishesReq = async (): Promise<
     config: {
       headers: new AxiosHeaders(),
     },
-    data: listData ?? [],
+    data: listsData ?? [],
+  };
+};
+
+export const getAllWishesReq = async (): Promise<AxiosResponse<IWishItem[]>> => {
+  let wishesData: IWishItem[] | null = null;
+  try {
+    const storedWishes = await AsyncStorage.getItem('wishes');
+    if (storedWishes) {
+      wishesData = JSON.parse(storedWishes);
+    }
+  } catch (error) {
+    //
+  }
+  return {
+    status: 200,
+    statusText: 'OK',
+    headers: new AxiosHeaders(),
+    config: {
+      headers: new AxiosHeaders(),
+    },
+    data: wishesData ?? [],
   };
 };
 
 export const deleteWishReq = async (id: string) => {
   try {
     const allWishes = await AsyncStorage.getItem('wishes');
-    const parsedWishes: IListsWishItem[] = allWishes
-      ? JSON.parse(allWishes)
-      : [];
+    const parsedWishes: IWishItem[] = allWishes ? JSON.parse(allWishes) : [];
 
     const filteredWishes = parsedWishes.filter(item => item.id !== id);
 
     await AsyncStorage.setItem('wishes', JSON.stringify(filteredWishes));
+  } catch {
+    //
+  }
+};
+
+export const deleteListReq = async (id: string) => {
+  try {
+    const allLists = await AsyncStorage.getItem('lists');
+    const parsedLists: IWishItem[] = allLists ? JSON.parse(allLists) : [];
+
+    const filteredLists = parsedLists.filter(item => item.id !== id);
+
+    await AsyncStorage.setItem('lists', JSON.stringify(filteredLists));
   } catch {
     //
   }

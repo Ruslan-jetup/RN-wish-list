@@ -22,7 +22,7 @@ export const ChooseCollectionAtom: React.FC<IProps> = ({
           <View style={styles.img_container}>
             <Image style={styles.img} source={imgPath} />
           </View>
-          <Txt style={styles.btn_title} content={'ChooseCollectionAtom'} />
+          <Txt style={styles.btn_title} content={'Without collection'} />
         </View>
         <Icon name={IconBtnNamesEnum.Right} size={24} />
       </TouchableOpacity>

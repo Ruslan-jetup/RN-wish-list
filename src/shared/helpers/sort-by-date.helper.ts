@@ -1,6 +1,4 @@
-import { IListsWishItem } from 'modules';
-
-export const sortByDateHelper = (items: IListsWishItem[] | null) => {
+export const sortByDateHelper = (items: any) => {
   if (!items) return null;
 
   const sortedItems = [...items].sort((a, b) => {

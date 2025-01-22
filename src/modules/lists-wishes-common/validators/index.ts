@@ -1,1 +1,1 @@
-export * from './lists-wish-editor.validator';
+export * from './lists-wishes-editor.validator';

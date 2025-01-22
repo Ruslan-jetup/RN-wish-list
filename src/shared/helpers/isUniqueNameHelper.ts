@@ -1,11 +1,9 @@
-import { IListsWishItem } from 'modules';
-
 export const isUniqueNameHelper = (
-  list: IListsWishItem[] | null,
+  list: any,
   createdItemName: string,
 ): boolean => {
   if (!list) return true;
   return !list.some(
-    item => item.itemName.toLowerCase() === createdItemName.toLowerCase(),
+    (item: any) => item.itemName.toLowerCase() === createdItemName.toLowerCase(),
   );
 };

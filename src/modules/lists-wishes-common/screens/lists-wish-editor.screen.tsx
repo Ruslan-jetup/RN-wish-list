@@ -19,17 +19,13 @@ import {
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
 import { primaryBlack, primaryWhite } from 'shared/configs';
 
-import {
-  ICurrency,
-  IListsWishEditorForm,
-  ListsWishEditorModeEnum,
-} from 'modules';
+import { ICurrency, IWishEditorForm, ListsWishEditorModeEnum } from 'modules';
 import { FormErrors } from 'shared/hooks';
 
 interface IProps {
-  onChangeField: (key: keyof IListsWishEditorForm, val: any) => void;
-  values: IListsWishEditorForm;
-  errors: FormErrors<IListsWishEditorForm>;
+  onChangeField: (key: keyof IWishEditorForm, val: any) => void;
+  values: IWishEditorForm;
+  errors: FormErrors<IWishEditorForm>;
   editorMode: ListsWishEditorModeEnum;
   currenciesList: ICurrency[];
   editorTitle: string | null;
@@ -40,6 +36,7 @@ interface IProps {
   onSubmitEditorForm: () => void;
   disableSaveBtn: boolean;
   loading: boolean;
+  onAddWishesToListPress: () => void;
 }
 
 export const ListsWishEditorScreen: React.FC<IProps> = ({
@@ -56,9 +53,13 @@ export const ListsWishEditorScreen: React.FC<IProps> = ({
   onSubmitEditorForm,
   disableSaveBtn,
   loading,
+  onAddWishesToListPress,
 }) => {
   const { width } = useWindowDimensions();
   const priceInputsWidth = width / 2 - 30;
+  const isWishEditorMode =
+    editorMode === ListsWishEditorModeEnum.AddWish ||
+    editorMode === ListsWishEditorModeEnum.EditWish;
 
   return (
     <ScreenLayout>
@@ -81,63 +82,78 @@ export const ListsWishEditorScreen: React.FC<IProps> = ({
           <TextField
             containerStyle={{ marginBottom: 24 }}
             label="Name wish"
-            placeholder="Enter wish name"
+            placeholder={`Enter ${isWishEditorMode ? 'wish' : 'list'} name`}
             error={errors?.itemName}
             value={values?.itemName}
             onChange={val => onChangeField('itemName', val)}
           />
 
-          <View style={styles.price_container}>
-            <TextField
-              containerStyle={{ width: priceInputsWidth }}
-              label="Price"
-              placeholder="Enter price"
-              error={errors?.price}
-              value={(values?.price ?? '').toString()}
-              onChange={val => onChangeField('price', val)}
-              keyboardType="number-pad"
-            />
+          {isWishEditorMode && (
+            <>
+              <View style={styles.price_container}>
+                <TextField
+                  containerStyle={{ width: priceInputsWidth }}
+                  label="Price"
+                  placeholder="Enter price"
+                  error={errors?.price}
+                  value={(values?.price ?? '').toString()}
+                  onChange={val => onChangeField('price', val)}
+                  keyboardType="number-pad"
+                />
 
-            <DropdownSelect
-              onSelectItem={onSelectCurrency}
-              selectItems={currenciesList}
-              selectTitle={values?.currency || 'Select a currency'}
-              label="Currency"
-              containerStyles={{
-                width: priceInputsWidth,
-                alignSelf: 'flex-end',
-              }}
-              error={errors.currency}
-            />
-          </View>
+                <DropdownSelect
+                  onSelectItem={onSelectCurrency}
+                  selectItems={currenciesList}
+                  selectTitle={values?.currency || 'Select a currency'}
+                  label="Currency"
+                  containerStyles={{
+                    width: priceInputsWidth,
+                    alignSelf: 'flex-end',
+                  }}
+                  error={errors.currency}
+                />
+              </View>
 
-          <TextField
-            containerStyle={{ marginBottom: 24 }}
-            label="URL"
-            placeholder="Add website URL"
-            error={errors?.itemUrl}
-            value={values?.itemUrl}
-            onChange={val => onChangeField('itemUrl', val)}
-          />
-
-          {(editorMode === ListsWishEditorModeEnum.CreateList ||
-            editorMode === ListsWishEditorModeEnum.EditList) && (
-            <ChooseCollectionAtom />
+              <TextField
+                containerStyle={{ marginBottom: 24 }}
+                label="URL"
+                placeholder="Add website URL"
+                error={errors?.itemUrl}
+                value={values?.itemUrl}
+                onChange={val => onChangeField('itemUrl', val)}
+              />
+            </>
           )}
 
-          <TextArea
-            placeholder="Enter a description"
-            title="Description"
-            error={errors?.description}
-            value={values?.description}
-            onValueChange={val => onChangeField('description', val)}
-          />
+          {!isWishEditorMode && <ChooseCollectionAtom />}
+          {isWishEditorMode && (
+            <TextArea
+              placeholder="Enter a description"
+              title="Description"
+              error={errors?.description}
+              value={values?.description}
+              onValueChange={val => onChangeField('description', val)}
+            />
+          )}
 
           <LargeSwitch
-            title="Hide wishes from other users"
+            title={`Hide ${
+              isWishEditorMode ? 'wishes' : 'list'
+            } from other users`}
             onSwitchToggle={onHideWishesToggle}
-            value={values?.hideWishes ? values?.hideWishes : false}
+            value={values?.hideItem ? values?.hideItem : false}
           />
+
+          {!isWishEditorMode && (
+            <BaseButton
+              title="Add wishes to list"
+              mode="secondary"
+              size="large"
+              onPress={onAddWishesToListPress}
+              additionalBtnStyles={styles.add_wishes_btn}
+              additionalFontStyles={{ color: primaryWhite }}
+            />
+          )}
 
           <BaseButton
             title="Save"
@@ -185,5 +201,9 @@ const styles = StyleSheet.create({
   },
   label: {
     color: '#514F50',
+  },
+  add_wishes_btn: {
+    backgroundColor: primaryBlack,
+    marginBottom: 24,
   },
 });

@@ -7,8 +7,8 @@ import {
   CurrenciesEnum,
   getWishItemReq,
   ICurrency,
-  IListsWishEditorForm,
-  IListsWishItem,
+  IWishEditorForm,
+  IWishItem,
   ListsWishEditorModeEnum,
   useListsWishesStore,
 } from 'modules';
@@ -22,8 +22,9 @@ import { isUniqueNameHelper } from 'shared';
 
 export const ListsWishEditorWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [initialValues, setInitialValues] =
-    useState<IListsWishEditorForm | null>(null);
+  const [initialValues, setInitialValues] = useState<IWishEditorForm | null>(
+    null,
+  );
   const { setBottomBarVisible, setActiveBottomBarTab, activeBottomBarTab } =
     useNavigationStore();
   const { goBack } = useNav();
@@ -41,7 +42,9 @@ export const ListsWishEditorWidget = () => {
     reset,
     set,
     setErrors,
-  } = useForm<IListsWishEditorForm>({}, validateListsWishEditor);
+  } = useForm<IWishEditorForm>({}, data =>
+    validateListsWishEditor(data, editorMode),
+  );
   const { itemId, setItemId, editorMode, setEditorMode } =
     useListsWishesStore();
   const { getAsyncStorageData } = useAsyncStorage();
@@ -54,7 +57,7 @@ export const ListsWishEditorWidget = () => {
   }, [editorMode, activeBottomBarTab]);
 
   useEffect(() => {
-    setField('hideWishes', isWishesHidden);
+    setField('hideItem', isWishesHidden);
   }, [isWishesHidden]);
 
   const fetchCurrentItemData = async () => {
@@ -64,14 +67,14 @@ export const ListsWishEditorWidget = () => {
       if (itemId && editorMode === ListsWishEditorModeEnum.EditWish) {
         const response = await getWishItemReq(itemId);
 
-        const fieldsData: IListsWishItem = {
+        const fieldsData: IWishItem = {
           coverImgPath: response.data.coverImgPath,
           itemName: response.data.itemName,
           price: response.data.price,
           currency: response.data.currency,
           itemUrl: response.data.itemUrl,
           description: response.data.description,
-          hideWishes: response.data.hideWishes,
+          hideItem: response.data.hideItem,
         };
         set({ ...fieldsData });
         setInitialValues({ ...fieldsData });
@@ -101,9 +104,9 @@ export const ListsWishEditorWidget = () => {
   };
 
   const resetErrors = Object.keys(values).reduce((acc, key) => {
-    acc[key as keyof IListsWishEditorForm] = '';
+    acc[key as keyof IWishEditorForm] = '';
     return acc;
-  }, {} as Record<keyof IListsWishEditorForm, string>);
+  }, {} as Record<keyof IWishEditorForm, string>);
 
   const onBackBtnPress = () => {
     setBottomBarVisible(true);
@@ -114,7 +117,11 @@ export const ListsWishEditorWidget = () => {
     setErrors(resetErrors);
   };
 
-  const onFieldChange = (key: keyof IListsWishEditorForm, val: any) => {
+  const onAddWishesToListPress = () => {
+    //
+  };
+
+  const onFieldChange = (key: keyof IWishEditorForm, val: any) => {
     setField(key, val);
   };
 
@@ -164,7 +171,7 @@ export const ListsWishEditorWidget = () => {
     editorMode && (
       <ListsWishEditorScreen
         onChangeField={onFieldChange}
-        values={{ ...values, hideWishes: isWishesHidden }}
+        values={{ ...values, hideItem: isWishesHidden }}
         errors={errors}
         editorMode={editorMode}
         currenciesList={CURRENCIES}
@@ -176,6 +183,7 @@ export const ListsWishEditorWidget = () => {
         onSubmitEditorForm={() => onSubmit(onSubmitEditorForm)}
         disableSaveBtn={isFormChanged}
         loading={isLoading}
+        onAddWishesToListPress={onAddWishesToListPress}
       />
     )
   );
