@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { CropView } from 'react-native-image-crop-tools';
 import { primaryBlack, primaryWhite } from 'shared/configs';
 import { FontWeightEnum } from 'typing';
@@ -28,7 +28,6 @@ export const CoverImgCropper: React.FC<IProps> = ({
 
   return (
     <ScreenLayout background={primaryBlack}>
-      <StatusBar backgroundColor={primaryBlack} barStyle={'light-content'} />
       <View style={styles.container}>
         <CropView
           sourceUrl={selectedImg}

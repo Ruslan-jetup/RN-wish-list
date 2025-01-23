@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigationStore, useUserInfoStore } from 'store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { IUserInfo, NavigationModuleKey } from 'typing';
+import { IUserInfo, NavigationModuleKey, RouteKey } from 'typing';
 
 export const useProfileActions = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [actionType, setActionType] = useState<'logout' | 'delete'>();
-
+  const { setActiveBottomBarTab } = useNavigationStore();
   const { setUserInfo, userInfo } = useUserInfoStore();
   const { setActiveModule } = useNavigationStore();
 
@@ -77,6 +77,7 @@ export const useProfileActions = () => {
 
   const onConfirmModal = () => {
     setModalVisible(false);
+    setActiveBottomBarTab(RouteKey.Home);
     if (actionType === 'logout') {
       handleLogout();
     } else if (actionType === 'delete') {

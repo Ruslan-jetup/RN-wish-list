@@ -1,6 +1,5 @@
 import {
   ImageBackground,
-  StatusBar,
   StyleSheet,
   Text,
   View,
@@ -68,8 +67,6 @@ export const PremiumScreen: React.FC = () => {
 
   return (
     <ScreenLayout>
-      <StatusBar backgroundColor={'transparent'} barStyle={'dark-content'} />
-
       <View style={styles.container}>
         <TopBgClouds />
 

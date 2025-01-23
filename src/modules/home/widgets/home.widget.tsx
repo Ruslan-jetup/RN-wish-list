@@ -3,6 +3,7 @@ import { HomeScreen } from '../screens';
 import {
   ContextMenu,
   ModalComponent,
+  primaryWhite,
   useNav,
   useToggle,
 } from 'shared';
@@ -20,6 +21,7 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import { RouteKey } from 'typing';
 import _ from 'lodash';
+import { statusbarStyleHelper } from 'shared/helpers/statusbar-style.helper';
 
 export const HomeWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -59,6 +61,11 @@ export const HomeWidget = () => {
     if (activeBottomBarTab === RouteKey.Home) {
       activeSwitchTab === 'wish' && fetchWishes();
       activeSwitchTab === 'lists' && fetchLists();
+       statusbarStyleHelper({
+         background: primaryWhite,
+         barStyle: 'dark-content',
+         translucent: false,
+       });
     }
   }, [activeBottomBarTab, activeSwitchTab]);
 

@@ -10,6 +10,7 @@ const grey = '#C5C5C5';
 const darkGrey = '#514F50';
 const secondaryBlue = '#CEECFD';
 const errorsColor = '#cc0000';
+const transparent = '#ffffff00';
 
 export {
   primaryBgColor,
@@ -24,4 +25,5 @@ export {
   secondaryGrey,
   errorsColor,
   primaryRed,
+  transparent,
 };

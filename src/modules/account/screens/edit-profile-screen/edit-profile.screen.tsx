@@ -97,10 +97,7 @@ export const EditProfileScreen = () => {
     <ScreenLayout viewStyle={styles.container}>
       <TopBgClouds />
 
-      <DefaultHeaderLayout
-        showBackBtn={true}
-        onBackBtnPress={onBackPress}
-      />
+      <DefaultHeaderLayout showBackBtn={true} onBackBtnPress={onBackPress} />
 
       <CoverImageSetter
         onSaveImgPath={storeAvatarPath}

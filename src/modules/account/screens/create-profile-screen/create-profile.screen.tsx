@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { StyleSheet } from 'react-native';
-import { useGlobalStore, useUserInfoStore } from 'store';
+import { useGlobalStore, useNavigationStore, useUserInfoStore } from 'store';
 import {
   DropdownSelect,
   LargeSwitch,
   ModalComponent,
   ScreenLayout,
   TopBgClouds,
+  transparent,
   Txt,
   useNav,
 } from 'shared';
@@ -17,6 +18,7 @@ import { ResetButtons } from 'modules/account/components';
 import { useProfileActions } from 'modules/account/hooks';
 import CountryList from 'country-list-with-dial-code-and-flag';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { statusbarStyleHelper } from 'shared/helpers/statusbar-style.helper';
 
 const updateAsyncStorage = async (key: keyof IUserInfo, value: any) => {
   try {
@@ -41,11 +43,22 @@ export const CreateProfileScreen = () => {
   } = useProfileActions();
 
   const { countriesList, setCountriesList } = useGlobalStore();
+  const { activeBottomBarTab } = useNavigationStore();
 
   useEffect(() => {
     const countries = CountryList.getAll();
     setCountriesList(countries);
   }, []);
+
+  useEffect(() => {
+    if (activeBottomBarTab === RouteKey.Setting) {
+      statusbarStyleHelper({
+        background: transparent,
+        barStyle: 'dark-content',
+        translucent: true,
+      });
+    }
+  }, [activeBottomBarTab]);
 
   const premiumTitleConfig = {
     [PremiumPeriodEnum.NoPremium]: 'Upgrade to premium',

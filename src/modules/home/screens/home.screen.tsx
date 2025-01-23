@@ -1,6 +1,4 @@
-import { StatusBar } from 'react-native';
 import { ProfileHeaderLayout, ScreenLayout } from 'shared/components/layouts';
-import { primaryWhite } from 'shared/configs';
 import { ListsWishSwitcherContent } from 'shared/components/lists-wish-switcher-content';
 import { ActiveScreenEnum, IUserInfo } from 'typing';
 import { IListItem, IWishItem } from 'modules/lists-wishes-common';
@@ -45,7 +43,7 @@ export const HomeScreen: React.FC<IProps> = ({
           activeScreen={ActiveScreenEnum.Home}
         />
       }>
-      <StatusBar barStyle="dark-content" backgroundColor={primaryWhite} />
+
       <ListsWishSwitcherContent
         onToggleContentSwitch={onToggleListsWishSwitch}
         activeTab={activeSwitchTab}
