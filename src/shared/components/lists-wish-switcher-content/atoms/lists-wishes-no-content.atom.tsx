@@ -5,7 +5,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import { Txt } from 'shared';
-import { FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   activeTab: 'lists' | 'wish';
@@ -29,7 +29,7 @@ export const ListsWishNoContentAtom: React.FC<IProps> = ({ activeTab }) => {
             ? 'Your wish list is empty :('
             : "You don't have any wishes yet :("
         }
-        fontWeight={FontWeightEnum.SemiBold}
+        fontFamily={FontFamiliesEnum.PoppinsSemiBold}
         style={styles.title}
       />
       <Txt

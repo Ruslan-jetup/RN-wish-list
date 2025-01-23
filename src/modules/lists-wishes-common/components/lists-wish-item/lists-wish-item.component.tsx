@@ -1,7 +1,7 @@
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Image, StyleSheet } from 'react-native';
 import { IListItem, IWishItem, wishCountTitleConfig } from 'modules';
-import { FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 import { DEFAULT_COVER_IMG } from 'shared/constants';
 import { primaryBlue, primaryWhite } from 'shared/configs';
 import { IconBtn, Txt } from 'shared';
@@ -146,10 +146,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 1,
     fontSize: 12,
     lineHeight: 18,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
   },
   title: {
-    fontWeight: FontWeightEnum.SemiBold,
+    fontFamily: FontFamiliesEnum.PoppinsSemiBold,
     marginBottom: 2,
   },
   link: {

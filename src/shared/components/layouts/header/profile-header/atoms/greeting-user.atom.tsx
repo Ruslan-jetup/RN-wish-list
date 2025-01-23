@@ -3,12 +3,7 @@ import { IconBtn } from 'shared/components/buttons';
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
 import { Txt } from 'shared/components/typography';
 import { primaryBlue, secondaryBlue } from 'shared/configs';
-import {
-  ActiveScreenEnum,
-  FontFamiliesEnum,
-  FontWeightEnum,
-  IconBtnNamesEnum,
-} from 'typing';
+import { ActiveScreenEnum, FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 import _ from 'lodash';
 
 interface IProps {
@@ -41,15 +36,13 @@ export const GreetingUserAtom: React.FC<IProps> = ({
             content={title}
             fontSize={26}
             lineHeight={34}
-            fontFamily={FontFamiliesEnum.poppins}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
           />
           <Txt
             content={`${userName}!`}
             fontSize={16}
             lineHeight={24}
-            fontFamily={FontFamiliesEnum.poppins}
-            fontWeight={FontWeightEnum.Regular}
+            fontFamily={FontFamiliesEnum.PoppinsRegular}
           />
         </View>
       </View>

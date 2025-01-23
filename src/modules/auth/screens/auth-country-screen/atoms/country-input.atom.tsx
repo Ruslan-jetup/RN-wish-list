@@ -8,7 +8,7 @@ import {
   TextField,
   Txt,
 } from 'shared';
-import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   value: string;
@@ -87,8 +87,7 @@ const styles = StyleSheet.create({
     color: primaryBlack,
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     paddingRight: 40,
   },
   input_flag: {

@@ -9,7 +9,11 @@ import {
   useForm,
   useNav,
 } from 'shared';
-import { FontWeightEnum, IconBtnNamesEnum, RouteKey } from 'typing';
+import {
+  FontFamiliesEnum,
+  IconBtnNamesEnum,
+  RouteKey,
+} from 'typing';
 import { CountriesListAtom, UserCountryInputAtom } from './atoms';
 import { useGlobalStore, useUserInfoStore } from 'store';
 import CountryList from 'country-list-with-dial-code-and-flag';
@@ -85,7 +89,7 @@ export const AuthCountryScreen: React.FC = () => {
             content={'Choose a country'}
             fontSize={26}
             lineHeight={38}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
           />
 
           <Txt

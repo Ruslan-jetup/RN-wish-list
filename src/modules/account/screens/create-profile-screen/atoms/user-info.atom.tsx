@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { IconBtn, primaryBlue, secondaryBlue, Txt } from 'shared';
 import { CoverImageSetter } from 'shared/components/cover-img-setter';
-import { FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   name: string;
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   name: {
     marginBottom: 2,
-    fontWeight: FontWeightEnum.Bold,
+    fontFamily: FontFamiliesEnum.PoppinsBold,
     fontSize: 26,
     lineHeight: 34,
   },

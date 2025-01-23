@@ -1,9 +1,4 @@
-import {
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { ImageBackground, StyleSheet, Text, View } from 'react-native';
 import {
   BaseButton,
   DefaultHeaderLayout,
@@ -15,7 +10,6 @@ import {
 import { useState } from 'react';
 import {
   FontFamiliesEnum,
-  FontWeightEnum,
   IconBtnNamesEnum,
   NavigationModuleKey,
   PremiumPeriodEnum,
@@ -88,7 +82,7 @@ export const PremiumScreen: React.FC = () => {
             content={'Desire without limits'}
             fontSize={26}
             lineHeight={34}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
             style={{ marginBottom: 10 }}
           />
 
@@ -180,8 +174,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
   },
   bottom_link: {
     color: primaryBlue,
@@ -191,7 +183,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 12,
     lineHeight: 18,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
   },
 });

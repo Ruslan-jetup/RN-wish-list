@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { SafeAreaView, SafeAreaProvider } from 'react-native-safe-area-context';
 import { primaryBlack, primaryBlue, primaryWhite } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface ModalComponentProps {
   isVisible: boolean;
@@ -115,9 +115,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: primaryWhite,
-    fontWeight: FontWeightEnum.Regular,
     fontSize: 16,
-    fontFamily: FontFamiliesEnum.poppins,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     textAlign: 'center',
   },
   modalText: {

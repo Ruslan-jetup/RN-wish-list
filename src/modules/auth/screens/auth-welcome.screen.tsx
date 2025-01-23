@@ -4,7 +4,6 @@ import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
 import { useCoverImgSetterStore, useUserInfoStore } from 'store';
 import {
   FontFamiliesEnum,
-  FontWeightEnum,
   PremiumPeriodEnum,
   RouteKey,
 } from 'typing';
@@ -35,8 +34,7 @@ export const WelcomeScreen: React.FC = () => {
         <View>
           <Txt
             content={'The best gift app'}
-            fontFamily={FontFamiliesEnum.poppins}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
             fontSize={26}
             lineHeight={33}
           />

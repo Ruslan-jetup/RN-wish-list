@@ -1,4 +1,4 @@
-import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 import { ChooseCollectionAtom } from './atoms';
 import {
   ScrollView,
@@ -193,8 +193,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     color: primaryBlack,
     textAlignVertical: 'top',
     textAlign: 'left',

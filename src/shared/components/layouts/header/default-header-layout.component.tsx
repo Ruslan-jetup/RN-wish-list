@@ -1,6 +1,6 @@
 import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 import _ from 'lodash';
-import {FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum} from 'typing';
+import {FontFamiliesEnum, IconBtnNamesEnum} from 'typing';
 import {BaseButton, IconBtn} from 'shared/components/buttons';
 import {Txt} from 'shared/components/typography';
 
@@ -46,10 +46,9 @@ export const DefaultHeaderLayout: React.FC<IProps> = ({
       {title && (
         <Txt
           content={title}
-          fontFamily={FontFamiliesEnum.poppins}
+          fontFamily={FontFamiliesEnum.PoppinsRegular}
           fontSize={16}
           lineHeight={24}
-          fontWeight={FontWeightEnum.Regular}
         />
       )}
 

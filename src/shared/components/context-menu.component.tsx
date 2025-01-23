@@ -1,8 +1,13 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Modal from 'react-native-modal';
-import { primaryBlue, primaryGrey, primaryWhite, primaryBlack } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+import {
+  primaryBlue,
+  primaryGrey,
+  primaryWhite,
+  primaryBlack,
+} from 'shared/configs';
+import { FontFamiliesEnum } from 'typing';
 
 interface ContextMenuProps {
   isVisible: boolean;
@@ -63,8 +68,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   menuItem: {
-    fontFamily: FontFamiliesEnum.SFProText,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.SFProTextRegular,
     fontSize: 17,
     color: primaryBlue,
     textAlign: 'center',
@@ -87,8 +91,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   cancelText: {
-    fontFamily: FontFamiliesEnum.SFProText,
-    fontWeight: FontWeightEnum.SemiBold,
+    fontFamily: FontFamiliesEnum.SFProTextSemibold,
     fontSize: 17,
     color: primaryBlue,
     textAlign: 'center',

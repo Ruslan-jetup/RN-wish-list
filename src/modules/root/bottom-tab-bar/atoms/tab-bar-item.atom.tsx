@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity } from 'react-native';
 import { grey, Icon, primaryBlack, Txt } from 'shared';
-import { FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   route: string;
@@ -32,7 +32,7 @@ export const TabBarItemAtom: React.FC<IProps> = ({
         style={styles.title}
         fontSize={12}
         lineHeight={18}
-        fontWeight={FontWeightEnum.Medium}
+        fontFamily={FontFamiliesEnum.PoppinsMedium}
         color={route === selectedTab ? primaryBlack : grey}
       />
     </TouchableOpacity>
@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 6,
     paddingHorizontal: 1,
+    textTransform: 'capitalize',
   },
 });

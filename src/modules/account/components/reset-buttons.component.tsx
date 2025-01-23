@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { BaseButton, primaryBlack, primaryRed } from 'shared';
-import { FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   onLogoutPress: () => void;
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   delete_entry_btn_text: {
     color: primaryRed,
-    fontWeight: FontWeightEnum.SemiBold,
+    fontFamily: FontFamiliesEnum.PoppinsSemiBold,
   },
   logout_btn_text: {
     color: primaryBlack,

@@ -1,7 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import { DropdownSelect, errorsColor, primaryWhite, Txt } from 'shared';
 import MaskInput from 'react-native-mask-input';
-import { FontFamiliesEnum } from 'typing';
 
 interface IDialCode {
   title: string;
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 10,
     borderTopRightRadius: 10,
     paddingLeft: 0,
-    fontFamily: FontFamiliesEnum.poppins,
     fontSize: 16,
   },
   error: {

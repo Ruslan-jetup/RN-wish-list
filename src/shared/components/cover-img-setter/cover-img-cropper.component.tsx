@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CropView } from 'react-native-image-crop-tools';
 import { primaryBlack, primaryWhite } from 'shared/configs';
-import { FontWeightEnum } from 'typing';
 import { BaseButton, ScreenLayout } from 'shared';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   onCropDone: (uri: string) => void;
@@ -52,7 +52,7 @@ export const CoverImgCropper: React.FC<IProps> = ({
             size="small"
             onPress={onDonePress}
             title="Done"
-            additionalFontStyles={{ fontWeight: FontWeightEnum.SemiBold }}
+            additionalFontStyles={styles.btn}
           />
         </View>
       </View>
@@ -76,5 +76,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     bottom: 50,
+  },
+  btn: {
+    fontFamily: FontFamiliesEnum.PoppinsSemiBold,
   },
 });

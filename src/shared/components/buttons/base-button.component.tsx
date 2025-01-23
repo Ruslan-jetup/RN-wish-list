@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {primaryBlue, primaryWhite, secondaryGrey} from 'shared/configs';
 import {Icon} from '../icon.component';
-import { FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   title: string;
@@ -131,17 +131,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   smallText: {
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     fontSize: 16,
     lineHeight: 18,
   },
   mediumText: {
-    fontWeight: FontWeightEnum.Medium,
+    fontFamily: FontFamiliesEnum.PoppinsMedium,
     fontSize: 14,
     lineHeight: 16,
   },
   largeText: {
-    fontWeight: FontWeightEnum.SemiBold,
+    fontFamily: FontFamiliesEnum.PoppinsSemiBold,
     fontSize: 16,
     lineHeight: 18,
   },

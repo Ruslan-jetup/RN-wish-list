@@ -1,7 +1,7 @@
-import {Pressable, StyleSheet, View} from 'react-native';
-import {primaryBlack, primaryBlue, primaryWhite, Txt} from 'shared';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { primaryBlack, primaryBlue, primaryWhite, Txt } from 'shared';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import {FontWeightEnum} from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IPriceData {
   weeklyPrice: number;
@@ -16,7 +16,7 @@ interface IProps {
   periodTitle: string;
 }
 
-export const PremiumPeriodAtom: React.FC<IProps & {isChecked: boolean}> = ({
+export const PremiumPeriodAtom: React.FC<IProps & { isChecked: boolean }> = ({
   isChecked,
   onPeriodPress,
   priceData,
@@ -46,7 +46,7 @@ export const PremiumPeriodAtom: React.FC<IProps & {isChecked: boolean}> = ({
       <View style={styles.right_content}>
         <Txt
           style={styles.price}
-          fontWeight={FontWeightEnum.SemiBold}
+          fontFamily={FontFamiliesEnum.PoppinsSemiBold}
           content={`${priceData?.price} USD`}
         />
       </View>

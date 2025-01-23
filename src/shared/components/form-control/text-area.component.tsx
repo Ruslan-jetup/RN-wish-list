@@ -1,7 +1,7 @@
 import { StyleSheet, TextInput, View } from 'react-native';
 import { Txt } from '../typography';
 import { errorsColor, grey, primaryBlack, primaryWhite } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   title?: string;
@@ -61,8 +61,7 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     color: primaryBlack,
     textAlignVertical: 'top',
     textAlign: 'left',

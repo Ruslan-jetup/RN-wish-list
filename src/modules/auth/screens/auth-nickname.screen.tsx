@@ -12,7 +12,6 @@ import {
 } from 'shared';
 import {
   FontFamiliesEnum,
-  FontWeightEnum,
   IconBtnNamesEnum,
   RouteKey,
 } from 'typing';
@@ -49,7 +48,7 @@ export const AuthNicknameScreen = () => {
             content={'Choose a nickname'}
             fontSize={26}
             lineHeight={38}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
           />
 
           <Txt
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
     color: primaryBlack,
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
   },
 });

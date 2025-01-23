@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, StyleProp, ViewStyle } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import { errorsColor, primaryBlack, primaryGrey, primaryWhite } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 import { Icon } from '../icon.component';
 import { useState, useEffect } from 'react';
 import { Txt } from '../typography';
@@ -171,8 +171,7 @@ const styles = StyleSheet.create({
   txt_style: {
     flex: 1,
     fontSize: 16,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
     color: primaryBlack,
   },
   dropdownMenuStyle: {

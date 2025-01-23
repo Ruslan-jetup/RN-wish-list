@@ -8,7 +8,6 @@ import {
 import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
 import {
   FontFamiliesEnum,
-  FontWeightEnum,
   IconBtnNamesEnum,
   RouteKey,
 } from 'typing';
@@ -39,8 +38,7 @@ export const CreateAccountScreen: React.FC = () => {
         <View>
           <Txt
             content={'Create an account'}
-            fontFamily={FontFamiliesEnum.poppins}
-            fontWeight={FontWeightEnum.Bold}
+            fontFamily={FontFamiliesEnum.PoppinsBold}
             fontSize={26}
             lineHeight={33}
             style={{ marginBottom: 10 }}
@@ -104,7 +102,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     lineHeight: 18,
-    fontFamily: FontFamiliesEnum.poppins,
   },
 
   link: {

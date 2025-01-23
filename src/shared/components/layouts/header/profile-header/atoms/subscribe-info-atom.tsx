@@ -1,7 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 import { Txt } from 'shared/components/typography';
 import { primaryBlack } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum } from 'typing';
+import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   subscribers: number | null;
@@ -17,32 +17,28 @@ export const SubscribeInfoAtom: React.FC<IProps> = ({
       <View style={{ ...styles.text_container, ...styles.left_text_container }}>
         <Txt
           content={subscribers ? subscribers : 0}
-          fontFamily={FontFamiliesEnum.poppins}
+          fontFamily={FontFamiliesEnum.PoppinsSemiBold}
           fontSize={16}
-          fontWeight={FontWeightEnum.SemiBold}
           lineHeight={24}
         />
         <Txt
           content="Subscribers"
-          fontFamily={FontFamiliesEnum.poppins}
+          fontFamily={FontFamiliesEnum.PoppinsRegular}
           fontSize={12}
-          fontWeight={FontWeightEnum.Regular}
           lineHeight={18}
         />
       </View>
       <View style={styles.text_container}>
         <Txt
           content={subscriptions ? subscriptions : 0}
-          fontFamily={FontFamiliesEnum.poppins}
+          fontFamily={FontFamiliesEnum.PoppinsSemiBold}
           fontSize={16}
-          fontWeight={FontWeightEnum.SemiBold}
           lineHeight={24}
         />
         <Txt
           content="Subscriptions"
-          fontFamily={FontFamiliesEnum.poppins}
+          fontFamily={FontFamiliesEnum.PoppinsRegular}
           fontSize={12}
-          fontWeight={FontWeightEnum.Regular}
           lineHeight={18}
         />
       </View>

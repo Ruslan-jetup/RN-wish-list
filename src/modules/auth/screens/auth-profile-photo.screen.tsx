@@ -8,7 +8,7 @@ import {
   Txt,
   useNav,
 } from 'shared';
-import { FontWeightEnum, RouteKey } from 'typing';
+import { FontFamiliesEnum, RouteKey } from 'typing';
 import {
   CameraOptions,
   ImageLibraryOptions,
@@ -87,7 +87,7 @@ export const ProfilePhotoScreen: React.FC = () => {
                 content={'Add a profile photo'}
                 fontSize={26}
                 lineHeight={38}
-                fontWeight={FontWeightEnum.Bold}
+                fontFamily={FontFamiliesEnum.PoppinsBold}
               />
 
               <Txt

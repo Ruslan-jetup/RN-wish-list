@@ -8,7 +8,7 @@ import {
   primaryGrey,
   primaryWhite,
 } from 'shared/configs';
-import { FontFamiliesEnum, FontWeightEnum, IconBtnNamesEnum } from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   onSearchCancelPress: () => void;
@@ -28,7 +28,7 @@ export const SearchHeaderLayout: React.FC<IProps> = ({
   value,
   searchResult = false,
 }) => {
-    const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
   return (
     <View style={styles.container}>
       <View
@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
     backgroundColor: primaryGrey,
     fontSize: 16,
     lineHeight: 24,
-    fontFamily: FontFamiliesEnum.poppins,
-    fontWeight: FontWeightEnum.Regular,
+    fontFamily: FontFamiliesEnum.PoppinsRegular,
   },
 });
