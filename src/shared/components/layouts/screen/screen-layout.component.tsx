@@ -1,11 +1,11 @@
 import React, { ReactElement } from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StatusBar, StyleSheet, View, ViewStyle } from 'react-native';
 import { ScreenLayoutContent } from './screen-layout-content.component';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { $size } from 'shared/helpers';
-import { primaryBgColor } from 'shared/configs';
+import { primaryBgColor, transparent } from 'shared/configs';
 
 export interface IScreenLayoutProps {
   children: JSX.Element | JSX.Element[];
@@ -43,6 +43,11 @@ export const ScreenLayout = ({
           paddingBottom: bottomSafeArea ? insets.bottom + 5 : 0,
         },
       ]}>
+      <StatusBar
+        translucent={true}
+        backgroundColor={transparent}
+        barStyle={'dark-content'}
+      />
       <ScreenLayoutContent {...props} header={() => props.headerComponent} />
     </View>
   );

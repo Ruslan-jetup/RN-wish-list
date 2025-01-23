@@ -43,7 +43,6 @@ export const HomeScreen: React.FC<IProps> = ({
           activeScreen={ActiveScreenEnum.Home}
         />
       }>
-
       <ListsWishSwitcherContent
         onToggleContentSwitch={onToggleListsWishSwitch}
         activeTab={activeSwitchTab}

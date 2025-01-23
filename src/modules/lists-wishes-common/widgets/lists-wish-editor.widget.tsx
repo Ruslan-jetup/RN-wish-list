@@ -18,8 +18,7 @@ import { useAsyncStorage } from 'shared/hooks/useAsyncStorage.hook';
 import Toast from 'react-native-toast-message';
 import { RouteKey } from 'typing';
 import isEqual from 'lodash/isEqual';
-import { isUniqueNameHelper, transparent } from 'shared';
-import { statusbarStyleHelper } from 'shared/helpers/statusbar-style.helper';
+import { isUniqueNameHelper } from 'shared';
 
 export const ListsWishEditorWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
@@ -54,14 +53,6 @@ export const ListsWishEditorWidget = () => {
     setField('currency', CurrenciesEnum.USD);
     if (editorMode === ListsWishEditorModeEnum.EditWish) {
       fetchCurrentItemData();
-    }
-
-    if (activeBottomBarTab === RouteKey.Add) {
-      statusbarStyleHelper({
-        background: transparent,
-        barStyle: 'dark-content',
-        translucent: true,
-      });
     }
   }, [editorMode, activeBottomBarTab]);
 

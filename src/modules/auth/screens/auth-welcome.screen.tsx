@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
-import { BaseButton, ScreenLayout, transparent, Txt, useNav } from 'shared';
-import { statusbarStyleHelper } from 'shared/helpers/statusbar-style.helper';
+import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
 import { useCoverImgSetterStore, useUserInfoStore } from 'store';
 import {
   FontFamiliesEnum,
@@ -21,12 +20,6 @@ export const WelcomeScreen: React.FC = () => {
       userCountry: '',
       userAvatarUri: '',
       premiumPeriod: PremiumPeriodEnum.NoPremium,
-    });
-
-    statusbarStyleHelper({
-      background: transparent,
-      barStyle: 'dark-content',
-      translucent: true,
     });
   }, []);
 

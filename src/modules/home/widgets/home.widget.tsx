@@ -1,12 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HomeScreen } from '../screens';
-import {
-  ContextMenu,
-  ModalComponent,
-  primaryWhite,
-  useNav,
-  useToggle,
-} from 'shared';
+import { ContextMenu, ModalComponent, useNav, useToggle } from 'shared';
 import { useNavigationStore, useUserInfoStore } from 'store';
 import { homeHeaderTitleConfig } from '../configs';
 import {
@@ -21,10 +15,9 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import { RouteKey } from 'typing';
 import _ from 'lodash';
-import { statusbarStyleHelper } from 'shared/helpers/statusbar-style.helper';
 
 export const HomeWidget = () => {
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [activeSwitchTab, setActiveSwitchTab] = useState<'lists' | 'wish'>(
@@ -61,43 +54,34 @@ export const HomeWidget = () => {
     if (activeBottomBarTab === RouteKey.Home) {
       activeSwitchTab === 'wish' && fetchWishes();
       activeSwitchTab === 'lists' && fetchLists();
-       statusbarStyleHelper({
-         background: primaryWhite,
-         barStyle: 'dark-content',
-         translucent: false,
-       });
     }
   }, [activeBottomBarTab, activeSwitchTab]);
 
   const fetchWishes = async () => {
-    if (activeSwitchTab === 'wish') {
-      setLoading(true);
-      try {
-        const response = await getAllWishesReq();
-        setAllWishes(response.data);
-        setLoading(false);
-      } catch {
-        //
-      }
+    setLoading(true);
+    try {
+      const response = await getAllWishesReq();
+      setAllWishes(response.data);
+      setLoading(false);
+    } catch {
+      //
     }
   };
 
   const fetchLists = async () => {
-    if (activeSwitchTab === 'lists') {
-      setLoading(true);
-
-      try {
-        const response = await getAllListsReq();
-        setAllLists(response.data);
-        setLoading(false);
-      } catch {
-        //
-      }
+    setLoading(true);
+    try {
+      const response = await getAllListsReq();
+      setAllLists(response.data);
+      setLoading(false);
+    } catch {
+      //
     }
   };
 
   const onToggleActiveSwitchTab = (val: 'lists' | 'wish') => {
     setActiveSwitchTab(val);
+    setLoading(true);
   };
 
   const onCopyLinkPress = (link: string) => {

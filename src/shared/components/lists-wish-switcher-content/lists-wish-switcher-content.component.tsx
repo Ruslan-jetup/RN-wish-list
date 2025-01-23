@@ -27,9 +27,13 @@ export const ListsWishSwitcherContent: React.FC<IProps> = ({
   onMoreBtnPress,
 }) => {
   const renderContent = () => {
-    return _.isEmpty(listData) ? (
-      <ListsWishNoContentAtom activeTab={activeTab} />
-    ) : (
+    if (isLoading) {
+      return <Loader additionalStyles={{ paddingBottom: 170 }} />;
+    } else if (_.isEmpty(listData)) {
+      return <ListsWishNoContentAtom activeTab={activeTab} />;
+    }
+
+    return (
       <FlatList
         data={listData}
         renderItem={({ item }) => (
@@ -53,7 +57,7 @@ export const ListsWishSwitcherContent: React.FC<IProps> = ({
         onPress={onToggleContentSwitch}
         additionalStyles={styles.switch}
       />
-      {isLoading ? <Loader /> : renderContent()}
+      {renderContent()}
     </View>
   );
 };
