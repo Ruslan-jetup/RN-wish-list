@@ -3,7 +3,6 @@ import {
   BaseButton,
   grey,
   IconBtn,
-  primaryBlack,
   ScreenLayout,
   TextField,
   Txt,
@@ -62,7 +61,6 @@ export const AuthNicknameScreen = () => {
             onChange={(value: string) => setField('userName', value)}
             placeholder={'Name'}
             placeholderTextColor={grey}
-            inputStyle={styles.input}
           />
         </View>
 
@@ -93,11 +91,5 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginBottom: 24,
-  },
-  input: {
-    color: primaryBlack,
-    fontSize: 16,
-    lineHeight: 24,
-    fontFamily: FontFamiliesEnum.PoppinsRegular,
   },
 });

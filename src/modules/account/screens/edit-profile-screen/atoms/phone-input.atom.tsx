@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   },
   select_container: {
     width: '35%',
+    minWidth: 140,
     borderTopRightRadius: 0,
     borderBottomRightRadius: 0,
   },

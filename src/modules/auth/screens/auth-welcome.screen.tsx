@@ -2,11 +2,7 @@ import { useEffect } from 'react';
 import { StyleSheet, View, ImageBackground } from 'react-native';
 import { BaseButton, ScreenLayout, Txt, useNav } from 'shared';
 import { useCoverImgSetterStore, useUserInfoStore } from 'store';
-import {
-  FontFamiliesEnum,
-  PremiumPeriodEnum,
-  RouteKey,
-} from 'typing';
+import { FontFamiliesEnum, PremiumPeriodEnum, RouteKey } from 'typing';
 
 export const WelcomeScreen: React.FC = () => {
   const { setUserInfo } = useUserInfoStore();

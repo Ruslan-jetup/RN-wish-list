@@ -169,8 +169,10 @@ const styles = StyleSheet.create({
     color: '#514F50',
   },
   txt_style: {
+    paddingTop: 2,
     flex: 1,
     fontSize: 16,
+    lineHeight: 24,
     fontFamily: FontFamiliesEnum.PoppinsRegular,
     color: primaryBlack,
   },

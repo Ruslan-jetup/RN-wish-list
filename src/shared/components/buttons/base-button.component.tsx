@@ -8,8 +8,8 @@ import {
   TextStyle,
   ActivityIndicator,
 } from 'react-native';
-import {primaryBlue, primaryWhite, secondaryGrey} from 'shared/configs';
-import {Icon} from '../icon.component';
+import { primaryBlue, primaryWhite, secondaryGrey } from 'shared/configs';
+import { Icon } from '../icon.component';
 import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
@@ -71,17 +71,15 @@ export const BaseButton: React.FC<IProps> = ({
       onPress={onPress}>
       {iconName && (
         <Icon
-          additionalStyle={[{position: 'absolute', left: 16}, iconStyle]}
+          additionalStyle={[{ position: 'absolute', left: 16 }, iconStyle]}
           name={iconName}
           size={24}
           color={primaryWhite}
         />
       )}
 
-      {mode === 'primary' || !loading ? (
-        <Text style={[getTextStyle(), additionalFontStyles]}>
-          {title}
-        </Text>
+      {mode === 'primary' && size === 'large'  || !loading ? (
+        <Text style={[getTextStyle(), additionalFontStyles]}>{title}</Text>
       ) : null}
 
       {loading && (
@@ -89,7 +87,7 @@ export const BaseButton: React.FC<IProps> = ({
           size="small"
           color={loaderColor}
           style={
-            mode === 'primary' ? styles.primary_loader : styles.secondary_loader
+            mode === 'primary' && size === 'large' ? styles.primary_loader : styles.secondary_loader
           }
         />
       )}
@@ -147,9 +145,11 @@ const styles = StyleSheet.create({
   },
   primaryText: {
     color: primaryWhite,
+    paddingTop: 4,
   },
   secondaryText: {
     color: primaryBlue,
+    paddingTop: 4,
   },
   disabledButton: {
     backgroundColor: secondaryGrey,

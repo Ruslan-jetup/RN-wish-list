@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
     height: 50,
     paddingHorizontal: $size(16, 14),
     fontSize: 16,
+    lineHeight: 24,
     color: primaryBlack,
     backgroundColor: primaryWhite,
     borderRadius: 10,
