@@ -1,14 +1,6 @@
 import { StyleSheet, View } from 'react-native';
-import {
-  BaseButton,
-  grey,
-  Icon,
-  primaryBlack,
-  primaryBlue,
-  TextField,
-  Txt,
-} from 'shared';
-import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
+import { BaseButton, grey, Icon, primaryBlue, TextField, Txt } from 'shared';
+import { IconBtnNamesEnum } from 'typing';
 
 interface IProps {
   value: string;
@@ -40,16 +32,24 @@ export const UserCountryInputAtom: React.FC<IProps> = ({
         <TextField
           value={value}
           error={error}
-          onChange={(val: string) => onCountryChange(val)}
+          onChange={(val: string) => {
+            onCountryChange(val);
+          }}
           onFocus={onFocusInput}
-          onBlur={onBlurInput}
+          onBlur={() => {
+            if (!value) {
+              onBlurInput();
+            }
+          }}
           placeholder={'Country'}
           placeholderTextColor={grey}
           inputStyle={{
             ...styles.input,
             ...(flagUrl && !isInFocus && styles.input_flag),
           }}
+          autoCapitalize="words"
         />
+
         {isInFocus && (
           <Icon
             additionalStyle={styles.icon}
@@ -83,11 +83,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   input: {
-    height: 50,
-    color: primaryBlack,
-    fontSize: 16,
-    lineHeight: 24,
-    fontFamily: FontFamiliesEnum.PoppinsRegular,
     paddingRight: 40,
   },
   input_flag: {
@@ -102,9 +97,9 @@ const styles = StyleSheet.create({
   flag_img: {
     position: 'absolute',
     left: 16,
-    top: 18,
+    top: 13,
     width: 24,
-    height: 15,
+    height: 22,
     zIndex: 10,
   },
 });

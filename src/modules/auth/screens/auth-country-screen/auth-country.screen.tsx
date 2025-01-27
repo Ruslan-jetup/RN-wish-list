@@ -9,11 +9,7 @@ import {
   useForm,
   useNav,
 } from 'shared';
-import {
-  FontFamiliesEnum,
-  IconBtnNamesEnum,
-  RouteKey,
-} from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum, RouteKey } from 'typing';
 import { CountriesListAtom, UserCountryInputAtom } from './atoms';
 import { useGlobalStore, useUserInfoStore } from 'store';
 import CountryList from 'country-list-with-dial-code-and-flag';
@@ -32,35 +28,49 @@ export const AuthCountryScreen: React.FC = () => {
 
   useEffect(() => {
     const countries = CountryList.getAll();
-    setCountriesList(countries);
+    if (countries) {
+      setCountriesList(countries);
+    }
   }, []);
+
+  const filteredCountries = countriesList.filter(item =>
+    item.name?.toLowerCase().includes(values.userCountry?.trim().toLowerCase()),
+  );
+
+  const capitalizeVal = (str: string) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 
   const onNextPress = () => {
     onSubmit(() => {
-      const isCountryValid = countriesList.some(
+      const trimmedCountry = values.userCountry?.trim();
+      const selectedCountry = countriesList.find(
         country =>
           country.name.toLocaleLowerCase() ===
-          values.userCountry.toLocaleLowerCase(),
+          trimmedCountry?.toLocaleLowerCase(),
       );
 
-      if (!values.userCountry) {
+      if (!trimmedCountry) {
+        setError('userCountry', 'Please enter a valid country');
         return;
-      } else if (!isCountryValid) {
+      } else if (!selectedCountry) {
         setError('userCountry', 'Choose a country from the list');
         return;
       }
-      setUserInfo({ userCountry: values.userCountry });
+
+      onCountryItemPress(selectedCountry.name, selectedCountry.flag);
+
+      setUserInfo({ userCountry: capitalizeVal(trimmedCountry) });
       navigate(RouteKey.AuthUserPhoto);
     });
   };
 
   const onCountryChange = (val: string) => {
     setField('userCountry', val);
+    setInFocus(true);
+    if (currentCountryFlag) {
+      setCurrentCountryFlag('');
+    }
   };
-
-  const filteredCountries = countriesList.filter(item =>
-    item.name?.toLowerCase().includes(values.userCountry?.toLowerCase()),
-  );
 
   const onFocusInput = () => {
     setInFocus(true);
@@ -69,9 +79,14 @@ export const AuthCountryScreen: React.FC = () => {
     setInFocus(false);
   };
 
+  const onCancelPress = () => {
+    setField('userCountry', '');
+    setCurrentCountryFlag('');
+  };
+
   const onCountryItemPress = (countryName: string, flag: string) => {
-    setCurrentCountryFlag(flag);
     setField('userCountry', countryName);
+    setCurrentCountryFlag(flag);
     setInFocus(false);
   };
 
@@ -84,25 +99,22 @@ export const AuthCountryScreen: React.FC = () => {
             onIconBtnPress={() => goBack()}
             additionalStyles={styles.back_btn}
           />
-
           <Txt
             content={'Choose a country'}
             fontSize={26}
             lineHeight={38}
             fontFamily={FontFamiliesEnum.PoppinsBold}
           />
-
           <Txt
             content={'You can always change it later'}
             style={styles.subtitle}
           />
-
           <UserCountryInputAtom
             value={values?.userCountry}
             error={errors?.userCountry}
             flagUrl={currentCountryFlag}
             onCountryChange={onCountryChange}
-            onCancelPress={() => setField('userCountry', '')}
+            onCancelPress={() => onCancelPress()}
             onFocusInput={onFocusInput}
             onBlurInput={onBlurInput}
             isInFocus={isInFocus}

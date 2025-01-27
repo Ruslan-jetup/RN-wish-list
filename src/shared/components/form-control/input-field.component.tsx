@@ -26,8 +26,13 @@ interface IProps {
   label?: string;
   labelStyles?: ViewStyle | TextStyle;
   inputProps?: Record<string, any>;
+  autoCapitalize?: 'words' | 'none' | 'sentences' | 'characters';
 }
-export const TextField: FC<IProps> = ({ inputProps = {}, ...props }) => {
+export const TextField: FC<IProps> = ({
+  inputProps = {},
+  autoCapitalize = 'none',
+  ...props
+}) => {
   return (
     <View style={[styles.container, props.containerStyle]}>
       {props.label ? (
@@ -46,7 +51,7 @@ export const TextField: FC<IProps> = ({ inputProps = {}, ...props }) => {
         onFocus={props.onFocus}
         onBlur={props.onBlur}
         onChangeText={props.onChange}
-        autoCapitalize="none"
+        autoCapitalize={autoCapitalize}
         {...inputProps}
       />
 

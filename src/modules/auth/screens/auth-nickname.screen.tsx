@@ -9,11 +9,7 @@ import {
   useForm,
   useNav,
 } from 'shared';
-import {
-  FontFamiliesEnum,
-  IconBtnNamesEnum,
-  RouteKey,
-} from 'typing';
+import { FontFamiliesEnum, IconBtnNamesEnum, RouteKey } from 'typing';
 import { validateUserAuth } from '../validations/auth.validator';
 import { useUserInfoStore } from 'store';
 
@@ -61,6 +57,7 @@ export const AuthNicknameScreen = () => {
             onChange={(value: string) => setField('userName', value)}
             placeholder={'Name'}
             placeholderTextColor={grey}
+            autoCapitalize="words"
           />
         </View>
 

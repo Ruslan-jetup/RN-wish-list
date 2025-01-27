@@ -17,21 +17,20 @@ export const CountriesListAtom: React.FC<IProps> = ({
   countriesList,
   onCountryItemPress,
 }) => {
-const renderItem = ({ item, index }: { item: ICountry; index: number }) => {
-  const isLastItem = index === countriesList.length - 1;
+  const renderItem = ({ item, index }: { item: ICountry; index: number }) => {
+    const isLastItem = index === countriesList.length - 1;
 
-  return (
-    <TouchableWithoutFeedback
-      key={item.dialCode}
-      onPress={() => onCountryItemPress(item.name, item.flag)}>
-      <View style={[styles.container, !isLastItem && styles.border_bottom]}>
-        <Txt content={item.flag} />
-        <Txt content={item.name} />
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
-
+    return (
+      <TouchableWithoutFeedback
+        key={item.dialCode}
+        onPress={() => onCountryItemPress(item.name, item.flag)}>
+        <View style={[styles.container, !isLastItem && styles.border_bottom]}>
+          <Txt content={item.flag} />
+          <Txt content={item.name} />
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  };
 
   return (
     <FlatList
