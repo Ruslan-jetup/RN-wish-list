@@ -67,6 +67,7 @@ export const WishDetailsScreen: React.FC<IProps> = ({
               currency={wishData.currency}
               price={wishData.price}
               name={wishData.itemName}
+              additionalStyles={styles.wish_info}
             />
 
             <CopyLink
@@ -125,5 +126,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     marginBottom: 8,
+  },
+  wish_info: {
+    marginBottom: 20,
   },
 });

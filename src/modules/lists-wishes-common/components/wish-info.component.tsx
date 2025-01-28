@@ -1,17 +1,25 @@
 import { Txt } from 'shared';
 import { CurrenciesEnum } from '../typing';
-import { StyleSheet, View } from 'react-native';
+import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { FontFamiliesEnum } from 'typing';
 
 interface IProps {
   price: number;
   currency: CurrenciesEnum | null;
   name: string;
+  showNameOnly?: boolean;
+  additionalStyles?: StyleProp<ViewStyle>;
 }
 
-export const WishInfo: React.FC<IProps> = ({ price, currency, name }) => {
+export const WishInfo: React.FC<IProps> = ({
+  price,
+  currency,
+  name,
+  showNameOnly = false,
+  additionalStyles,
+}) => {
   return (
-    <View style={styles.container}>
+    <View style={[{ ...styles.container }, additionalStyles]}>
       <Txt
         style={styles.info}
         content={name}
@@ -20,24 +28,15 @@ export const WishInfo: React.FC<IProps> = ({ price, currency, name }) => {
         }}
       />
 
-      <View style={styles.price_container}>
+      {!showNameOnly && (
         <Txt
           style={[styles.text, styles.price]}
-          content={price}
+          content={price + ' ' + currency}
           optionalProps={{
             numberOfLines: 1,
           }}
         />
-        {currency && (
-          <Txt
-            style={styles.text}
-            content={currency}
-            optionalProps={{
-              numberOfLines: 1,
-            }}
-          />
-        )}
-      </View>
+      )}
     </View>
   );
 };
@@ -46,10 +45,6 @@ const styles = StyleSheet.create({
   container: {
     width: '80%',
     overflow: 'hidden',
-  },
-  price_container: {
-    flexDirection: 'row',
-    marginBottom: 20,
   },
   info: {
     fontFamily: FontFamiliesEnum.PoppinsSemiBold,

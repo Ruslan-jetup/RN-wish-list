@@ -1,9 +1,15 @@
 import { TouchableWithoutFeedback, View } from 'react-native';
 import { Image, StyleSheet } from 'react-native';
-import { IListItem, IWishItem, wishCountTitleConfig } from 'modules';
+import {
+  CopyLink,
+  IListItem,
+  IWishItem,
+  wishCountTitleConfig,
+  WishInfo,
+} from 'modules';
 import { FontFamiliesEnum, IconBtnNamesEnum } from 'typing';
 import { DEFAULT_COVER_IMG } from 'shared/constants';
-import { primaryBlue, primaryWhite } from 'shared/configs';
+import { primaryWhite } from 'shared/configs';
 import { IconBtn, Txt } from 'shared';
 
 type IListWishItem = Partial<IListItem & IWishItem>;
@@ -38,67 +44,42 @@ export const ListsWishItem: React.FC<IProps> = ({
         }
       }}>
       <View style={styles.container}>
+        <View style={styles.img_container}>
+          <Image
+            style={styles.img}
+            source={itemData.coverImgPath ? coverImgSource : DEFAULT_COVER_IMG}
+          />
+        </View>
+
         <View style={styles.content_container}>
-          <View style={styles.img_container}>
-            <Image
-              style={styles.img}
-              source={
-                itemData.coverImgPath ? coverImgSource : DEFAULT_COVER_IMG
-              }
+          <View style={styles.top_content}>
+            <WishInfo
+              currency={itemData.currency ?? null}
+              price={itemData.price ?? 0}
+              name={itemData.itemName || ''}
+              additionalStyles={styles.wish_nfo}
+              showNameOnly={type === 'wish' ? false : true}
+            />
+
+            <IconBtn
+              iconName={IconBtnNamesEnum.Dots}
+              onIconBtnPress={onMoreBtnPress}
+              size={16}
             />
           </View>
-          <View style={styles.text_container}>
-            <View>
-              <Txt
-                optionalProps={{
-                  numberOfLines: 1,
-                }}
-                style={styles.title}
-                content={itemData.itemName || ''}
-              />
-              {type === 'wish' && (
-                <Txt
-                  optionalProps={{
-                    numberOfLines: 1,
-                  }}
-                  style={styles.text_common}
-                  content={
-                    (itemData.price ?? '') +
-                    ' ' +
-                    (itemData.currency?.toString() ?? '')
-                  }
-                />
-              )}
-            </View>
+
+          {type === 'wish' ? (
+            <CopyLink
+              onCopyLinkPress={onCopyLinkPress}
+              wishUrl={itemData.itemUrl || ''}
+            />
+          ) : (
             <Txt
               optionalProps={{
                 numberOfLines: 1,
               }}
-              style={{ ...styles.text_common, ...styles.link }}
-              content={
-                type === 'wish'
-                  ? itemData.itemUrl || ''
-                  : wishCountTitleConfig(wishesCount ?? 0)
-              }
-            />
-          </View>
-        </View>
-
-        <View style={styles.btn_container}>
-          <IconBtn
-            iconName={IconBtnNamesEnum.Dots}
-            onIconBtnPress={onMoreBtnPress}
-            size={16}
-          />
-          {type === 'wish' && (
-            <IconBtn
-              iconName={IconBtnNamesEnum.Copy}
-              onIconBtnPress={() =>
-                itemData.itemUrl && onCopyLinkPress(itemData.itemUrl)
-              }
-              size={30}
-              color={primaryBlue}
-              additionalStyles={{ paddingVertical: 8, paddingLeft: 10 }}
+              style={styles.wish_count}
+              content={wishCountTitleConfig(wishesCount ?? 0)}
             />
           )}
         </View>
@@ -110,7 +91,6 @@ export const ListsWishItem: React.FC<IProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     width: '100%',
     height: 112,
     padding: 6,
@@ -120,11 +100,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   content_container: {
-    flexDirection: 'row',
     flex: 1,
-    paddingRight: 30,
+    justifyContent: 'space-between',
+    paddingBottom: 2,
     overflow: 'hidden',
   },
+  top_content: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+
   img_container: {
     width: 100,
     height: 100,
@@ -137,28 +122,14 @@ const styles = StyleSheet.create({
     height: '100%',
     objectFit: 'cover',
   },
-  text_container: {
-    flex: 1,
-    justifyContent: 'space-between',
-    paddingTop: 6,
+  wish_nfo: {
+    marginTop: 5,
   },
-  text_common: {
+  wish_count: {
     paddingHorizontal: 1,
     fontSize: 12,
     lineHeight: 18,
     fontFamily: FontFamiliesEnum.PoppinsRegular,
-  },
-  title: {
-    fontFamily: FontFamiliesEnum.PoppinsSemiBold,
-    marginBottom: 2,
-  },
-  link: {
-    marginBottom: 9,
-  },
-  btn_container: {
-    width: 36,
-    height: '100%',
-    justifyContent: 'space-between',
-    overflow: 'hidden',
+    marginBottom: 7,
   },
 });
