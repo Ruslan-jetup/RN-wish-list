@@ -26,7 +26,7 @@ export const WishDetailsWidget = () => {
       const response = await getWishItemReq(id);
       setWishData(response.data);
     } catch {
-      console.log('Error fetching wish data');
+      //
     }
   };
 

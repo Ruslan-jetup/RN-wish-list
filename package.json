@@ -25,6 +25,7 @@
     "react-native": "0.76.3",
     "react-native-bootsplash": "^6.3.2",
     "react-native-bouncy-checkbox": "^4.1.2",
+    "react-native-dashed-line": "^1.1.0",
     "react-native-date-picker": "^5.0.7",
     "react-native-image-crop-tools": "^1.6.4",
     "react-native-image-picker": "^7.2.3",

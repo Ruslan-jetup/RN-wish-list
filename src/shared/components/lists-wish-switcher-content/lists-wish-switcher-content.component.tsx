@@ -1,9 +1,15 @@
 import { FlatList, StyleSheet, View } from 'react-native';
 import { TabsSwitch } from '../switch';
 import { ListsWishNoContentAtom } from './atoms';
-import { IListItem, IWishItem, ListsWishItem } from 'modules';
+import {
+  DateItemsSeparator,
+  IListItem,
+  IWishItem,
+  ListsWishItem,
+} from 'modules';
 import { Loader } from '../loader.component';
 import _ from 'lodash';
+import dayjs from 'dayjs';
 
 type ListsWishes = Partial<IListItem | IWishItem>;
 
@@ -36,15 +42,29 @@ export const ListsWishSwitcherContent: React.FC<IProps> = ({
     return (
       <FlatList
         data={listData}
-        renderItem={({ item }) => (
-          <ListsWishItem
-            type={activeTab}
-            itemData={item}
-            onCopyLinkPress={onCopyLinkPress}
-            onMoreBtnPress={() => item.id && onMoreBtnPress(item.id)}
-            onListsWishItemPress={onListsWishItemPress}
-          />
-        )}
+        renderItem={({ item, index }) => {
+          const currentDate = dayjs(item.creatingDate).format('YYYY-MM-DD');
+          const prevDate = listData?.[index - 1]
+            ? dayjs(listData[index - 1].creatingDate).format('YYYY-MM-DD')
+            : null;
+          const showSeparator = currentDate !== prevDate;
+          const formattedDate = dayjs(item.creatingDate)
+            .subtract(1, 'year')
+            .format('DD MMM YYYY');
+
+          return (
+            <>
+              {showSeparator && <DateItemsSeparator date={formattedDate} />}
+              <ListsWishItem
+                type={activeTab}
+                itemData={item}
+                onCopyLinkPress={onCopyLinkPress}
+                onMoreBtnPress={() => item.id && onMoreBtnPress(item.id)}
+                onListsWishItemPress={onListsWishItemPress}
+              />
+            </>
+          );
+        }}
         keyExtractor={item => item.id || 'default-key'}
         contentContainerStyle={styles.flat_list}
       />
@@ -53,10 +73,7 @@ export const ListsWishSwitcherContent: React.FC<IProps> = ({
 
   return (
     <View style={styles.container}>
-      <TabsSwitch
-        onPress={onToggleContentSwitch}
-        additionalStyles={styles.switch}
-      />
+      <TabsSwitch onPress={onToggleContentSwitch} />
       {renderContent()}
     </View>
   );
@@ -66,9 +83,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 24,
-  },
-  switch: {
-    marginBottom: 16,
   },
   flat_list: {
     paddingBottom: 130,
