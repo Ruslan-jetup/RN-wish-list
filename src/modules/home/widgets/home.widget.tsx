@@ -99,6 +99,7 @@ export const HomeWidget = () => {
 
   const onListsWishItemPress = (id: string) => {
     setItemId(id);
+    navigate(RouteKey.WishDetails);
   };
 
   const onMenuCancelPress = () => {

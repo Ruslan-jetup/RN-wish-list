@@ -19,4 +19,6 @@ export enum RouteKey {
 
   CreateProfile = 'create-profile',
   EditProfile = 'edit-profile',
+
+  WishDetails = 'wish-details',
 }

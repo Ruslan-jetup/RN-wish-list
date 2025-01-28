@@ -12,3 +12,4 @@ export * from './top-bg-clouds.component';
 export * from './loader.component';
 export * from './cover-img-setter';
 export * from './lists-wish-switcher-content';
+export * from './web-viewer.component';

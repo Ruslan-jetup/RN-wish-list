@@ -7,12 +7,12 @@ import {
   primaryWhite,
   primaryBlack,
 } from 'shared/configs';
-import { FontFamiliesEnum } from 'typing';
+import { FontFamiliesEnum, IContextMenuItem } from 'typing';
 
 interface ContextMenuProps {
   isVisible: boolean;
   toggleContextMenu: () => void;
-  options: { label: string; onPress: () => void }[];
+  options: IContextMenuItem[];
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({

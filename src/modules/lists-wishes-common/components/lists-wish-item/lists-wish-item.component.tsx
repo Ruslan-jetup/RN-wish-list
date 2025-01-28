@@ -33,7 +33,7 @@ export const ListsWishItem: React.FC<IProps> = ({
   return (
     <TouchableWithoutFeedback
       onPress={() => {
-        if (itemData.id) {
+        if (itemData.id && type === 'wish') {
           onListsWishItemPress(itemData.id);
         }
       }}>
