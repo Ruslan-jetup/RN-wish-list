@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react';
 import { HomeScreen } from '../screens';
-import { ContextMenu, ModalComponent, useNav, useToggle } from 'shared';
+import {
+  ContextMenu,
+  DrawerLayout,
+  ModalComponent,
+  primaryBgColor,
+  useNav,
+  useToggle,
+} from 'shared';
 import { useNavigationStore, useUserInfoStore } from 'store';
 import { homeHeaderTitleConfig } from '../configs';
 import {
@@ -15,9 +22,11 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Toast from 'react-native-toast-message';
 import { RouteKey } from 'typing';
 import _ from 'lodash';
+import { AddWish } from '../components';
 
 export const HomeWidget = () => {
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [deleteModalVisible, setDeleteModalVisible] = useState<boolean>(false);
   const [headerTitle, setHeaderTitle] = useState<string>('');
   const [activeSwitchTab, setActiveSwitchTab] = useState<'lists' | 'wish'>(
@@ -55,6 +64,8 @@ export const HomeWidget = () => {
       activeSwitchTab === 'wish' && fetchWishes();
       activeSwitchTab === 'lists' && fetchLists();
     }
+
+    isDrawerOpen && setDrawerOpen(false);
   }, [activeBottomBarTab, activeSwitchTab]);
 
   const fetchWishes = async () => {
@@ -107,11 +118,20 @@ export const HomeWidget = () => {
     setItemId('');
   };
 
-  const onSharePress = () => {
+  const onAddWishPress = () => {
+    setDrawerOpen(true);
+    setMoreMenuVisible(false);
+  };
+
+  const onDrawerClose = () => {
+    setDrawerOpen(false);
+  };
+
+  const onSearchBtnPress = () => {
     //
   };
 
-  const onAddWishPress = () => {
+  const onSharePress = () => {
     //
   };
 
@@ -158,7 +178,7 @@ export const HomeWidget = () => {
     }
   };
 
-  const onSearchBtnPress = () => {
+  const onAddToListPress = () => {
     //
   };
 
@@ -187,37 +207,53 @@ export const HomeWidget = () => {
   ];
 
   return (
-    <>
-      <HomeScreen
-        userInfo={userInfo}
-        onToggleListsWishSwitch={onToggleActiveSwitchTab}
-        activeSwitchTab={activeSwitchTab}
-        onSearchBtnPress={onSearchBtnPress}
-        headerTitle={headerTitle}
-        isLoading={isLoading}
-        listData={activeSwitchTab === 'wish' ? allWishes : allLists}
-        onCopyLinkPress={activeSwitchTab === 'wish' ? onCopyLinkPress : _.noop}
-        onMoreBtnPress={onMoreBtnPress}
-        onListsWishItemPress={onListsWishItemPress}
-      />
+    <DrawerLayout
+      isDrawerOpen={isDrawerOpen}
+      onDrawerOpen={onAddWishPress}
+      onDrawerClose={onDrawerClose}
+      drawerStyle={{ backgroundColor: primaryBgColor }}
+      drawerContent={
+        <AddWish
+          onAddToListPress={onAddToListPress}
+          onDrawerBackPress={() => setDrawerOpen(false)}
+        />
+      }
+      children={
+        <>
+          <HomeScreen
+            userInfo={userInfo}
+            onToggleListsWishSwitch={onToggleActiveSwitchTab}
+            activeSwitchTab={activeSwitchTab}
+            onSearchBtnPress={onSearchBtnPress}
+            headerTitle={headerTitle}
+            isLoading={isLoading}
+            listData={activeSwitchTab === 'wish' ? allWishes : allLists}
+            onCopyLinkPress={
+              activeSwitchTab === 'wish' ? onCopyLinkPress : _.noop
+            }
+            onMoreBtnPress={onMoreBtnPress}
+            onListsWishItemPress={onListsWishItemPress}
+          />
 
-      <ContextMenu
-        isVisible={isMoreMenuVisible}
-        toggleContextMenu={onMenuCancelPress}
-        options={contextMenuOptions}
-      />
+          <ContextMenu
+            isVisible={isMoreMenuVisible}
+            toggleContextMenu={onMenuCancelPress}
+            options={contextMenuOptions}
+          />
 
-      <ModalComponent
-        isVisible={deleteModalVisible}
-        content={
-          activeSwitchTab === 'lists'
-            ? 'Are you sure you want to delete lists?'
-            : 'Are you sure you want to delete wish?'
-        }
-        onClose={() => setDeleteModalVisible(false)}
-        onConfirm={() => onConfirmDeletePress()}
-        onCancel={() => setDeleteModalVisible(false)}
-      />
-    </>
+          <ModalComponent
+            isVisible={deleteModalVisible}
+            content={
+              activeSwitchTab === 'lists'
+                ? 'Are you sure you want to delete lists?'
+                : 'Are you sure you want to delete wish?'
+            }
+            onClose={() => setDeleteModalVisible(false)}
+            onConfirm={() => onConfirmDeletePress()}
+            onCancel={() => setDeleteModalVisible(false)}
+          />
+        </>
+      }
+    />
   );
 };
