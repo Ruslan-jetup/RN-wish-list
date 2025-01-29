@@ -18,16 +18,16 @@ export const UserInfoAtom: React.FC<IProps> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View style={styles.left_content}>
-        <View style={styles.avatar_container}>
-          <CoverImageSetter imageUrl={avatarUrl} />
-        </View>
+      <CoverImageSetter imageUrl={avatarUrl} />
 
-        <View>
-          <Txt content={name} style={styles.name} />
+      <View style={styles.text_container}>
+        <Txt
+          content={name}
+          style={styles.name}
+          optionalProps={{ numberOfLines: 1 }}
+        />
 
-          <Txt content={email} />
-        </View>
+        <Txt content={email} optionalProps={{ numberOfLines: 1 }} />
       </View>
 
       <IconBtn
@@ -47,24 +47,13 @@ export const UserInfoAtom: React.FC<IProps> = ({
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    gap: 12,
+    width: '100%',
     marginTop: 54,
     marginBottom: 24,
   },
-  left_content: {
-    flexDirection: 'row',
-  },
-  avatar_container: {
-    width: 64,
-    height: 64,
-    marginRight: 12,
-    borderRadius: '50%',
-    overflow: 'hidden',
-  },
-  avatar: {
-    width: '100%',
-    height: '100%',
+  text_container: {
+    flex: 1,
   },
   name: {
     marginBottom: 2,

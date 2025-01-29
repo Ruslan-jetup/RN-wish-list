@@ -88,14 +88,14 @@ export const CreateProfileScreen = () => {
     <ScreenLayout viewStyle={styles.container}>
       <TopBgClouds />
 
-      <UserInfoAtom
-        avatarUrl={userInfo.userAvatarUri}
-        email={userInfo.email}
-        name={userInfo.nickName}
-        onEditPress={onEditPress}
-      />
-
       <ScrollView>
+        <UserInfoAtom
+          avatarUrl={userInfo.userAvatarUri}
+          email={userInfo.email}
+          name={userInfo.nickName}
+          onEditPress={onEditPress}
+        />
+
         <Txt content={'Subscription'} style={styles.label} />
         <DropdownSelect
           selectTitle={

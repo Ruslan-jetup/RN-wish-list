@@ -13,7 +13,7 @@ import { useCoverImgSetup } from 'shared/hooks';
 import { CoverImgSetterModal } from './img-setter-modal.component';
 import { useEffect, useState } from 'react';
 import { CoverImgStickers } from './cover-img-stickers.component';
-import { DEFAULT_COVER_IMG } from 'shared/constants';
+import { coverImgSourceHelper } from 'shared/helpers';
 
 interface IProps {
   onSaveImgPath?: (path: string | number) => void;
@@ -83,11 +83,6 @@ export const CoverImageSetter: React.FC<IProps> = ({
     setShowStickers(false);
   };
 
-  const path =
-    imageUrl && typeof imageUrl === 'number'
-      ? imageUrl
-      : { uri: `file://${imageUrl}` };
-
   return (
     <>
       <View
@@ -96,10 +91,7 @@ export const CoverImageSetter: React.FC<IProps> = ({
           additionalStyle,
         ]}>
         <View style={styles.image_container}>
-          <Image
-            source={imageUrl ? path : DEFAULT_COVER_IMG}
-            style={styles.image}
-          />
+          <Image source={coverImgSourceHelper(imageUrl)} style={styles.image} />
         </View>
         <IconBtn
           iconName={IconBtnNamesEnum.Camera}

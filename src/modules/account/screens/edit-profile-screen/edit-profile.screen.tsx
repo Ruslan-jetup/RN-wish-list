@@ -99,15 +99,15 @@ export const EditProfileScreen = () => {
 
       <DefaultHeaderLayout showBackBtn={true} onBackBtnPress={onBackPress} />
 
-      <CoverImageSetter
-        onSaveImgPath={storeAvatarPath}
-        imageUrl={userInfo.userAvatarUri}
-        size={120}
-        showEditor={true}
-        additionalStyle={styles.avatar}
-      />
-
       <ScrollView style={styles.scroll_container}>
+        <CoverImageSetter
+          onSaveImgPath={storeAvatarPath}
+          imageUrl={userInfo.userAvatarUri}
+          size={120}
+          showEditor={true}
+          additionalStyle={styles.avatar}
+        />
+
         <TextField
           containerStyle={styles.input_container}
           label="Your first name"
